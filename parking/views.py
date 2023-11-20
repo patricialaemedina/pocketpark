@@ -8,7 +8,7 @@ from reportlab.lib.colors import HexColor, black
 from datetime import datetime, timedelta
 from django.urls import reverse
 from django.utils import timezone
-from django.db import transaction
+from django.db import transaction, IntegrityError
 from django.http import FileResponse
 from django.contrib import messages, auth
 from django.shortcuts import render, redirect
@@ -171,6 +171,7 @@ def parking_area(request):
 def reservation(request, slot_number):
     already_reserved = False
     vehicles = Vehicle.objects.filter(owner=request.user)
+
     try: 
         slot = Slot.objects.get(number=slot_number)    
     except Slot.DoesNotExist:
@@ -203,19 +204,23 @@ def reservation(request, slot_number):
         
                 if slot.status != 'Vacant':
                     return render(request, 'parking/reservation.html', {'user': request.user, 'vehicles': vehicles, 'slot_number': slot_number, 'already_reserved': True})
+                else:
+                    slot.refresh_from_db()
+                    if slot.status != 'Vacant':
+                        return render(request, 'parking/reservation.html', {'user': request.user, 'vehicles': vehicles, 'slot_number': slot_number, 'already_reserved': True})
+                
+                    new_booking = Booking.objects.create(slot=slot, user=request.user, vehicle=vehicle, start_time=start_time, expiration_time=expiration_time)
 
-                new_booking = Booking.objects.create(slot=slot, user=request.user, vehicle=vehicle, start_time=start_time, expiration_time=expiration_time)
-
-                slot.status = 'Reserved'
-                slot.save()
-                new_booking.save()
-        
-                payment = create_checkout_session(request, new_booking, fee_type="Reservation", fee=amount)
-                return redirect(payment.checkout_url)
+                    slot.status = 'Reserved'
+                    slot.save()
+                    new_booking.save()
             
-            except Slot.DoesNotExist:
-                return redirect(reverse('parking_area'))
-        
+                    payment = create_checkout_session(request, new_booking, fee_type="Reservation", fee=amount)
+                    return redirect(payment.checkout_url)
+            
+            except IntegrityError:
+                return render(request, 'parking/reservation.html', {'user': request.user, 'vehicles': vehicles, 'slot_number': slot_number, 'already_reserved': True})
+
     return render(request, 'parking/reservation.html', {'user': request.user, 'vehicles': vehicles, 'slot_number': slot_number, 'already_reserved': False})
 
 @login_required(login_url='login')

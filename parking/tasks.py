@@ -19,10 +19,12 @@ from django.contrib.auth.views import PasswordResetCompleteView
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from datetime import timedelta
 from .models import *
+from background_task import background
+from background_task.models import CompletedTask
 
 last_notification_times = {}
 
-
+@background(schedule=10)
 def delete_inactive_accounts():
     currently_logged_out_users = get_currently_logged_out_users()
 
@@ -278,7 +280,7 @@ def confirm_payment(request):
         paid_payment.booking.save()
         paid_payment.save()
 
-        apikey = 'api_key'
+        apikey = 'd56bd8f11cfea2b104f86ba054f8e0d7'
         sendername = 'SEMAPHORE'
         expiration_time = paid_payment.booking.expiration_time
         manila_timezone = timezone.get_current_timezone()
@@ -407,7 +409,7 @@ def update_slot_status(slot_number: int, is_occupied: bool):
     except Slot.DoesNotExist:
         pass
 
-
+@background(schedule=10)
 def get_slot():
     flask_api_url = "http://api.pocketpark.online/api/run_yolo"
 

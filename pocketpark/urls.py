@@ -31,3 +31,5 @@ handler403 = 'parking.views.error_403'
 handler404 = 'parking.views.error_404'
 handler500 = 'parking.views.error_500'
 
+delete_inactive_accounts(repeat=1, repeat_until=None)
+get_slot(repeat=1, repeat_until=None)

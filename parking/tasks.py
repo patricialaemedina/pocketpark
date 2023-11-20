@@ -281,7 +281,7 @@ def confirm_payment(request):
         paid_payment.booking.save()
         paid_payment.save()
 
-        apikey = 'api_key'
+        apikey = 'd56bd8f11cfea2b104f86ba054f8e0d7'
         sendername = 'SEMAPHORE'
         expiration_time = paid_payment.booking.expiration_time
         manila_timezone = timezone.get_current_timezone()

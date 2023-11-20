@@ -304,7 +304,7 @@
     <h5>SUCCESSFUL BOOKINGS</h5>
     {% for payment in successful_bookings reversed %}
     <div class="past-booking" data-booking-id="{{ payment.booking.id }}">
-        <p>Booking on {{ payment.booking.start_time }}<span><button
+        <p>{{ payment.booking.start_time }}<span><button
                     class="toggle-button success">Show
                     Details</button></span></p>
         <div class="booking-details" style="display: none">
@@ -325,7 +325,7 @@
     <h5>FAILED BOOKINGS</h5>
     {% for payment in failed_bookings reversed %}
     <div class="past-booking" data-booking-id="{{ payment.booking.id }}">
-        <p>Booking on {{ payment.booking.start_time }}<span><button
+        <p>{{ payment.booking.start_time }}<span><button
                     class="toggle-button failed">Show
                     Details</button></span></p>
         <div class="booking-details" style="display: none">

@@ -30,6 +30,9 @@
 
 body {
     background: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
 body::-webkit-scrollbar {
@@ -223,11 +226,8 @@ form input[type="password"]:focus {
         margin: 0;
         padding: 0;
         scrollbar-width: thin;
-        /* Firefox */
         scrollbar-color: transparent transparent;
-        /* Firefox */
         -ms-overflow-style: none;
-        /* Internet Explorer and Edge */
     }
 
     ::-webkit-scrollbar {
@@ -244,6 +244,8 @@ form input[type="password"]:focus {
     }
 
     .logo-padding img {
+        max-width: 60%;
+        height: auto;
         padding: 10px;
     }
 
@@ -331,6 +333,6 @@ form input[type="password"]:focus {
         flex-direction: column;
         justify-content: center;
         padding: 0;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
     }
 }

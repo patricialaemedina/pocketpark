@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .edit-profile {
     padding: 3rem 0 1rem 0;
     margin-bottom: 0;
@@ -231,6 +235,6 @@ form input:focus {
 
     .edit-profile h4::before,
     .edit-profile h4::after {
-        width: 80%;
+        width: 75%;
     }
 }

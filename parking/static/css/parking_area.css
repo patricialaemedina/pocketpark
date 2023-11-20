@@ -99,8 +99,8 @@ body {
 }
 
 .left-column-1 ul li.circle.vacant {
-    width: 3rem;
-    padding: 0 5rem;
+    width: 2rem;
+    padding: 0 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -109,8 +109,8 @@ body {
 }
 
 .left-column-1 ul li.circle.occupied {
-    width: 3rem;
-    padding: 0 5rem;
+    width: 2rem;
+    padding: 0 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -119,8 +119,8 @@ body {
 }
 
 .left-column-1 ul li.circle.reserved {
-    width: 3rem;
-    padding: 0 5rem;
+    width: 2rem;
+    padding: 0 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -213,7 +213,7 @@ body {
 
     .colors-indicator h4::before,
     .colors-indicator h4::after {
-        width: 20%;
+        width: 17%;
     }
 
     .container {

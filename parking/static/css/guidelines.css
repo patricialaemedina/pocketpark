@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .guidelines {
     padding: 3rem 0 0 0rem;
     margin-bottom: 0;
@@ -100,7 +104,7 @@
 
     .guidelines h4::before,
     .guidelines h4::after {
-        width: 13%;
+        width: 10.5%;
     }
   
     .guidelines-content {

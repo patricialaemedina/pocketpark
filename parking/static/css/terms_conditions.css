@@ -1,5 +1,9 @@
+body {
+  overflow-x: hidden;
+}
+
 .terms_conditions {
-    padding: 3rem 0 0 0rem;
+    padding: 2rem 0 0 0rem;
     margin-bottom: 0;
     text-align: center; 
     position: relative;
@@ -130,7 +134,7 @@
 
   .terms_conditions h4::before,
   .terms_conditions h4::after {
-    width: 34%;
+    width: 29%;
   }
 
   .terms_conditions-content h4 {

@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .notification {
     padding: 3rem 0 0 0rem;
     margin-bottom: 0;
@@ -87,7 +91,7 @@
 
     .notification h4::before,
     .notification h4::after {
-        width: 60%;
+        width: 58%;
     }
 
     .notification-content {

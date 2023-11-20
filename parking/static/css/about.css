@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .about {
     padding: 3rem 0 0 0rem;
     margin-bottom: 0;
@@ -90,7 +94,7 @@
 
     .about h4::before,
     .about h4::after {
-        width: 47%;
+        width: 41%;
     }
   
     .about-content {

@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .reservation-details {
     text-align: center;
     position:relative;
@@ -315,6 +319,7 @@ input[type="time"] {
     }
 
     .right-column {
+        margin-top: 1rem;
     }
 
     #chosen_slot_display,
@@ -348,7 +353,7 @@ input[type="time"] {
 
     .reservation-details h4::before,
     .reservation-details h4::after {
-    width: 28%;
+        width: 23%;
     }
 
 

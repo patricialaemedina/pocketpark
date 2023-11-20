@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.shortcuts import redirect
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from decimal import Decimal
 
 class CustomUser(AbstractUser):
     contact_number = models.CharField(max_length=11, help_text='Enter a 11-digit contact number (e.g. 09xx).')
@@ -82,9 +83,9 @@ class Payment(models.Model):
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS, default='Pending')
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.amount_paid /= 100.00
-        super().save(*args, **kwargs)
+        if not self.id:  
+            self.amount_paid = Decimal(self.amount_paid) / Decimal('100.00')
+        super().save(*args, **kwargs) 
 
     def __str__(self):
         return f"{self.fee_type} Fee: {self.payment_status} - {self.booking.user.first_name} {self.booking.user.last_name} - ₱{self.amount_paid}"

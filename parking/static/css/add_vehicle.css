@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .new-vehicle {
     padding: 3rem 0 1rem 0;
     margin-bottom: 0;
@@ -228,6 +232,6 @@ form input:focus {
 
     .new-vehicle h4::before,
     .new-vehicle h4::after {
-        width: 30%;
+        width: 27%;
     }
 }

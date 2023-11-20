@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 body::-webkit-scrollbar {
     display: none;
   }
@@ -360,6 +364,11 @@ body::-webkit-scrollbar {
     .list ul {
       padding: 0;
       font-size: .9rem;
+    }
+
+    li {
+      overflow-wrap: break-word;
+      word-wrap: break-word; 
     }
   }
   

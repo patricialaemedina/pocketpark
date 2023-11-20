@@ -1,4 +1,8 @@
-.extension{
+body {
+    overflow-x: hidden;
+}
+
+.extension {
     padding: 3rem 0 0 0;
     text-align: center;
     margin-bottom: 0;
@@ -330,7 +334,7 @@ button {
 
     .extension h4::before,
     .extension h4::after {
-        width: 90%;
+        width: 86%;
     }
 
-
+}

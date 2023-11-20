@@ -1,3 +1,12 @@
+html {
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
 .my-reservations {
     padding: 3rem 0 0 0;
     
@@ -366,11 +375,6 @@
         font-size: 1rem;
     }
 
-    .col-md-6 {
-        display: flex;
-        justify-content: space-evenly;
-    }
-
     .past-booking p,
     .past-booking h4 {
         margin-left: 1rem;
@@ -400,6 +404,13 @@
 .booking-details p {
     font-size: 0.8rem;
     margin-left: 1rem;
+}
+
+.col-md-6 {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0 !important;
+    margin: 0 0 !important;
 }
 
 }

@@ -348,6 +348,12 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
+        function reloadPage() {
+            location.reload();
+        }
+
+        setInterval(reloadPage, 5000);
+
         function updateCountDown() {
             var currentBookingDetailsPaid = document.querySelectorAll('.current-booking-details-paid');
             currentBookingDetailsPaid.forEach(function (bookingDetailPaid) {

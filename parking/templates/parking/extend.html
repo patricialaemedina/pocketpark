@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/extend.css' %}">
+
+<div class="extension">
+    <h4>EXTENSION</h4>
+    <p>Fill up the form to extend the expiration time.</p><span>Only 1 extension is allowed. </span>
+</div>
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="columns-wrapper">
+            <div class="left-column">
+                <div class="left-column-1">
+                    {% if unpaid_extension %}
+                    {% for payment in unpaid_extension %}
+                    <div class="booking-details current-booking-details"
+                        data-creation-time="{{ payment.creation_datetime|date:'c' }}">
+                        {% if payment.amount_paid == 20.00 %}
+                        <label for="num-minutes">Number of Minutes: </label>
+                        <label class="input">
+                            <p>15 minutes</p>
+                        </label>
+                        {% elif payment.amount_paid == 30.00 %}
+                        <label for="num-minutes">Number of Minutes: </label>
+                        <label class="input">
+                            <p>30 minutes</p>
+                        </label>
+                        {% else %}
+                        <label for="num-minutes">Number of Minutes: </label>
+                        <label class="input">
+                            <p>45 minutes</p>
+                        </label>
+                        {% endif %}
+                        </label>
+                        <label for="num-minutes">Amount: </label>
+                        <label class="input">{{ payment.amount_paid }}</label>
+
+                        <p id="timer">TIME LEFT TO PAY: <br><span class="time-pay"></span></p>
+                        <button id="cancel"><a href="{% url 'my_reservation' %}">CANCEL</a></button>
+                        <button class="pay-now-btn"><a href="{{ payment.checkout_url }}">PAY EXTENSION FEE</a></button>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% else %}
+                <div class="left-column-2">
+                    <table>
+                        <tr>
+                            <th>Number of Minutes</th>
+                            <th>Extension Fee</th>
+                        </tr>
+                        <tr>
+                            <td>15 minutes</td>
+                            <td>₱20.00</td>
+                        </tr>
+                        <tr>
+                            <td>30 minutes</td>
+                            <td>₱30.00</td>
+                        </tr>
+                        <tr>
+                            <td>45 minutes</td>
+                            <td>₱40.00</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <label id="amount_label" for="amount">Extended Minutes: </label>
+                    <select name="amount" id="amount" required>
+                        <option value="" selected disabled>Select Number of Minutes</option>
+                        <option value="2000">15 minutes</option>
+                        <option value="3000">30 minutes</option>
+                        <option value="4000">45 minutes</option>
+                    </select>
+                    <br>
+                    <div class="button-container">
+                        <button id="cancel"><a href="{% url 'my_reservation' %}">CANCEL</a></button>
+                        <button type="submit" id="pay-extension">PAY EXTENSION FEE</button>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+</div>
+</form>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function updateCountDown() {
+            var currentBookingDetails = document.querySelectorAll('.current-booking-details');
+            currentBookingDetails.forEach(function (bookingDetail) {
+                var now = new Date();
+
+                // For payment expiration
+                var creationTimeString = bookingDetail.getAttribute('data-creation-time');
+                var creationTime = new Date(creationTimeString);
+
+                var timeLeftMillisPay = creationTime.getTime() + 5 * 60 * 1000 - now.getTime();
+
+                var timeLeftElementPay = bookingDetail.querySelector('.time-pay');
+                var payNowBtn = bookingDetail.querySelector('.pay-now-btn');
+
+                if (timeLeftMillisPay <= 0) {
+                    timeLeftElementPay.textContent = 'Payment Expired';
+                    payNowBtn.disabled = true;
+                    payNowBtn.textContent = "Payment Expired";
+                } else {
+                    var secondsPay = Math.floor((timeLeftMillisPay / 1000) % 60);
+                    var minutesPay = Math.floor((timeLeftMillisPay / 1000 / 60) % 60);
+
+                    timeLeftElementPay.textContent = minutesPay + ' minutes ' + secondsPay + ' seconds';
+                }
+            })
+        };
+
+        updateCountDown();
+        setInterval(updateCountDown, 1000);
+
+    });
+</script>
+
+{% endblock %}

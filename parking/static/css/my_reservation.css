@@ -1,0 +1,405 @@
+.my-reservations {
+    padding: 3rem 0 0 0;
+    
+    text-align: center;
+    position: relative;
+}
+
+.my-reservations h4 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    padding: 0 20px;
+    transition: ease .40s;
+}
+
+.my-reservations h4::before,
+.my-reservations h4::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 120%;
+    height: 2px;
+    background-color: #F9BF29;
+    transition: ease .40s;
+}
+
+.my-reservations h4::before {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.my-reservations h4::after {
+    right: 0;
+    transform: translateX(100%);
+}
+
+.my-reservations,
+.bookings {
+    color: var(--third-color);
+    margin-bottom: 0;
+}
+
+.bookings{
+    padding: 2rem 6rem 0 6rem;
+    padding-bottom: 4rem;
+}
+
+.my-reservations h4,
+.bookings h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: ease .40s;
+}
+
+.intro-message{
+    margin: 0 3.5rem;
+    padding: 1rem 6rem 0;
+    text-align: center;
+    text-indent: 50px;
+    margin-bottom: 0;
+    font-weight: light;
+    font-size: var(--text-font);
+    transition: ease .40s;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.columns-wrapper {
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid #3B5D50;
+    width: 80%;
+    margin: 1rem 7rem;
+}
+
+.left-column,
+.right-column {
+    flex-basis: calc(50% - 15px);
+    padding: 2rem 0 2rem 2rem;
+}
+
+.container .left-column h5,
+.container .right-column h5 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: ease .40s;
+}
+
+.container .left-column p,
+.container .right-column p {
+    font-size: 1rem; 
+    font-weight: normal; 
+    color: var(--text-color);
+    line-height: 1.5;
+    transition: ease .40s;
+}
+
+#timer {
+    font-size: .9rem; 
+    font-weight: bold; 
+    color: #DB3535;
+    transition: ease .40s;
+}
+
+.pay-timer {
+    font-size: 1.1rem; 
+    font-weight: bold; 
+    color: var(--sixth-color);
+    transition: ease .40s;
+    margin-left: 14rem;
+}
+
+.buttons {
+    display: inline-block;
+    vertical-align: middle;
+    transition: ease .40s;
+}
+
+.buttons button a {
+    text-decoration: none;
+    color: var(--bg-color);
+}
+
+#e-receipt-btn{
+    margin-left: 7rem;
+}
+
+#pay-now-btn {
+    margin-left: 13rem;
+}
+
+#extend-btn,
+#pay-now-btn {
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+#extend-btn:hover,
+#extend-btn:hover a,
+#pay-now-btn:hover,
+#pay-now-btn:hover a{
+    color: var(--second-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #F9BF29;
+    cursor: pointer;
+}
+
+#e-receipt-btn{
+    color: var(--bg-color);
+    background-color: var(--third-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+#e-receipt-btn:hover,
+#e-receipt-btn:hover a{
+    color: var(--third-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #3B5D50;
+    cursor: pointer;
+}
+
+#extend-btn a:hover,
+#extend-btn:hover a,
+#pay-now-btn a:hover,
+#pay-now-btn:hover a,
+#e-receipt-btn a:hover,
+#e-receipt-btn:hover a
+ {
+    text-decoration: none;
+    border: none; 
+}
+
+.slot-label {
+    color: var(--third-color);
+    font-weight: bold;
+}
+
+.no-reservations {
+    display: flex;
+    justify-content: center;
+}
+
+.no-reservations p{
+    color: var(--text-color); 
+    font-size: 1.2rem; 
+    margin-bottom: 0; 
+    transition: ease .40s;
+}
+
+.success {
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: 0.8rem;
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    margin-left: 1rem;
+}
+
+.success:hover {
+    color: var(--second-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #F9BF29;
+    cursor: pointer;
+}
+
+.failed {
+    color: var(--bg-color);
+    background-color: #DB3535;
+    font-size: 0.8rem;
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    margin-left: 1rem;
+}
+
+.failed:hover {
+    color: #DB3535;
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #DB3535;
+    cursor: pointer;
+}
+
+.booking-details {
+    width: 100%;
+    margin-left: 2.9rem;
+}
+
+#yellow {
+    color: #F9BF29;
+}
+
+#red {
+    color: #DB3535;
+}
+
+.booking-details h4 {
+    color: #F9BF29;
+    font-size: 1rem;   
+}
+
+.booking-details p {
+    font-size: 1rem;
+    margin-left: 1rem;
+}
+
+.bookings h5 {
+    border-top: 2px dashed #F9BF29;
+    padding-top: 1rem;
+    font-weight: 500;
+    transition: ease .40s;
+}
+
+/* Media query for screens 768px and below */
+@media screen and (max-width: 768px) {
+    .intro-message {
+      margin: 0 1rem;
+      padding: 1rem;
+      text-align: justify;
+      text-indent: 0; 
+      font-weight: normal;
+      font-size: .9rem; 
+      margin-bottom: 0;
+    }
+
+    .my-reservations {
+        padding: 2rem 0 0 0;
+    }
+
+    .bookings {
+      padding: 1rem 0 0 0; 
+      margin: 0; 
+    }
+  
+    .my-reservations h4,
+    .bookings h5,
+    .bookings h4 {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 1rem; 
+    }
+  
+    .columns-wrapper {
+      flex-direction: column;
+      width: 100%; 
+      margin: 1rem 0; 
+    }
+  
+    .left-column,
+    .right-column {
+      flex-basis: 100%; 
+      padding: 1rem; 
+    }
+  
+    .container .left-column h5,
+    .container .right-column h5 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+  
+    .container .left-column p,
+    .container .right-column p {
+      font-size: 0.9rem;
+      font-weight: normal;
+      line-height: 1.4;
+    }
+
+    .timer {
+        font-size: .9rem;
+        margin-left: 0;       
+    }
+
+    .pay-timer {
+        font-size: .9rem;
+        margin-left: 0;
+    }
+  
+    .buttons {
+      margin-left: 0;
+    }
+
+    #e-receipt-btn,
+    #pay-now-btn{
+        margin-left: 0rem;
+    }
+    
+    #extend-btn,
+    #pay-now-btn,
+    #e-receipt-btn {
+        font-size: var(--responsive-font);
+        padding: 6px 20px;
+    }
+
+    .no-reservations p{
+        font-size: 1rem;
+    }
+
+    .col-md-6 {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .past-booking p,
+    .past-booking h4 {
+        margin-left: 1rem;
+    }
+
+    .my-reservations h4::before,
+    .my-reservations h4::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 50%;
+    height: 2px;
+    background-color: #F9BF29;
+    transition: ease .40s;
+}
+
+.bookings h5 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.booking-details h4 {
+    color: #F9BF29;
+    font-size: 0.8rem;   
+}
+
+.booking-details p {
+    font-size: 0.8rem;
+    margin-left: 1rem;
+}
+
+}

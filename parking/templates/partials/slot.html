@@ -1,0 +1,22 @@
+<div id="slot-update-container" class="button-container">
+    {% for slot in slots %}
+    {% if already_booked %}
+    <a href="{% url 'reservation' slot.number %}" data-slot-number="{{ slot.number }}">
+        <button class="slot-button btn-disabled" data-slot-number="{{ slot.number }}"
+            data-slot-status="{{ slot.status }}" data-already-booked="true">Slot {{slot.number}}
+        </button>
+    </a>
+    {% else %}
+    <a href="{% url 'reservation' slot.number %}" data-slot-number="{{ slot.number }}">
+        <button class="slot-button" data-slot-number="{{ slot.number }}" data-slot-status="{{ slot.status }}"
+            data-already-booked="false">Slot {{slot.number}}
+        </button>
+    </a>
+    {% endif %}
+
+    {% if forloop.counter|divisibleby:5 %}
+</div>
+<div class="button-container">
+    {% endif %}
+    {% endfor %}
+</div>

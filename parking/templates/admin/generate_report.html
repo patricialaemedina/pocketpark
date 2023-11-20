@@ -1,0 +1,123 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<h1>Generate Reports</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div style="margin-bottom: 2rem;">
+        <label for="report_type">Choose Report Type:</label>
+        <select name="report-type" required id="reportSelect">
+            <option value="" selected disabled>Select Report Type</option>
+            <option value="revenue">Revenue Report</option>
+            <option value="occupancy">Occupancy Report</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom: 2rem;">
+        <label for="period">Select Period:</label>
+        <select name="period" required id="periodSelect">
+            <option value="" selected disabled>Select Period</option>
+        </select>
+    </div>
+
+    <div style="margin-bottom: 2rem;" id="dateStartContainer" style="display: none;">
+        <label for="periodDateStart">Date Start:</label>
+        <input name="periodDateStart" type="date">
+    </div>
+
+    <div>
+        <input type="submit" value="Generate Report">
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const reportSelect = document.getElementById('reportSelect');
+        const periodSelect = document.getElementById('periodSelect');
+        const dateStartContainer = document.getElementById('dateStartContainer');
+        const dateStartInput = dateStartContainer.querySelector('input[name="periodDateStart"]');
+
+        function updatePeriodOptions(reportType) {
+            periodSelect.innerHTML = ''; 
+
+            if (reportType === 'revenue') {
+                addOption('daily', 'Daily');
+                addOption('weekly', 'Weekly');
+                addOption('monthly', 'Monthly');
+                addOption('yearly', 'Yearly');
+            } else if (reportType === 'occupancy') {
+                addOption('realtime', 'Real-Time');
+            }
+        }
+
+        function addOption(value, text) {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = text;
+            periodSelect.appendChild(option);
+        }
+            
+        function updateInputType() {
+            const selectedPeriod = periodSelect.value;
+
+            if (selectedPeriod === 'daily' || selectedPeriod === 'weekly') {
+                dateStartInput.type = 'date';
+                setDefaultDate();
+            } else if (selectedPeriod === 'monthly') {
+                dateStartInput.type = 'month';
+                setDefaultMonth();
+            } else if (selectedPeriod === 'yearly') {
+                dateStartInput.type = 'number';
+                dateStartInput.value = new Date().getFullYear();
+                dateStartInput.setAttribute('placeholder', 'Year');
+                dateStartInput.setAttribute('min', '1900');
+                dateStartInput.setAttribute('max', '2099');
+                dateStartInput.setAttribute('step', 1);
+                setDefaultYear();
+            } else if (selectedPeriod === 'realtime') {
+                dateStartContainer.style.display = 'none';
+                return;
+            } else {
+                dateStartContainer.style.display = 'block';
+            }
+
+            dateStartContainer.style.display = selectedPeriod ? 'block' : 'none';
+
+        }
+
+        function setDefaultDate() {
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const day = String(currentDate.getDate()).padStart(2, '0');
+            dateStartInput.value = `${year}-${month}-${day}`;
+        }
+
+        function setDefaultMonth() {
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            dateStartInput.value = `${year}-${month}`;  
+        }
+
+        function setDefaultYear() {
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            dateStartInput.value = `${year}`; 
+        }   
+
+        reportSelect.addEventListener('change', function () {
+            const selectedReportType = reportSelect.value;
+            updatePeriodOptions(selectedReportType);
+            updateInputType();
+        });
+
+        periodSelect.addEventListener('change', updateInputType);
+
+        updateInputType();
+    });
+</script>
+
+{% endblock %}

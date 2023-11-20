@@ -1,0 +1,115 @@
+.notification {
+    padding: 3rem 0 0 0rem;
+    margin-bottom: 0;
+    text-align: center;
+    position: relative;
+}
+
+.notification h4 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    padding: 0 20px;
+    transition: ease .40s;
+}
+
+.notification h4::before,
+.notification h4::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 120%;
+    height: 2px;
+    background-color: var(--second-color);
+    transition: ease .40s;
+}
+
+.notification h4::before {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.notification h4::after {
+    right: 0;
+    transform: translateX(100%);
+}
+
+.notification-content {
+    background-color: rgba(217, 217, 217, 0.5);
+    border-radius: 25px;
+    margin: 1rem 12rem;
+    max-width: 100%;
+    max-height: 100%;
+    border: 2px solid rgba(59, 93, 80, 0.5);
+    padding: 3rem 3rem;
+    overflow: auto;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.notification-content ul {
+    list-style-type: none;
+    padding: 0;
+    transition: ease .40s;
+}
+
+.notification-content li {
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0px;
+}
+
+.notification-content li .time {
+    padding-left: 45px;
+    opacity: 50%;
+    transition: ease .40s;
+}
+
+.notification-content li i {
+    font-size: 25px;
+    color: var(--second-color);
+    margin-right: 10px;
+    vertical-align: middle;
+    transition: ease .40s;
+}
+
+/* Media query for screens 768px and below */
+@media screen and (max-width: 768px) {
+    .notification {
+        padding: 2rem 0 0 0rem;
+    }
+
+    .notification h4 {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
+    .notification h4::before,
+    .notification h4::after {
+        width: 60%;
+    }
+
+    .notification-content {
+        margin: 1rem 1rem;
+        padding: 2rem 2rem;
+    }
+
+    .notification-content ul {
+        padding-left: 0;
+    }
+
+    .notification-content li {
+        font-size: .8rem;
+        padding: 10px 0px;
+    }
+
+    .notification-content li .time {
+        padding-left: 30px;
+    }
+
+    .notification-content li i {
+        font-size: 20px;
+        margin-right: 8px;
+    }
+}

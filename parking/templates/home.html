@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %}
+    <title>PocketPark</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+</head>
+
+<body>
+    <section class="cta" id=cta>
+        <div class="home fade-in">
+            <p class="p-1">Welcome To</p>
+            <h1 class="second">
+                <span id="typing-text" class="typing-animation"></span>
+            </h1>
+            <p class="p-2">Discover spacious parking facilities and exceptional customer service
+                at Greenfield, ensuring a hassle-free experience for all.</p>
+
+            <a href="{% url 'login' %}" class="btn">
+                <svg width="277" height="62">
+                    <defs>
+                        <linearGradient id="grad1">
+                            <stop offset="100%" stop-color="#F9BF29" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="5" y="5" rx="25" fill="none" stroke="url(#grad1)" width="266" height="50"></rect>
+                </svg>
+                <span>Book Now</span>
+            </a>
+        </div>
+    </section>
+
+    <div class="navigation fade-in">
+        <ul>
+            <li><a href="{% url 'login' %}">Sign In</a></li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const textToType = "Mayflower Parking";
+            const typingElement = document.getElementById('typing-text');
+
+            function typeText() {
+                let charIndex = 0;
+                return function () {
+                    if (charIndex < textToType.length) {
+                        typingElement.textContent += textToType.charAt(charIndex);
+                        charIndex++;
+                    } else {
+                        charIndex = 0;
+                    }
+                };
+            }
+
+            function startTyping() {
+                const typeTextInstance = typeText();
+                const typingInterval = setInterval(function () {
+                    typeTextInstance();
+                    if (typingElement.textContent === textToType) {
+                        clearInterval(typingInterval);
+                        setTimeout(function () {
+                            typingElement.textContent = '';
+                            startTyping();
+                        }, 3000);
+                    }
+                }, 150);
+            }
+
+            startTyping();
+        });
+    </script>
+</body>
+
+</html>

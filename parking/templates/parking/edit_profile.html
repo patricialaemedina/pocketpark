@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+
+<div class="edit-profile">
+    <h4>EDIT PROFILE</h4>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<p class="success-message">
+    {{ message }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div class="container">
+    <div class="columns-wrapper">
+        <div class="left-column">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    {{ userEditForm.first_name.label_tag }}
+                    {{ userEditForm.first_name }}
+                    <span class="error-message">
+                        {{ userEditForm.first_name.errors }}
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    {{ userEditForm.last_name.label_tag }}
+                    {{ userEditForm.last_name }}
+                    <span class="error-message">
+                        {{ userEditForm.last_name.errors }}
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    {{ userEditForm.username.label_tag }}
+                    {{ userEditForm.username }}
+                    <span class="error-message">
+                        {{ userEditForm.username.errors }}
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    {{ userEditForm.email.label_tag }}
+                    {{ userEditForm.email }}
+                    <span class="error-message">
+                        {{ userEditForm.email.errors }}
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    {{ userEditForm.contact_number.label_tag }}
+                    {{ userEditForm.contact_number }}
+                    <span class="error-message">
+                        {{ userEditForm.contact_number.errors }}
+                    </span>
+                </div>
+
+                <div class="button-container">
+                    <a href="{% url 'profile' %}" class="button" id="cancel-button">CANCEL</a>
+                    <button class="button" type="submit" name="edit_profile">SAVE CHANGES</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="right-column">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    {{ pwordForm.old_password.label_tag }}
+                    {{ pwordForm.old_password }}
+                    <span class="error-message">
+                        {{ pwordForm.old_password.errors }}
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    {{ pwordForm.new_password1.label_tag }}
+                    {{ pwordForm.new_password1 }}
+                    <span class="error-message">
+                        {{ pwordForm.new_password1.errors }}
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    {{ pwordForm.new_password2.label_tag }}
+                    {{ pwordForm.new_password2 }}
+                    <span class="error-message">
+                        {{ pwordForm.new_password2.errors }}
+                    </span>
+                </div>
+
+                <div class="button-container">
+                    <button class="button" type="submit" name="change_password" id="change-pw">CHANGE PASSWORD</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

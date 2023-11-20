@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Paytone+One&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,500&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    list-style: none;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg-color: #FFFFFF;
+    --big-font: #130F26;
+    --text-color: #2F2F2F;
+    --second-color: #F9BF29;
+    --third-color: #3B5D50;
+    --fourth-color: #DA6A00;
+    --fifth-color: #C8D2D1;
+    --sixth-color: #A13232;
+    --big-font: 6rem;
+    --medium-font: 3.2rem;
+    --h2-font: 2rem;
+    --text-font: 1rem;
+    --responsive-font: 0.5rem;
+    --before-color-sticky: #221314;
+}
+
+body {
+    background: var(--bg-color);
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-left: 3.5rem;
+    margin-top: 2rem;
+}
+
+.logo-padding {
+    display: flex;
+    padding: 5px;
+    transition: ease .40s;
+}
+
+.logo-padding img {
+    max-width: 30%;
+    height: auto;
+    align-self: flex-start; 
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.columns-wrapper {
+    display: flex;
+    justify-content: space-between;
+    transition: ease .40s;
+}
+
+.sign-up-account {
+    color: var(--third-color);
+    font-size: 1.5rem;
+    font-weight: light;
+    margin-left: 66rem;
+}
+
+.left-column,
+.right-column {
+    flex-basis: calc(50% - 15px);
+    align-self: flex-start;
+    transition: ease .40s;
+}
+
+.left-column {
+    padding: 0px 50px 50px 30px;
+}
+
+.right-column {
+    padding: 0px 55px 0px 0px;
+}
+
+.pass1,
+.pass2 {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px;
+}
+
+i {
+    color: var(--third-color);
+    font-size: 20px;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: ease .40s;
+}
+
+.form-group {
+    margin-top: 20px;
+    align-items: center;
+    position: relative;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    
+    margin-top: 0;
+}
+
+form input[type="text"]::placeholder,
+form input[type="email"]::placeholder,
+form input[type="tel"]::placeholder,
+form input[type="password"]::placeholder {
+    font-size: var(--text-font);
+    color: #000000;
+    transition: opacity 0.5s ease;
+    opacity: 0.5;
+}
+
+form input[type="text"]:focus::placeholder,
+form input[type="email"]:focus::placeholder,
+form input[type="tel"]:focus::placeholder,
+form input[type="password"]:focus::placeholder {
+    opacity: 0;
+}
+
+/* Reset default input styles */
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="password"] {
+    border: none;
+    background: none;
+    font: inherit;
+    width: 100%;
+    outline: none;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--third-color);
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+    transition: ease .40s;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="tel"]:focus,
+form input[type="password"]:focus {
+    border-bottom: 1px solid var(--second-color);
+}
+
+.form-group button {
+    display: inline-block;
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: var(--text-font);
+    padding: 10px 25px;
+    border: 1px solid #FED94D;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: ease .40s;
+}
+
+.form-group button:hover {
+    color: var(--second-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #FED94D;
+    cursor: pointer;
+}
+
+.right-column a:hover {
+    text-decoration: underline;
+}
+
+#sign-up-btn {
+    margin-left: 45%;
+}
+
+.sign-up-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.sign-up-link a {
+    display: inline-block;
+}
+
+.sign-up-link {
+    margin-top: 1rem;
+    color: var(--third-color);
+    font-size: 1rem;
+    font-weight: light;
+    font-style: italic;
+}
+
+.error-message {
+    color: var(--sixth-color);
+    font-weight: bold;
+    font-size: .9rem;
+    transition: ease .40s;
+    font-style: italic;
+}
+
+/*-----------------------------*/
+@media (max-width: 768px) {
+    body {
+        margin: 0;
+        padding: 0;
+        scrollbar-width: thin;
+        /* Firefox */
+        scrollbar-color: transparent transparent;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* Internet Explorer and Edge */
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    .logo-container {
+        margin-top: 1.5rem;
+    }
+
+    .logo-padding img {
+        padding: 10px;
+    }
+
+    i {
+        font-size: 18px;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .columns-wrapper {
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .right-column .form-group {
+        padding-left: 0;
+    }
+
+    .left-column {
+        width: 100%;
+    }
+
+    .left-column,
+    .right-column {
+        flex-basis: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+
+    form input[type="text"]::placeholder,
+    form input[type="email"]::placeholder,
+    form input[type="tel"]::placeholder,
+    form input[type="password"]::placeholder {
+        font-size: .9rem;
+    }
+
+    .sign-up-account {
+        margin-top: 1rem;
+        margin-left: 7.5rem;
+        font-size: 1rem;
+    }
+
+    .sign-up-link {
+        color: var(--third-color);
+        font-size: .8rem;
+        font-weight: light;
+        font-style: italic;
+    }
+
+    .error-message {
+        color: var(--sixth-color);
+        font-weight: bold;
+        font-size: .9rem;
+        transition: ease .40s;
+        font-style: italic;
+    }
+
+    .form-group button {
+        font-size: .8rem;
+        padding: 5px 20px;
+        margin: 10px 0;
+    }
+
+    .right-column a:hover {
+        text-decoration: underline;
+    }
+
+    #sign-up-btn {
+        margin:0;
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/add_vehicle.css' %}">
+
+<div class="new-vehicle">
+    <h4>REGISTER NEW VEHICLE </h4>
+</div>
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="columns-wrapper">
+            <div class="left-column">
+                <div class="form-group">
+                    <label for="license_plate">License Plate Number:</label>
+                    <input type="text" name="license_plate" required>
+                    <span class="error-message">
+                        {{ form.license_plate.errors }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle_make">Vehicle Make:</label>
+                    <input type="text" name="vehicle_make" required>
+                    <span class="error-message">
+                        {{ form.vehicle_make.errors }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle_model">Vehicle Model:</label>
+                    <input type="text" name="vehicle_model" required>
+                    <span class="error-message">
+                        {{ form.vehicle_model.errors }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle_color">Vehicle Color:</label>
+                    <input type="text" name="vehicle_color" required>
+                    <span class="error-message">
+                        {{ form.vehicle_color.errors }}
+                    </span>
+                </div>
+
+                <div class="button-container">
+                    <a href="{% url 'profile' %}" class="button" id="cancel-button">CANCEL</a>
+                    <button class="button" type="submit">ADD VEHICLE</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

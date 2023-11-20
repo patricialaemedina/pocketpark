@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/terms_conditions.css' %}">
+
+<div class="terms_conditions">
+    <h4>TERMS AND CONDITIONS</h4>
+</div>
+
+<div class="terms_conditions-content">
+    <h4>1. INTRODUCTION</h4>
+    <p>Welcome to PocketPark, the Smart Parking Reservation System. Prior to utilizing
+       our services, we kindly request that you carefully review and understand the
+       terms and conditions outlined herein. These terms and conditions serve as the
+       governing rules and policies for your use of the PocketPark platform.</p>
+    <br>
+    <h4>2. RESERVATION POLICY</h4>
+    <p><b>2.1. Parking Period and Payment:</b> Users are required to specify the start date
+       and time for their desired parking period in the reservation form. After making
+       their selection, a summary of the reservation details is displayed, and users are
+       then directed to the payment form to settle the parking reservation fee. If the user
+       completes the payment immediately, the reservation becomes binding, and the
+       chosen slot is reserved for the user by PocketPark. In cases where the user
+       prefers to pay at a later time, a 5-minute grace period is provided to finalize
+       payment and secure the chosen parking spot. If payment is not made within the
+       allocated time frame, the chosen slot becomes subject to availability, and the
+       reservation is considered void.</p>
+
+    <p><b>2.2. Reservation Confirmation:</b> Upon completing the reservation or booking
+       process, PocketPark will promptly confirm it by sending an email and SMS
+       message to the email address and contact number provided by the user. This
+       confirmation serves as official proof of the reservation made through PocketPark.
+       The message will include a receipt and a QR Code, which the User must present
+       to the establishment's guard at the entrance to validate their reservation.</p>
+
+    <p><b>2.3. Entry and Exit Conditions:</b> Entering the parking facility at a date/time earlier
+       or later than the parking period start date or exiting the parking facility at a
+       date/time earlier or later than the parking period end date is possible, subject to
+       the following conditions:
+       <div class="sub-item">
+            <p><b>a.</b> If a user enters the parking facility before the scheduled start date and
+                  time of their reservation, they must wait until their specified reservation
+                  time begins before utilizing the reserved parking spot for a fair and orderly
+                  process.</p>
+        </div>
+        <div class="sub-item">
+            <p><b>b.</b> If a user enters the parking facility after the reservation's start date and
+                  time, it does not affect the end date and time of the reservation; the end
+                  remains unchanged. No refunds for any portion of the parking fees are
+                  provided.</p>
+        </div>
+        <div class="sub-item">
+            <p><b>c.</b> When a user exits the parking facility with their vehicle before the end date
+                  and time of the reservation, the reservation ends when the user leaves the facility. 
+                  Re-entry during the reservation period is not permitted; the reservation ends automatically
+                  upon the first exit, and no refunds are issued.</p>
+        </div>
+        <div class="sub-item">
+            <p><b>d.</b> If a user exits the parking facility after the end date and time of the
+                  reservation, they will be charged for the additional time. The user must
+                  pay the full daily rate for the extended duration, and this charge should be
+                  settled in person with the parking staff.</p>
+        </div>
+
+    <p><b>2.4. Parking Spot Reservation Confirmation:</b> To avoid any instances where a
+       user parks in the spot reserved by another parking renter and to prevent
+       confusion or conflicts, the establishment employs a clear reservation confirmation
+       process. In cases where a user insists that a parking spot is rightfully theirs, they
+       must adhere to the following protocol:
+       <div class="sub-item">
+            <p><b>a.</b> Cones are placed in reserved parking spots to clearly indicate their status.
+                  These cones serve as visual markers to help prevent parking in the wrong spot.</p>
+        </div>
+        <div class="sub-item">
+            <p><b>b.</b> If a user believes that a parking spot is reserved for them and there is a
+                  cone present, they must present their reservation details, including the
+                  reservation receipt and QR Code, to the parking staff or parking facility
+                  personnel.</p>
+        </div>
+        <div class="sub-item">
+            <p><b>c.</b> The parking staff will verify the user's reservation details and the spot's
+                  availability. If the reservation details and QR Code match the spot in
+                  question, the user's statement will be confirmed, and the cone will be
+                  removed.</p>
+        </div>
+    <br>
+    <h4>3. ACCOUNT ACTIVATION AND DELETION POLICY</h4>
+    <p><b>3.1. Account Activation:</b> Prior to using the system, users must complete the
+       account activation process. This includes providing accurate information
+       and agreeing to the system's terms and conditions.
+    <p><b>3.2. Account Deletion:</b> The Company reserves the right to delete user
+       accounts under the following conditions:
+       <div class="sub-item">
+            <p><b>a. Violation of Terms:</b> Users found in violation of the system's terms and conditions, 
+                     including attempting human reservations or any other actions that contravene our policies,
+                     may face account deletion.</p>
+        </div>
+        <div class="sub-item">
+            <p><b>b. Misuse of System:</b> If a user is found to be misusing the system, engaging in fraudulent 
+                     activities, or not adhering to the policies, their account may be deleted. Misuse includes 
+                     any behavior that compromises the integrity of the system such as fraudulent bookings, unauthorized
+                     system access, or attempting to manipulate grace period or extension rate fees.</p>
+        </div>
+        <div class="sub-item">
+            <p><b>c. Long Inactivity:</b> To ensure that active users have priority and to maintain a well-functioning system,
+                     accounts that remain inactive for an extended period may receive a notification via email, indicating the
+                     potential deletion of their account. We understand that circumstances may change, and users may not require 
+                     parking services for a while. However, we encourage users to log in and use the system periodically to prevent
+                     deletion. Deletion means the permanent removal of user accounts and associated data. Reactivating a deleted account
+                     may not be possible, and users may need to create a new account if needed.</p>
+        </div>
+    
+    <br>
+    <h4>4. FEE STRUCTURE</h4>
+    <p><b>4.1. Reservation Fees:</b> Users must pay the reservation fee based on the
+    selected duration at the time of booking. Please note that the reservation
+    fees are structured as follows:</p>
+    <div class="table">
+        <table>
+            <tr>
+                <th>NUMBER OF HOURS</th>
+                <th>RESERVATION FEE</th>
+            </tr>
+            <tr>
+                <td>1 hour</td>
+                <td>₱20.00</td>
+            </tr>
+            <tr>
+                <td>2 hours</td>
+                <td>₱30.00</td>
+            </tr>
+            <tr>
+                <td>3 hours</td>
+                <td>₱40.00</td>
+            </tr>
+            <tr>
+                <td>4 hours</td>
+                <td>₱50.00</td>
+            </tr>
+            <tr>
+                <td>5 hours</td>
+                <td>₱60.00</td>
+            </tr>
+            <tr>
+                <td>6 hours</td>
+                <td>₱70.00</td>
+            </tr>
+            <tr>
+                <td>7+ hours</td>
+                <td>₱80.00</td>
+            </tr>
+        </table>
+    </div>
+
+    <p><b>4.2. Extension Fees:</b> If the user wishes to extend the parking reservation,
+    additional fees will apply. The extension fees are as follows:</p>
+    <div class="table">
+        <table>
+            <tr>
+                <th>NUMBER OF HOURS</th>
+                <th>EXTENSION FEE</th>
+            </tr>
+            <tr>
+                <td>1 hour</td>
+                <td>₱20.00</td>
+            </tr>
+            <tr>
+                <td>2 hours</td>
+                <td>₱30.00</td>
+            </tr>
+            <tr>
+                <td>3 hours</td>
+                <td>₱40.00</td>
+            </tr>
+        </table>
+    </div>
+    
+    <br>
+    <h4>5. PARKING SCOPE</h4>
+    <p><b>5.1. Vehicle Type:</b> The Pocketpark is exclusively designed for reserving
+    parking spaces for cars. Users are not permitted to book spaces for other
+    vehicle types.</p>
+    
+    <br>
+    <h4>6. GRACE PERIOD AND EXTENSION POLICY</h4>
+    <p><b>6.1. Initial Grace Period:</b> The system offers a 1-hour free grace period based
+    on the indicated reservation start time. During this grace period, users
+    have the flexibility to arrive at the parking facility without incurring any
+    additional fees. The grace period is designed to accommodate unforeseen
+    delays and ensure a convenient parking experience.</p>
+
+    <p><b>6.2. Grace Period Extension:</b> Users who require more time beyond the initial
+    1-hour grace period have the option to extend it. The extension allows
+    users to extend the grace period for an additional hour or hours (1-3
+    hours), depending on their needs. Users are not obligated to extend the
+    grace period and may choose to enter the parking facility at any time
+    within the reservation time, initial or extended grace period.</p>
+
+    <p><b>6.3. Limit on Extension:</b> For a single reservation, users are allowed to extend
+    the grace period only once. After this single allowable extension, if the
+    user does not arrive within the extended grace period, the reservation will
+    become invalid. Users may proceed to regular or traditional parking or
+    they have the option to create a new reservation once the previous one
+    has expired or become invalid.</p>
+
+    <br>
+    <h4>7. USER RESPONSIBILITIES</h4>
+    <p><b>7.1. Provision of Accurate Information:</b> As users of PocketPark, it is their
+    responsibility to furnish precise and current information when making
+    reservations. This includes the accurate detailing of their vehicles, contact
+    information, and any other relevant particulars.</p>
+
+    <p><b>7.2. Adherence of Reservation Compliance:</b> Users are expected to diligently
+    adhere to the specifics outlined within their reservations. This pertains to
+    the designated date, time, and location of their parking reservations within
+    the parking facility. Any modifications or amendments are not
+    recommended and not available. It is advisable to make the reservation
+    accurately before finalizing the booking.</p>
+
+    <p><b>7.3. Financial Obligations:</b> Users shall ensure a timely and accurate payment
+    of parking fees associated with their reservations. Failure to fulfill this
+    financial obligation within the given date and time may result in additional
+    charges.</p>
+
+    <p><b>7.4. Security and Privacy Preservation:</b> Safeguarding their reservation
+    details, including QR codes and personal information, is crucial in
+    preventing unauthorized use. Users are urged to exercise due diligence in
+    preserving the security and privacy of their accounts.</p>
+
+    <p><b>7.5. Compliance with Policies:</b> Users shall acquaint themselves with the
+    Terms and Conditions governing the use of the PocketPark parking
+    reservation system. Adherence to these rules and policies is obligatory, as
+    non-compliance may lead to conflicts or other consequences.</p>
+
+    <br>
+    <h4>8. CANCELLATION AND REFUNDS (NOT APPLICABLE)</h4>
+    <p><b>8.1. Cancellation Policy:</b> There are no provisions for cancellation and
+    refunds. Users should carefully consider their reservations and ensure that
+    they align with their needs before making bookings.</p>
+    <p><b>8.2. Booking Amendments:</b> Once a reservation is made, users are not
+    allowed to amend or modify their bookings, including changing the
+    reservation time or parking space. It is essential to review and confirm all
+    reservation details before finalizing the booking.</p>
+    <p><b>8.3. No-Show Policy:</b> In the event of a no-show, where a user fails to use their
+    reserved parking space during the specified reservation time, no refunds
+    or credits will be issued.</p>
+    
+    <br>
+    <h4>9. SYSTEM AVAILABILITY AND MAINTENANCE</h4>
+    <p><b>9.1. Availability:</b> The system strives to maintain optimal availability for users.
+    However, it does not guarantee uninterrupted service. Users understand
+    that occasional maintenance, updates, and unforeseen issues may affect
+    system availability.</p>
+    <p><b>9.2. Scheduled Maintenance:</b> The system may conduct scheduled
+    maintenance to enhance system performance and security. Users will be
+    provided with advance notice whenever possible to minimize disruption.</p>
+    <p><b>9.3. Emergency Maintenance:</b> In cases of critical security updates or urgent
+    system fixes, PocketPark reserves the right to perform emergency
+    maintenance without prior notice. The Company aims to keep such
+    instances to a minimum.</p>
+    <p><b>9.4. Limited Liability:</b> Pocketpark is not liable for any loss or inconvenience
+    resulting from system unavailability or maintenance. This includes any
+    issues arising from scheduled or emergency maintenance.</p>
+
+    <br>
+    <h4>10. PRIVACY AND DATA SECURITY</h4>
+    <p><b>10.1. Data Collection and Usage</b>
+    <div class="sub-item">
+        <p><b>a. User Information:</b> PocketPark may collect and store user information,
+            including but not limited to names, contact details, vehicle details, and
+            payment information, to facilitate the reservation and parking process.</p>
+    </div>
+    
+    <div class="sub-item"><p><b>b. Usage Information:</b> The data collected on users' 
+        interactions with the system, including reservations, extensions, and account 
+        activity, serve the purpose of improving service and ensuring system integrity.</p>
+    </div>
+    
+    <p><b>10.2. Data Security</b>
+    <div class="sub-item"><p><b>a. Protection:</b> The system employs industry-standard 
+        security measures to protect user data, including encryption and access controls, 
+        to prevent unauthorized access or data breaches.</p>
+    </div>
+    
+    <div class="sub-item"><p><b>b. Third-Party Services:</b> Although PocketPark places a 
+        high emphasis on data security, users are encouraged to evaluate the data security
+        measures of third-party services, including the payment gateway, Paymongo, which is
+        employed for transaction processing.</p>
+    </div>
+    
+    <p><b>10.3. Data Sharing</b>
+    <div class="sub-item"><p><b>a. Limited Sharing:</b> Pocketpark does not share user data 
+        with third parties for marketing or advertising purposes.</p>
+    </div>
+    
+    <div class="sub-item"><p><b>b. Service Partners:</b> User data may be shared with service partners, 
+        such as payment processors, solely for the purpose of facilitating reservations and transactions.</p>
+    </div>
+    
+    <br>
+    <h4>11. CONTACT INFORMATION</h4>
+    <p><b>11.1.</b> For inquiries or concerns regarding these Terms and Conditions, please
+    reach out to [Company Contact Information].</p>
+</div>
+
+<div class="terms_conditions-reminder">
+    <p>
+        By using the PocketPark, users agree to abide by these Terms and Conditions. Failure
+        to comply with these terms may result in account deactivation or other actions deemed
+        necessary by Pocketpark.
+        Please read these Terms and Conditions carefully before using the PocketPark system.</p>
+</div>
+
+<div class="button-container">
+    <a href="{% url 'profile' %}" class="button">GO BACK</a>
+</div>
+
+{% endblock %}
+

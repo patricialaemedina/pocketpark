@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %}
+    <title>PocketPark</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+</head>
+
+{% include 'partials/terms_modal.html' with modal_id='termsAndConditionsModal' %}
+
+<body>
+    <nav class="pocket">
+        <div class="logo-container">
+            <div class="logo-padding">
+                <img src="{% static 'images/pocket-park.png' %}" alt="Logo" id="logo-image">
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h4 class="sign-up-account">SIGN UP AN ACCOUNT</h4>
+        <form method="post">
+            {% csrf_token %}
+            <div class="columns-wrapper">
+                <div class="left-column">
+                    <div class="form-group">
+                        {{ userCreateForm.first_name }}
+                        <span class="error-message">
+                            {{ userCreateForm.first_name.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        {{ userProfileForm.first_name }}
+                        <span class="error-message">
+                            {{ userProfileForm.first_name.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        {{ userCreateForm.last_name }}
+                        <span class="error-message">
+                            {{ userCreateForm.last_name.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        {{ userCreateForm.username }}
+                        <span class="error-message">
+                            {{ userCreateForm.username.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        {{ userCreateForm.email }}
+                        <span class="error-message">
+                            {{ userCreateForm.email.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        {{ userCreateForm.contact_number }}
+                        <span class="error-message">
+                            {{ userCreateForm.contact_number.errors }}
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        {{ userCreateForm.password1 }}
+                        <span class="pass1">
+                            <i class="fa-solid fa-eye-slash password-toggle" data-target="password1"></i>
+                        </span>
+                        <span class="error-message">
+                            {{ userCreateForm.password1.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        {{ userCreateForm.password2 }}
+                        <label class="pass2">
+                            <i class="fa-solid fa-eye-slash password-toggle" data-target="password2"></i>
+                        </label>
+                        <span class="error-message">
+                            {{ userCreateForm.password2.errors }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="form-group" style="padding-left: 0px;">
+                        {{ vehicleForm.license_plate }}
+                        <span class="error-message">
+                            {{ vehicleForm.license_plate.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group" style="padding-left: 0px;">
+                        {{ vehicleForm.vehicle_make }}
+                        <span class="error-message">
+                            {{ vehicleForm.vehicle_make.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group" style="padding-left: 0px;">
+                        {{ vehicleForm.vehicle_model }}
+                        <span class="error-message">
+                            {{ vehicleForm.vehicle_model.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group" style="padding-left: 0px;">
+                        {{ vehicleForm.vehicle_color }}
+                        <span class="error-message">
+                            {{ vehicleForm.vehicle_color.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        {{ userCreateForm.agreed_to_terms }}
+                        <label for="agreed_to_terms">I agree to the <a href="#" id="termsAndConditionsLink">terms and
+                                conditions</a></label>
+                        <span class="error-message">
+                            {{ userCreateForm.agreed_to_terms.errors}}
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group button-container">
+                <button type="submit" id="sign-up-btn">SIGN UP</button>
+                <p class="sign-up-link"><a href="{% url 'login' %}">Already have an account? Sign In</a></p>
+            </div>
+        </form>
+    </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <script>
+
+        let countdownActive = false;
+
+        function startCountdown() {
+            const modal = $('#termsAndConditionsModal');
+            let count = 5;
+
+            function updateCountdown() {
+                if (count > 0) {
+                    modal.find('.countdown-timer').text(`Close (${count})`);
+                    count--;
+                    setTimeout(updateCountdown, 1000);
+                } else {
+                    modal.find('.countdown-timer').text('Close');
+                    countdownActive = false;
+                    modal.find('.modal-footer button').prop('disabled', false);
+                }
+            }
+
+            modal.on('shown.bs.modal', function () {
+                countdownActive = true;
+                updateCountdown();
+            });
+        }
+
+        document.getElementById('termsAndConditionsLink').addEventListener('click', function (e) {
+            e.preventDefault();
+            const modal = $('#termsAndConditionsModal');
+            modal.modal('show');
+            startCountdown();
+        });
+
+        $('#termsAndConditionsModal').on('hide.bs.modal', function (e) {
+            if (countdownActive) {
+                e.preventDefault();
+            }
+        });
+
+        const passwordToggles = document.querySelectorAll(".password-toggle");
+
+        passwordToggles.forEach(function (passwordToggle) {
+            passwordToggle.addEventListener("click", function () {
+                const targetId = passwordToggle.getAttribute("data-target");
+                const passwordInput = document.getElementById(targetId);
+
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    passwordToggle.classList.remove("fa-eye-slash");
+                    passwordToggle.classList.add("fa-eye");
+                } else {
+                    passwordInput.type = "password";
+                    passwordToggle.classList.remove("fa-eye");
+                    passwordToggle.classList.add("fa-eye-slash");
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/guidelines.css' %}">
+
+<div class="guidelines">
+    <h4>MAYFLOWER PARKING GUIDELINES</h4>
+</div>
+
+<div class="guidelines-content">
+    <p>1. Please adhere to designated parking zones as indicated by signage and markings.</p>
+    <p>2. Maintain a safe and cautious speed of 5 mph within the parking premises.</p>
+    <p>3. Respect reserved parking spaces for individuals with specific permits or authorization.</p>
+    <p>4. Ensure payment for parking is made promptly using designated payment methods.</p>
+    <p>5. Lock your vehicle and avoid leaving valuables in plain sight. The management is not responsible for any theft or damage.</p>
+    <p>6. Dispose of trash and litter in designated receptacles.</p>
+    <p>7. In case of emergencies or concerns, contact the establishment's management or security personnel.</p>
+    <p>8. Smoking is prohibited within the parking facility.</p>
+    <p>9. Present the provided QR code for entry at the establishment's entrance or guard booth.</p>
+</div>
+
+<div class="guidelines-reminder">
+    <p>Failure to comply with these guidelines may result in towing or other necessary actions. 
+        We appreciate your cooperation and hope you have a pleasant parking experience.</p>
+</div>
+
+<div class="button-container">
+    <a href="{% url 'profile' %}" class="button">GO BACK</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/parking_area.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+{% if request.session.payment_processed %}
+<script>
+    var payment_processed = true;
+</script>
+    {% include 'partials/modal.html' with modal_id="paymentProcessingModal" modal_title="PAYMENT PROCESSING" modal_content="Your payment is being processed. Please wait..." %}
+{% else %}
+<script>
+    var payment_processed = false;
+</script>
+{% endif %}
+
+{% if user_banned %}
+    {% include 'partials/modal.html' with modal_id="userBannedModal" modal_title="BANNED USER" modal_content="You are currently banned. Please try again after 24 hours." %}
+{% endif %}
+
+{% if not already_booked %}
+    {% include 'partials/modal.html' with modal_id="reservedSlotModal" modal_title="RESERVED SLOT" modal_content="Apologies, this slot is already reserved. Please select another slot or wait until the slot becomes available. Thank you. Drive and park safely." %}
+    {% include 'partials/modal.html' with modal_id="occupiedSlotModal" modal_title="OCCUPIED SLOT" modal_content="Apologies, this slot is already occupied. Please select another slot or wait until the slot becomes available. Thank you. Drive and park safely." %}
+{% endif %}
+
+{% if already_booked %}
+    {% include 'partials/modal.html' with modal_id="alreadyBookedModal" modal_title="ALREADY BOOKED" modal_content="You already have an active booking. Please wait until it expires before making another reservation. Thank you. Drive and park safely." %}
+{% endif %}
+
+<div class="colors-indicator">
+    <h4>PARKING AREA CURRENT STATUS</h4>
+</div>
+
+<div class="container">
+    <div class="columns-wrapper">
+        <div class="left-column">
+            <div class="left-column-1">
+                <h6><b>COLORS INDICATOR</b></h6>
+                <ul>
+                    <li class="circle vacant" ><i class='bx bxs-car'></i>Vacant</li>
+                    <li class="circle occupied"><i class='bx bxs-car'></i>Occupied</li>
+                    <li class="circle reserved"><i class='bx bxs-car'></i>Reserved</li>
+                </ul>
+            </div>
+
+            <div class="left-column-2">
+                <p>The reservation fee is different from the parking fee. Kindly settle the parking fee at parking attendant's booth.</p>
+                <table>
+                    <tr>
+                        <th>BOOKING TIMEFRAME <br>(IN ADVANCE)</th>
+                        <th>RESERVATION FEE</th>
+                    </tr>
+                    <tr>
+                        <td>1 hour</td>
+                        <td>₱20.00</td>
+                    </tr>
+                    <tr>
+                        <td>2 hours</td>
+                        <td>₱30.00</td>
+                    </tr>
+                    <tr>
+                        <td>3 hours</td>
+                        <td>₱40.00</td>
+                    </tr>
+                    <tr>
+                        <td>4 hours</td>
+                        <td>₱50.00</td>
+                    </tr>
+                    <tr>
+                        <td>5 hours</td>
+                        <td>₱60.00</td>
+                    </tr>
+                    <tr>
+                        <td>6 hours</td>
+                        <td>₱70.00</td>
+                    </tr>
+                    <tr>
+                        <td>6+ hours</td>
+                        <td>₱80.00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div id="all-slots" hx-get="{% url 'parking_area' %}" hx-trigger="every 3s" hx-swap="innerHTML">
+                {% include 'partials/slot.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/htmx.org@1.6.1"></script>
+<script>
+    
+    $(document).ready(function () {
+        console.log("JavaScript is running");
+
+        $(document).on("click", ".slot-button", function(event) {
+            var slotStatus = $(this).data("slot-status");
+            var already_booked = $(this).data("already-booked");
+            var user_banned = $(this).data("user-banned"); 
+            
+            console.log("Before Reservation Page");
+            console.log("Slot Status:", slotStatus);
+            console.log("User banned:", user_banned);
+            console.log("Already booked:", already_booked);
+
+
+            if (user_banned === "True") { 
+                event.preventDefault();
+                console.log("Show user is banned modal");
+                $("#userBannedModal").modal("show");
+            } else if (already_booked === true) {
+                event.preventDefault();
+                console.log("Show already booked modal");
+                $("#alreadyBookedModal").modal('show');
+            } else if (slotStatus === "Reserved") {
+                event.preventDefault();
+                console.log("Show reserved slot modal");
+                $("#reservedSlotModal").modal("show");
+            } else if (slotStatus === "Occupied") {
+                event.preventDefault();
+                console.log("Show occupied slot modal");
+                $("#occupiedSlotModal").modal("show");
+            } else {
+                console.log("Go to the Reservation Page");
+                // default behavior
+                
+            }
+        });
+
+        $(document).on("htmx:load", function (evt) {
+            
+            $(".slot-button").each(function () {
+                var slotNumber = $(this).data("slot-number");
+                var slotStatus = $(this).data("slot-status");
+                var button = $(this);
+               
+                if (slotStatus === "Occupied") {
+                    button.css({
+                        "background-color": "#DB3535",
+                        "color": "#FFFFFF"
+                    });
+                } else if (slotStatus === "Reserved") {
+                    button.css({
+                        "background-color": "#F9BF29",
+                        "color": "#FFFFFF"
+                    });
+                } else if (slotStatus === "Vacant") {
+                    button.css({
+                        "background-color": "#3B5D50",
+                        "color": "#FFFFFF"
+                    });
+                }
+            });
+        });
+        
+        console.log("Payment Processed:", payment_processed);
+        if (payment_processed) {
+
+            $('#paymentProcessingModal').modal('show');
+            
+            setTimeout(function () {
+                $('#paymentProcessingModal').modal('hide');
+            }, 3000); // hide 3 seconds
+
+            $.ajax({
+                url: 'clear_payment_processed', 
+                method: 'POST',
+                success: function (data) {
+                    // Session variable cleared
+                },
+                error: function () {
+                    console.log('Error clearing session variable');
+                }
+            });
+        }
+    });
+</script>
+
+
+{% endblock %}

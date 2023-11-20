@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %}
+    <title>PocketPark</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <nav class="pocket">
+        <div class="logo-container">
+            <div class="logo-padding">
+                <img src="{% static 'images/pocket-park.png' %}" alt="Logo" id="logo-image" width="300" height="200">
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="left-column">
+            <h1>PocketPark</h1>
+            <h2>Parking Reservation</h2>
+            <h3>Reserve Now!</h3>
+        </div>
+
+        <div class="right-column">
+            <h4 class="right-sign-in">SIGN IN TO CONTINUE</h4>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    {{ form.username }}
+                    <label for="username"><i class="fas fa-user"></i></label>
+                </div>
+
+                <div class="form-group">
+                    {{ form.password }}
+                    <label for="password">
+                        <i class="fa-solid fa-eye-slash" id="password-toggle"></i>
+                    </label>
+                </div>
+
+                <div class="right-sign-in">
+                    <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                </div>
+
+                <div class="form-group">
+                    {{ form.captcha }}
+                    <label for="captcha">
+                    </label>
+                </div>
+
+                {% if messages %}
+                {% for message in messages %}
+                <p class="messages {{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+                {% endif %}
+
+                <div class="form-group">
+                    <button type="submit">SIGN IN</button>
+                </div>
+
+                <p class="sign-up-link"><a href="{% url 'signup' %}">New Here? Sign Up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const passwordToggle = document.getElementById("password-toggle");
+
+        passwordToggle.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordToggle.classList.remove("fa-eye-slash");
+                passwordToggle.classList.add("fa-eye");
+            } else {
+                passwordInput.type = "password";
+                passwordToggle.classList.remove("fa-eye");
+                passwordToggle.classList.add("fa-eye-slash");
+            }
+        });
+    </script>
+
+    <script>
+        function resizeImage() {
+            var logoImage = document.querySelector(".logo-container img");
+            if (window.innerWidth <= 767.98) {
+                logoImage.style.height = "40px";
+                logoImage.style.width = "auto";
+                logoImage.style.padding = "10px 0 0 0";
+                logoImage.style.marginLeft = "0";
+            } else if (window.innerWidth <= 1000) {
+                logoImage.style.height = "50px";
+                logoImage.style.width = "100%";
+                logoImage.style.padding = "10px 0 0 0";
+                logoImage.style.marginLeft = "0";
+            } else {
+                logoImage.style.height = "80px";
+                logoImage.style.width = "100%";
+                logoImage.style.marginLeft = "30px";
+                logoImage.style.padding = "30px 0 0 0";
+            }
+        }
+
+        window.addEventListener("load", resizeImage);
+
+        window.addEventListener("resize", resizeImage);
+    </script>
+
+</body>
+
+</html>

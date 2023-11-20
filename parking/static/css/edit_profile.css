@@ -1,0 +1,236 @@
+.edit-profile {
+    padding: 3rem 0 1rem 0;
+    margin-bottom: 0;
+    text-align: center;
+    position: relative;
+    transition: ease .40s;
+}
+
+.edit-profile h4 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    padding: 0 20px;
+}
+
+.edit-profile h4::before,
+.edit-profile h4::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 180%;
+    height: 2px;
+    background-color: var(--second-color);
+    transition: ease .40s;
+}
+
+.edit-profile h4::before {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.edit-profile h4::after {
+    right: 0;
+    transform: translateX(100%);
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.columns-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+label {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    transition: ease .40s;
+}
+
+.left-column,
+.right-column {
+    flex-basis: calc(50% - 15px);
+    align-self: flex-start;
+    transition: ease .40s;
+}
+
+.left-column {
+    padding: 20px 50px 40px 0px;
+}
+
+.right-column {
+    padding: 20px 50px 0px 0px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    margin-bottom: 30px;
+    margin-top: 0;
+}
+
+/* Reset default input styles */
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="password"] {
+    background: none;
+    font-size: var(--text-font);
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #3B5D50;
+    border-radius: 10px;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+    transition: ease .40s;
+}
+
+form input:focus {
+    outline: none;
+    border-color: var(--second-color);
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-left: auto;
+}
+
+.button {
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+.button:hover {
+    color: var(--second-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #F9BF29;
+    cursor: pointer;
+}
+
+#cancel-button {
+    color: var(--bg-color);
+    background-color: var(--third-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+#cancel-button:hover {
+    color: var(--third-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #3B5D50;
+    cursor: pointer;
+}
+
+.error-message {
+    color: var(--sixth-color);
+    font-weight: bold;
+    font-size: .9rem;
+    transition: ease .40s;
+    font-style: italic;
+}
+
+/*---------------------------------------------/
+/* Media query for screens 768px and below */
+@media screen and (max-width: 768px) {
+    .edit-profile {
+        padding: 2rem 0 0 0;
+        text-align: center;
+    }
+
+    .edit-profile h4 {
+        font-size: 1.1rem;
+    }
+
+    .container {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .columns-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    label {
+        font-size: var(--responsive-font);
+    }
+
+    .form-group {
+        padding-left: 0;
+    }
+
+    form {
+        margin-left: 0;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="tel"],
+    form input[type="password"] {
+        font-size: .9rem;
+    }
+
+    .left-column {
+        padding: 0px 0px;
+    }
+
+    .right-column {
+        padding: 0;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .button,
+    #cancel-button {
+        font-size: var(--responsive-font);
+        padding: 6px 20px;
+    }
+
+    #change-pw {
+        margin-left: 4.5rem;
+    }
+
+    .error-message {
+        font-size: .7rem;
+    }
+
+    .edit-profile h4::before,
+    .edit-profile h4::after {
+        width: 80%;
+    }
+}

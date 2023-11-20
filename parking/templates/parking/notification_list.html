@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load static custom_filters %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/notification_list.css' %}">
+
+<div class="notification">
+    <h4>ALL NOTIFICATIONS</h4>
+</div>
+
+<div class="notification-content">
+    <ul>
+        {% for notification in notifications %}
+        <li{% if notification.is_read %} class="read" {% endif %}>
+            <i class='bx bxs-notification'></i>
+            {{ notification.message }}
+            <br><small class="time">{{ notification.timestamp|custom_timesince:current_time }}</small>
+            </li>
+            {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

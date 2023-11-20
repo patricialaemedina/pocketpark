@@ -1,0 +1,146 @@
+.terms_conditions {
+    padding: 3rem 0 0 0rem;
+    margin-bottom: 0;
+    text-align: center; 
+    position: relative;
+  }
+  
+  .terms_conditions h4 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    padding: 0 20px;
+    transition: ease .40s;
+  }
+  
+  .terms_conditions h4::before,
+  .terms_conditions h4::after {
+    content: ""; 
+    position: absolute; 
+    top: 50%; 
+    width: 100%; 
+    height: 2px; 
+    background-color: var(--second-color); 
+    transition: ease .40s;
+  }
+  
+  .terms_conditions h4::before {
+    left: 0; 
+    transform: translateX(-100%);
+  }
+  
+  .terms_conditions h4::after {
+    right: 0; 
+    transform: translateX(100%); 
+  }
+  
+  .terms_conditions-content {
+    margin: 1.5rem 10rem;
+  }
+
+  .terms_conditions-content h4{
+    color: var(--third-color);
+  }
+
+  .terms_conditions-content p{
+    font-size: 1rem;
+    margin-top: 1rem;
+    text-align: justify;
+    transition: ease .40s;
+  }
+
+  .sub-item {
+    margin-left: 2rem;
+  }
+
+  .table{
+      display: flex;
+      justify-content: center;
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1rem auto;
+  }
+
+  th, td {
+      border: 1px solid var(--third-color);
+      padding: 10px;
+      text-align: center;
+  }
+
+  th {
+      background-color: var(--third-color);
+      color: var(--bg-color);
+  }
+
+  .terms_conditions-reminder {
+      margin: 2rem 10rem 0;
+      margin-bottom: 2rem;
+  }
+
+  .terms_conditions-reminder p{
+    font-size: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+    font-style: italic;
+    color: var(--second-color);
+    transition: ease .40s;
+  }
+
+  .button {
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+  }
+
+  .button:hover {
+    color: var(--second-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #F9BF29;
+    cursor: pointer;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+@media (max-width: 768px) {
+  .terms_conditions-content {
+      margin: 1.5rem 1rem;
+  }
+
+  .terms_conditions-reminder {
+      margin: 2rem 1rem 0; 
+  }
+
+  .terms_conditions h4{
+    font-size: 1rem;
+  }
+
+  .terms_conditions h4::before,
+  .terms_conditions h4::after {
+    width: 34%;
+  }
+
+  .terms_conditions-content h4 {
+      font-size: .9rem;
+  }
+
+  .table,
+  .terms_conditions-content p,
+  .terms_conditions-reminder p{
+    font-size: .8rem;
+  }
+}
+

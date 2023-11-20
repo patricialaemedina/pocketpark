@@ -1,0 +1,438 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Paytone+One&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,500&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    list-style: none;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg-color: #FFFFFF;
+    --big-font: #130F26;
+    --text-color: #2F2F2F;
+    --second-color: #F9BF29;
+    --third-color: #3B5D50;
+    --fourth-color: #DA6A00;
+    --sixth-color: #A13232;
+    --big-font: 6rem;
+    --medium-font: 3.2rem;
+    --h2-font: 2rem;
+    --text-font: 1rem;
+    --before-color-sticky: #221314;
+}
+
+body {
+    background: var(--bg-color);
+    overflow-x: hidden;
+    padding: 10px 20px 0px 20px;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-padding img {
+    width: 100%;
+    height: 90px;
+    transition: ease .40s;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 2rem;
+}
+
+.left-column {
+    width: 100%;
+    flex: 1;
+    transition: ease .40s;
+    padding: 0 30px 0 30px;
+}
+
+.right-column {
+    width: 50%;
+    padding: 0 30px 0 30px;
+}
+
+.left-column h1 {
+    margin-bottom: 10px;
+    font-family: 'Archivo Black', sans-serif;
+    color: var(--big-font);
+    font-weight: bolder;
+    font-size: 5.5rem;
+}
+
+.left-column h2 {
+    margin-bottom: 10px;
+    font-family: 'Archivo Black', sans-serif;
+    color: var(--big-font);
+    font-weight: 500;
+    font-size: 3rem;
+}
+
+.left-column h3 {
+    margin-bottom: 10px;
+    display: inline-block;
+    color: var(--bg-color);
+    background-color: var(--third-color);
+    font-size: 1.5rem;
+    padding: 15px 30px;
+    border: 2px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    width: fit-content;
+}
+
+.right-column h4{
+    color: var(--third-color);
+    font-size: 1.5rem;
+    font-weight: light;
+    margin-bottom: 20px;
+}
+
+.right-sign-in a {
+    color: var(--text-color);
+    font-size: 1rem;
+    float: right;
+}
+
+/*---------------*/
+.form-group {
+    margin-top: 20px;
+    position: relative;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"] {
+    padding-right: 30px;
+}
+
+label {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+i {
+    color: var(--third-color);
+    font-size: 20px;
+    opacity: 0.5;
+    cursor: pointer;
+    float: right;
+}
+
+form input[type="text"]::placeholder,
+form input[type="password"]::placeholder {
+    font-size: var(--text-font);
+    color: #000000;
+    transition: opacity 0.5s ease;
+    opacity: 0.5;
+}
+
+form input[type="text"]:focus::placeholder,
+form input[type="password"]:focus::placeholder {
+    opacity: 0;
+}
+
+/* Reset default input styles */
+form input[type="text"],
+form input[type="password"] {
+    border: none;
+    background: none;
+    font: inherit;
+    width: 100%;
+    outline: none;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--third-color);
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    border-bottom: 1px solid var(--second-color);
+}
+
+.form-group {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.form-group button {
+    display: inline-block;
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: var(--text-font);
+    padding: 10px 25px;
+    border: 1px solid #F9BF29;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    color: var(--third-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #14471E;
+    cursor: pointer;
+}
+
+.right-column a:hover {
+    text-decoration: underline;
+}
+
+.sign-up-link {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sign-up-link a {
+    color: var(--third-color);
+    font-size: 1rem;
+    font-weight: light;
+    font-style: italic;
+}
+
+p {
+    color: var(--sixth-color);
+    font-weight: light;
+    font-style: italic;
+    font-size: .9rem;
+    text-align: center;
+    
+}
+
+.success-message,
+.error-message,
+.confirmation-message{
+    color: var(--sixth-color);
+    font-weight: light;
+    font-style: italic;
+    font-size: .9rem;
+    text-align: justify;
+    margin: 1rem 0 0 5rem;
+}
+
+.error-message{
+    text-align: center;
+}
+
+/* for phones */
+@media (max-width: 575.98px) {
+    body {
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+        -ms-overflow-style: none;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    .logo-container {
+        margin-left: 20px;
+        margin-top: 1rem;
+    }
+
+    .container {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    .left-column h1 {
+        font-size: 2rem;
+    }
+
+    .left-column h2 {
+        font-size: 1.5rem;
+    }
+
+    .left-column h3 {
+        font-size: .9rem;
+        padding: 10px 20px;
+    }
+
+    .right-column {
+        width: 100%;
+        margin-top: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right-column h4{
+        font-size: 1rem;
+        margin-bottom: 0px;
+    }
+
+
+    form {
+        width: 100%;
+    }
+
+    form input[type="text"]::placeholder,
+    form input[type="password"]::placeholder {
+        width: 90%;
+        font-size: .9rem;
+    }
+
+    .right-column h4 {
+        text-align: center;
+    }
+
+    .right-sign-in a {
+        font-size: .9rem;
+    }
+
+    .form-group {
+        padding-left: 0;
+    }
+
+    label {
+        right: 10px;
+    }
+
+    i {
+        font-size: 18px;
+    }
+
+    p {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .sign-up-link a{
+        font-size: .8rem;
+    }
+
+    .messages {
+        margin:0;
+    }
+}
+
+/* for tablets */
+@media (min-width: 576px) and (max-width: 1000px) {
+    body {
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+        -ms-overflow-style: none;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    .logo-container {
+        margin-top: 1rem;
+        margin-left: 20px;
+        text-align: center; /* Centering the logo */
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1rem;
+    }
+
+    .left-column h1 {
+        font-size: 3rem; /* Larger font size */
+    }
+
+    .left-column h2 {
+        font-size: 2rem; /* Larger font size */
+    }
+
+    .left-column h3 {
+        font-size: 1.2rem; /* Larger font size */
+        padding: 12px 25px; /* Adjusted padding */
+    }
+
+    .right-column {
+        width: 100%;
+        margin-top: 2rem; /* Adjusted margin */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right-column h4 {
+        font-size: 1.5rem; 
+        margin-bottom: 20px;
+        text-align: center; 
+    }
+
+    form {
+        width: 100%;
+    }
+
+    form input[type="text"]::placeholder,
+    form input[type="password"]::placeholder {
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    .right-sign-in a {
+        font-size: 1.1rem;
+    }
+
+    .form-group {
+        padding-left: 0;
+    }
+
+    label {
+        right: 10px;
+    }
+
+    i {
+        font-size: 20px; /* Adjusted font size */
+    }
+
+    p {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .sign-up-link a {
+        font-size: .9rem;
+    }
+
+    .messages {
+        margin: 0;
+    }
+}

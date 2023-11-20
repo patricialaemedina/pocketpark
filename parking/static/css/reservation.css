@@ -1,0 +1,354 @@
+.reservation-details {
+    text-align: center;
+    position:relative;
+    padding: 3rem 0 0 0rem;
+    margin-bottom: 0;
+}
+
+.reservation-details h4 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    padding: 0 30px;
+    transition: ease .40s;
+}
+
+.reservation-details h4::before,
+.reservation-details h4::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 80%;
+    height: 2px;
+    background-color: #F9BF29;
+    transition: ease .40s;
+}
+
+.reservation-details h4::before {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.reservation-details h4::after {
+    right: 0;
+    transform: translateX(100%);
+}
+
+.reservation-details p {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    transition: ease .40s;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.column-wrapper {
+    margin: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+label {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: bolder;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.input {
+    background: rgba(59, 93, 80, 0.1);
+    font: inherit;
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #3B5D50;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+
+.left-column,
+.right-column {
+    flex-basis: calc(50% - 15px);
+}
+
+.left-column {
+    align-self: flex-start;
+}
+
+.right-column {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    transition: ease .40s;
+}
+
+.form-group {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form input[type="text"]::placeholder,
+form input[type="time"]::placeholder,
+form input[type="date"]::placeholder {
+    font-size: var(--text-font);
+    color: var(--text-color);
+    transition: opacity 0.5s ease;
+    opacity: 0.5;
+}
+
+form input[type="text"]:focus::placeholder,
+form input[type="time"]:focus::placeholder,
+form input[type="date"]:focus::placeholder {
+    opacity: 0;
+}
+
+/* Reset default input styles */
+form input[type="text"],
+form input[type="time"],
+form input[type="date"] {
+    background: none;
+    font: inherit;
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #3B5D50;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+
+form input:focus {
+    outline: none;
+    border-color: var(--second-color);
+} 
+
+#chosen_slot_display {
+    background: rgba(59, 93, 80, 0.1);
+    display: block;
+    margin-top: 5px;
+    font: inherit;
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #3B5D50;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+
+#vehicle {
+    margin-top: 5px;
+    padding: 7px 10px;
+}
+
+form select {
+    background: none;
+    font: inherit;
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #3B5D50;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+
+form select option {
+    background: var(--bg-color);
+    font: inherit;
+    color: var(--text-color);
+}
+
+form select:focus {
+    outline: none;
+    border-color: var(--second-color);
+}
+
+form select::-ms-expand {
+    display: none; 
+}
+
+form select::placeholder {
+    font-size: var(--text-font);
+    color: var(--text-color);
+    transition: opacity 0.5s ease;
+    opacity: 0.5;
+}
+
+form select:focus::placeholder {
+    opacity: 0;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    margin-left: 78%;
+    transition: ease .40s;
+}
+
+.button {
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+.button:hover {
+    color: var(--second-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #F9BF29;
+    cursor: pointer;
+}
+
+#cancel-button{
+    text-decoration: none;
+    color: var(--bg-color);
+    background-color: var(--third-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+#cancel-button:hover{
+    color: var(--third-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #3B5D50;
+    cursor: pointer;
+}
+
+.error-message {
+    color: var(--sixth-color);
+    font-weight: bold;
+    font-size: .9rem;
+    transition: ease .40s;
+    font-style: italic;
+}
+
+
+input[type="time"] {
+    padding: 5px; 
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Media query for screens 768px and below */
+@media screen and (max-width: 768px) {
+    body {
+        display: block;
+    }
+
+    .reservation-details {
+        padding: 2rem 0 0 0; 
+        text-align: center;
+    }
+
+    .reservation-details h4 {
+        font-size: 1.1rem;
+    }
+  
+    .reservation-details p {
+        margin-top: 1rem;
+        font-size: .9rem;
+    }
+  
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .column-wrapper {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        margin-top: 0.5rem;
+        margin-bottom: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .left-column,
+    .right-column {
+        align-self: initial;
+        flex-basis: unset;
+        width: unset;
+    }
+
+    .right-column {
+        width: 74.5%;
+    }
+
+    label {
+        font-size: var(--responsive-font);
+    }
+
+    .right-column {
+    }
+
+    #chosen_slot_display,
+    #label,
+    #start_time
+    {
+    }
+
+    #vehicle {
+        font-size: .9rem;
+    }
+
+    .button-container {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+  
+    .button,
+    #cancel-button {
+        font-size: var(--responsive-font);
+        padding: 6px 20px;
+    }
+
+    form select,
+    .input {
+        font-size: .9rem;
+        
+    }
+
+    .reservation-details h4::before,
+    .reservation-details h4::after {
+    width: 28%;
+    }
+
+
+  }

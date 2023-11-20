@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketPark</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <style>
+        #content {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #no-parking {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            color: var(--bg-color);
+            cursor: pointer;
+            background-color: var(--second-color);
+            border: 1px solid;
+            border-radius: 18px;
+            font-size: var(--text-font);
+            font-weight: bolder;
+            margin-top: 1rem;
+            padding: 8px 20px;
+            text-transform: uppercase;
+            transition: ease .40s;
+        }
+
+        button:hover {
+            color: var(--second-color);
+            transform: scale(1);
+            background-color: transparent;
+            border: 1px solid #F9BF29;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="pocket">
+        <div class="logo-container">
+            <div class="logo-padding">
+                <img src="{% static 'images/pocket-park2.png' %}" alt="Logo" id="logo-image">
+            </div>
+        </div>
+    </nav>
+    <div id="content">
+        {% if user.is_authenticated %}
+        <img src="{% static 'images/no-parking.png' %}" alt="No-parking" id="no-parking">
+        <h1>Our Parking Garage Needs Maintenance</h1>
+        <p>Our parking system is temporarily under maintenance. We apologize for the inconvenience.</p>
+
+        {% else %}
+        <img src="{% static 'images/no-parking.png' %}" alt="No-parking" id="no-parking">
+        <h1>Our Parking Garage Needs Maintenance</h1>
+        <p>Our parking system is temporarily under maintenance. We apologize for the inconvenience.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

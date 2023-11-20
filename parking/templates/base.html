@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %}
+    <title>PocketPark</title>
+    {% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <nav class="pocket">
+        <div class="logo-container">
+            <div class="logo-padding">
+                {% if user.is_authenticated %}
+                <a href=""><img src="{% static 'images/pocket-park2.png' %}" alt="Logo" id="logo-image"></a>
+                {% else %}
+                <img src="{% static 'images/pocket-park2.png' %}" alt="Logo" id="logo-image">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="bx bx-menu" id="menu-icon"></div>
+
+        <div class="navigation-2" id="menu">
+            <ul class="nav-items">
+                {% if user.is_authenticated %}
+                <li><i class='bx bx-calendar-week'></i><a href="{% url 'my_reservation' %}">My Reservation</a></li>
+                <li><i class='bx bx-car'></i><a href="{% url 'parking_area' %}">View Parking Area</a></li>
+                <li><i class='bx bx-notification'></i><a href="{% url 'notification_list' %}">Notifications</a></li>
+                <li><i class='bx bx-user-circle'></i><a href="{% url 'profile' %}">Profile</a></li>
+                <li>
+                    <form id="logout-form" method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <a href="javascript:void(0);" class="sign-out-link"
+                            onclick="document.getElementById('logout-form').submit();"><i
+                                class='bx bx-log-in-circle'></i>Sign Out</a>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <script>
+        const menuIcon = document.querySelector('#menu-icon');
+        const menu = document.querySelector('#menu');
+
+        menuIcon.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
+
+</body>
+
+</html>

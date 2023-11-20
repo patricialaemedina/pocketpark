@@ -1,0 +1,233 @@
+.new-vehicle {
+    padding: 3rem 0 1rem 0;
+    margin-bottom: 0;
+    text-align: center;
+    position: relative;
+    transition: ease .40s;
+}
+
+.new-vehicle h4 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    padding: 0 20px;
+}
+
+.new-vehicle h4::before,
+.new-vehicle h4::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 80%;
+    height: 2px;
+    background-color: var(--second-color);
+    transition: ease .40s;
+}
+
+.new-vehicle h4::before {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.new-vehicle h4::after {
+    right: 0;
+    transform: translateX(100%);
+}
+
+.new-vehicle p {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.columns-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+label {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: bolder;
+    display: block;
+    margin-bottom: 5px;
+    transition: ease .40s;
+}
+
+.left-column,
+.right-column {
+    flex-basis: calc(50% - 15px);
+    align-self: flex-start;
+}
+
+.left-column {
+    padding: 40px 50px 40px 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    margin-top: 0;
+}
+
+/* Reset default input styles */
+form input[type="text"] {
+    background: none;
+    font: inherit;
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #3B5D50;
+    border-radius: 10px;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+    transition: ease .40s;
+}
+
+form input:focus {
+    outline: none;
+    border-color: var(--second-color);
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    float: right;
+}
+
+.button {
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+.button:hover {
+    color: var(--second-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #F9BF29;
+    cursor: pointer;
+}
+
+#cancel-button {
+    color: var(--bg-color);
+    background-color: var(--third-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+#cancel-button:hover {
+    color: var(--third-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #3B5D50;
+    cursor: pointer;
+}
+
+.error-message {
+    color: var(--sixth-color);
+    font-weight: bold;
+    font-size: .9rem;
+    transition: ease .40s;
+    font-style: italic;
+}
+
+/*---------------------------------------------/
+/* Media query for screens 768px and below */
+@media screen and (max-width: 768px) {
+    .new-vehicle {
+        padding: 2rem 0 0 0;
+        text-align: center;
+    }
+
+    .new-vehicle h4 {
+        font-size: 1.1rem;
+    }
+
+    .new-vehicle p {
+        font-size: .9rem;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .columns-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .left-column,
+    .right-column {
+        flex-basis: 100%;
+        padding: 20px 0;
+    }
+
+    label {
+        font-size: var(--responsive-font);
+    }
+
+    .form-group {
+        padding-left: 0;
+    }
+
+    form {
+        margin-left: 0;
+    }
+
+    form input[type="text"] {
+        font-size: .9rem;
+        width: 100%;
+    }
+
+    .left-column {
+        padding: 20px 0px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .button,
+    #cancel-button {
+        font-size: var(--responsive-font);
+        padding: 6px 20px;
+    }
+
+    .error-message {
+        font-size: .7rem;
+    }
+
+    .new-vehicle h4::before,
+    .new-vehicle h4::after {
+        width: 30%;
+    }
+}

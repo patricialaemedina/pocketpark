@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/reservation.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+{% if already_reserved %}
+    {% include 'partials/modal.html' with modal_id="slotAlreadyReservedModal" modal_title="SLOT ALREADY RESERVED" modal_content=" The selected slot has already been reserved by another user. Please choose another slot." %}
+{% endif %}
+
+<div class="reservation-details">
+    <h4>RESERVATION DETAILS</h4>
+    <p>Fill up the form to reserve your chosen slot.</p>
+</div>
+
+<div class="container">
+    <form method="post" id="reservation-form">
+        {% csrf_token %}
+        <input type="hidden" name="chosen_slot" value="{{ slot_number }}">
+        <div class="column-wrapper">
+
+            <div class="left-column">
+
+                <label for="chosen_slot">Chosen Slot: </label>
+                <span id="chosen_slot_display">Slot {{ slot_number }}</span>
+
+                <label for="name">Name: </label>
+                <label class="input" id="label">{{ user.first_name }} {{ user.last_name }}</label>
+
+                <label for="start_time">Start Time: </label>
+                <input type="time" name="start_time" id="start_time" required>
+
+            </div>
+
+            <div class="right-column">
+                <label for="vehicle">Vehicle: </label>
+                <select name="vehicle" id="vehicle" required>
+                    <option value="" selected disabled>Select a Vehicle</option>
+                    {% for vehicle in vehicles %}
+                    <option value="{{ vehicle.license_plate }}">{{ vehicle.vehicle_make }} {{ vehicle.vehicle_model }}
+                        ({{ vehicle.license_plate }})</option>
+                    {% endfor %}
+                </select>
+                {% for vehicle in vehicles %}
+                <div class="vehicle-details" data-vehicle-id="{{ vehicle.license_plate }}" style="display: none;">
+                    <label for="license_plate">License Plate Number: </label>
+                    <label class="input">{{ vehicle.license_plate }}</label>
+
+                    <label for="vehicle_make">Vehicle Make: </label>
+                    <label class="input">{{ vehicle.vehicle_make }}</label>
+
+                    <label for="vehicle_model">Vehicle Model: </label>
+                    <label class="input">{{ vehicle.vehicle_model }}</label>
+
+                    <label for="vehicle_color">Vehicle Color: </label>
+                    <label class="input">{{ vehicle.vehicle_color }}</label>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="button-container">
+            <a href="{% url 'parking_area' %}" class="button" id="cancel-button">Cancel</a>
+            <button class="button" type="submit">Continue</button>
+        </div>
+
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/htmx.org@1.6.1"></script>
+<script>
+
+    function checkAlreadyReserved() {
+        $.ajax({
+            url: "{% url 'check_reservation_status' %}?slot_number={{ slot_number }}",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                var alreadyReserved = data.already_reserved;
+
+                if (alreadyReserved) {
+                    console.log("Slot is already reserved.");
+                    $("#slotAlreadyReservedModal").modal("show");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error checking reservation status:", error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        checkAlreadyReserved();
+        setInterval(checkAlreadyReserved, 1000); // Check every 1 seconds
+
+        $("#vehicle").change(function () {
+            var selectedVehicleId = $(this).val();
+            $(".vehicle-details").hide();
+            if (selectedVehicleId) {
+                $(".vehicle-details[data-vehicle-id='" + selectedVehicleId + "']").show();
+                $(".right-column").css("width", "24rem");
+            }
+        });
+
+        $("#reservation-form").submit(function (event) {
+            checkAlreadyReserved();
+        });
+
+        $("#slotAlreadyReservedModal").on("hidden.bs.modal", function () {
+            window.location.href = "{% url 'parking_area' %}";
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const startInput = document.getElementById("start_time");
+        const form = document.getElementById("reservation-form");
+        const currentDatetime = new Date();
+
+        startInput.addEventListener("input", function () {
+            const selectedTime = new Date(currentDatetime.toDateString() + " " + startInput.value);
+
+            if (selectedTime <= currentDatetime) {
+                startInput.setCustomValidity("Please select a start time in the future.");
+            } else {
+                startInput.setCustomValidity("");
+            }
+        });
+
+        form.addEventListener("submit", function () {
+            startInput.setCustomValidity("");
+        });
+    });
+
+</script>
+
+{% endblock %}

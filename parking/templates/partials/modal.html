@@ -1,0 +1,156 @@
+{% load static %}
+<div class="modal fade" id="{{ modal_id }}" tabindex="-1" aria-labelledby="{{ modal_id }}Label" aria-hidden="true">
+    <div class="modeal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ modal_id }}Label">{{ modal_title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ modal_content }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal-content {
+        border: 1px solid #F9BF29;
+    }
+
+    .modal-header {
+        margin: 0 1.2rem;
+        border: none;
+    }
+
+    .modal-title {
+        color: #F9BF29;
+        border: none;
+    }
+
+    .modal-body {
+        text-align: justify;
+        margin: 0 2.3rem;
+        padding: 0;
+    }
+
+    .modal-body h4 {
+        text-align: center;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #3B5D50;
+        margin-bottom: 1rem;
+    }
+
+    .modal-body h5 {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .row {
+        margin-left: .5rem;
+    }
+
+    .form-check-label {
+        font-weight: 400;
+        font-size: 1rem;
+    }
+
+    .modal-footer {
+        margin-right: 1.2rem;
+        border: none;
+    }
+
+    .modal-footer .btn-primary:nth-child(1) {
+        background-color: #3B5D50;
+        color: #FFFFFF;
+        border: 1px solid #3B5D50;
+    }
+
+    .modal-footer .btn-primary:nth-child(1):hover {
+        background-color: transparent;
+        color: #3B5D50;
+        border: 1px solid #3B5D50;
+    }
+
+    .modal-footer .btn-primary:nth-child(2) {
+        background-color: #F9BF29;
+        color: #FFFFFF;
+        border: 1px solid #F9BF29;
+    }
+
+    .modal-footer .btn-primary:nth-child(2):hover {
+        background-color: transparent;
+        color: #F9BF29;
+        border: 1px solid #F9BF29;
+    }
+</style>
+
+<!-- for feedbackFormModal -->
+<div class="modal fade" id="feedbackFormModal" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="feedbackFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="{% static 'images/pocket-park.png' %}" height="70px" width="40%"
+                    style="padding: 15px 0; margin-left: 0px;">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Feedback Form: PocketPark Reservation Experience</h4>
+                <p>We would greatly appreciate your feedback on your recent
+                    reservation experience with PocketPark. Please take a moment
+                    to let us know how we did. </p>
+                <h5>1. How do you rate your reservation experience with PocketPark?</h5>
+                <div class="row">
+                    <div class="col-auto">
+                        <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault1"
+                            value="Excellent">
+                        <label class="form-check-label" for="flexRadioDefault1">Excellent</label>
+                    </div>
+
+                    <div class="col-auto">
+                        <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault2" value="Good">
+                        <label class="form-check-label" for="flexRadioDefault2">Good</label>
+                    </div>
+
+                    <div class="col-auto">
+                        <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault3"
+                            value="Medium">
+                        <label class="form-check-label" for="flexRadioDefault3">Medium</label>
+                    </div>
+
+                    <div class="col-auto">
+                        <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault4" value="Poor">
+                        <label class="form-check-label" for="flexRadioDefault4">Poor</label>
+                    </div>
+
+                    <div class="col-auto">
+                        <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault5"
+                            value="Very Bad">
+                        <label class="form-check-label" for="flexRadioDefault5">Very Bad</label>
+                    </div>
+                </div>
+                <h5>2. Do you have any comments about PocketPark?
+                    (Please feel free to share any additional thoughts,
+                    suggestions, or concerns.)</h5>
+                <form>
+                    <div class="mb-3">
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">LATER</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">SUBMIT</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<script src="{% static 'js/qr_packed.js' %}"></script>
+
+<body>
+    <h1>QR Code Scanner</h1>
+
+    <a id="btn-scan-qr">
+        <input type="submit" value="Open Camera">
+    </a>
+
+    <canvas hidden="" id="qr-canvas"></canvas>
+
+    <div style="margin-top: 1rem;" id="qr-result" hidden="">
+        <b>Data:</b> <span id="outputData"></span>
+        <br>
+        <b>Status:</b> <span id="validData"></span>
+        <br>
+        <div style="margin-top: 1rem; border: 1px solid black; border-radius: 5px; padding: 2px;" id="additional-data">
+            <p><b>Name:</b> <span id="user"></span></p>
+            <p><b>Slot Number:</b> <span id="slot"></span></p>
+            <p><b>Reservation Time:</b> <span id="start_time"></span></p>
+            <p><b>License Plate:</b> <span id="license_plate"></span></p>
+            <p><b>Vehicle Model:</b> <span id="vehicle_model"></span></p>
+            <p><b>Vehicle Make:</b> <span id="vehicle_make"></span></p>
+            <p><b>Vehicle Color:</b> <span id="vehicle_color"></span></p>
+        </div>
+    </div>
+
+    <script src="{% static 'js/scan_qr.js' %}"></script>
+</body>
+
+</html>
+
+{% endblock %}

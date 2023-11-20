@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+<div class="about">
+    <h4>ABOUT POCKETPARK</h4>
+</div>
+
+<div class="about-content">
+    <p><b>PocketPark</b> is driven by a commitment to revolutionize urban mobility through innovative solutions. Our focus lies in simplifying the parking experience within bustling city landscapes. Founded on the premise of alleviating the stress associated with finding parking spaces, our team comprises tech enthusiasts, urban planners, and forward-thinking innovators. At the core of our offerings is the PocketPark Smart Parking Reservation System. This cutting-edge platform, powered by advanced technology, empowers users to effortlessly reserve parking spots in advance, effectively eliminating the frustration of last-minute searches upon arrival. With a user-friendly mobile app and website, our system offers real-time availability, secure transactions, and user-friendly navigation, providing a seamless parking experience. Beyond convenience, our vision extends toward contributing to smoother traffic flows and enhancing urban experiences. PocketPark strives to be a catalyst for positive change, envisioning a future where urban mobility seamlessly integrates with sustainable and efficient parking solutions.</p>
+</div>
+
+<div class="button-container">
+    <a href="{% url 'profile' %}" class="button">GO BACK</a>
+</div>
+
+{% endblock %}

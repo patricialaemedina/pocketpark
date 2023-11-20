@@ -1,0 +1,455 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/my_reservation.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+{% if paid_reservation %}
+    {% if not feedback_exists %}
+        {% include 'partials/feedback_modal.html' with modal_id="feedbackFormModal" %}
+    {% endif %}
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        if ($('#feedbackFormModal').length) {
+            $('#feedbackFormModal').modal('show');
+        }
+    });
+</script>
+
+<style>
+    
+    .modal-content {
+        border: 1px solid #F9BF29;
+    }
+
+    .modal-content *:focus {
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    .modal-header {
+        margin: 0 1.2rem;
+        border: none;
+    }
+
+    .modal-header img {
+        margin-top: 1rem;
+        width: 40%;
+        max-width: 100%;
+        height: auto; 
+        transition: ease .40s;
+    }
+
+    .modal-title {
+        color: #F9BF29;
+        border: none;
+    }
+
+    .modal-body {
+        margin: 0 2.3rem;
+        padding: 0;
+        text-align: justify;
+    }
+
+    .modal-body h4 {
+        text-align: center;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #3B5D50;
+        margin-bottom: 1rem;
+        transition: ease .40s;
+    }
+
+    .modal-body h5 {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .row {
+        margin-left: .5rem;
+    }
+
+    .form-check-label {
+        font-weight: 400;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .modal-footer {
+        margin-right: 1.2rem;
+        border: none;
+    }
+
+    textarea.form-control:focus {
+        border-color: var(--second-color);
+    }
+
+    .modal-footer .btn-primary:nth-child(1) {
+        background-color: #3B5D50;
+        color: #FFFFFF;
+        border: 1px solid #3B5D50;
+    }
+
+    .modal-footer .btn-primary:nth-child(1):hover {
+        background-color: transparent;
+        color: #3B5D50;
+        border: 1px solid #3B5D50;
+    }
+
+    .modal-footer .btn-primary:nth-child(2) {
+        background-color: #F9BF29;
+        color: #FFFFFF;
+        border: 1px solid #F9BF29;
+    }
+
+    .modal-footer .btn-primary:nth-child(2):hover {
+        background-color: transparent;
+        color: #F9BF29;
+        border: 1px solid #F9BF29;
+    }
+
+    @media (max-width: 768px) {
+
+        .modal-dialog {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .modal-content {
+            border: 1px solid #F9BF29;
+        }
+    
+        .modal-header {
+            margin: 0 0.5rem;
+            border: none;
+        }
+
+        .modal-header img {
+            width: 50%; 
+            max-width: 100%;
+            height: auto;
+        }
+
+        p{
+            font-size: .9rem;
+        }
+
+        .modal-body{
+            margin: 0 1.5rem;
+        }
+    
+        .modal-body h4 {
+            font-size: 1rem; 
+        }
+    
+        .modal-body h5 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            font-size: .9rem;
+        }
+    
+        .row {
+            margin-left: 0.5rem;
+        }
+
+        .form-check-label {
+            font-size: .9rem;
+            margin-left: .5rem;
+        }
+
+        #flexRadioDefault4{
+            margin-left: 4rem;
+        }
+    
+        .modal-footer {
+            margin-right: .5rem;
+        }
+    
+        textarea.form-control {
+            width: 100%;
+            height: 50px; 
+        }
+
+        .modal-footer .btn-primary:nth-child(1),
+        .modal-footer .btn-primary:nth-child(2) {
+            font-size: .8rem;
+        }
+
+    }
+</style>
+
+<div class="my-reservations">
+    <h4>MY RESERVATIONS</h4>
+</div>
+
+{% if paid_reservation %}
+
+{% for payment in paid_reservation %}
+
+<p class="intro-message">
+    Great! <span class="slot-label">'Slot {{ payment.booking.slot.number }}'</span> successfully booked!
+    After your parking duration ends, please settle your reservation payment or update your status
+    for extensions. Failure to comply may result in additional charges.</p>
+
+<div class="container">
+    <div class="booking-details-paid current-booking-details-paid" data-booking-id="{{ payment.booking.id }}"
+        data-expiration-time="{{ payment.booking.expiration_time|date:'c'}}"
+        data-start-time="{{ payment.booking.start_time|date:'c' }}" data-slot-status="{{ payment.booking.slot.status }}"
+        data-extended="{{ payment.booking.extended }}">
+
+        <div class="columns-wrapper">
+            <div class="left-column">
+                <h5>BOOKING DETAILS</h5>
+                <p>Booking ID: {{ payment.booking.id }}</p>
+                <p>Chosen Slot: {{ payment.booking.slot.number }}</p>
+                <p>Status: {{ payment.booking.slot.status }}</p>
+                <p>Start of Reservation Time: {{ payment.booking.start_time }}</p>
+                <p id="expiration-time">Expiration Time: {{ payment.booking.expiration_time }}</p>
+            </div>
+
+            <div class="right-column">
+                <h5>CAR DETAILS</h5>
+                <p>License Plate Number: {{ payment.booking.vehicle.license_plate }}</p>
+                <p>Vehicle Make: {{ payment.booking.vehicle.vehicle_make }}</p>
+                <p>Vehicle Model: {{ payment.booking.vehicle.vehicle_model }}</p>
+                <p>Vehicle Color: {{ payment.booking.vehicle.vehicle_color }}</p>
+                <p id="timer"><b>TIME LEFT TO ARRIVE: </b><span class="time-arrive"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+        <div class="buttons">
+            <button class="e-receipt" id="e-receipt-btn"><a href="{% url 'download_receipt' %}">DOWNLOAD
+                    RECEIPT</a></button>
+        </div>
+        <div class="buttons">
+            <button class="extend-button" id="extend-btn" style="display: none;"><a
+                    href="{% url 'extend' %}">EXTEND</a></button>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% elif unpaid_reservation %}
+
+{% for payment in unpaid_reservation %}
+
+<p class="intro-message">
+    Great! <span class="slot-label">'Slot {{ payment.booking.slot.number }}'</span> successfully booked!
+    After your parking duration ends, please settle your reservation payment or update your status
+    for extensions. Failure to comply may result in additional charges.</p>
+
+<div class="container">
+    <div class="booking-details-unpaid current-booking-details-unpaid" data-booking-id="{{ payment.booking.id }}"
+        data-expiration-time="{{ payment.booking.expiration_time|date:'c'}}"
+        data-creation-time="{{ payment.creation_datetime|date:'c' }}">
+
+        <div class="columns-wrapper">
+
+            <div class="left-column">
+                <h5>BOOKING DETAILS</h5>
+                <p>Booking ID: {{ payment.booking.id }}</p>
+                <p>Chosen Slot: {{ payment.booking.slot.number }}</p>
+                <p>Status: {{ payment.booking.slot.status }}</p>
+                <p>Start of Reservation Time: {{ payment.booking.start_time }}</p>
+                <p id="timer">TIME LEFT TO PAY: <span class="time-pay"></span></p>
+            </div>
+
+            <div class="right-column">
+                <h5>CAR DETAILS</h5>
+                <p>License Plate Number: {{ payment.booking.vehicle.license_plate }}</p>
+                <p>Vehicle Make: {{ payment.booking.vehicle.vehicle_make }}</p>
+                <p>Vehicle Model: {{ payment.booking.vehicle.vehicle_model }}</p>
+                <p>Vehicle Color: {{ payment.booking.vehicle.vehicle_color }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+        <div class="buttons">
+            <button class="pay-now-btn" id="pay-now-btn"><a href="{{ payment.checkout_url }}">PAY RESERVATION
+                    FEE</a></button>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% else %}
+<div class="no-reservations">
+    <p>You have no reservations at the moment.</p>
+</div>
+{% endif %}
+
+<div class="bookings">
+    <h5>SUCCESSFUL BOOKINGS</h5>
+    {% for payment in successful_bookings reversed %}
+    <div class="past-booking" data-booking-id="{{ payment.booking.id }}">
+        <p>Booking on {{ payment.booking.start_time }}<span><button
+                    class="toggle-button success">Show
+                    Details</button></span></p>
+        <div class="booking-details" style="display: none">
+            <h4 id="yellow">Booking Details</h4>
+            <p><b>Booking ID:</b> {{ payment.booking.id }}</p>
+            <p><b>Chosen Slot:</b> {{ payment.booking.slot.number }}</p>
+            <p><b>Start Time of Reservation:</b> {{ payment.booking.start_time }}</p>
+            <p><b>End Time of Reservation:</b> {{ payment.booking.end_time }} </p>
+            <h4 id="yellow">Car Details</h4>
+            <p><b>License Plate Number:</b> {{ payment.booking.vehicle.license_plate }}</p>
+            <p><b>Vehicle Make:</b> {{ payment.booking.vehicle.vehicle_make }}</p>
+            <p><b>Vehicle Model:</b> {{ payment.booking.vehicle.vehicle_model }}</p>
+            <p><b>Vehicle Color:</b> {{ payment.booking.vehicle.vehicle_color }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <h5>FAILED BOOKINGS</h5>
+    {% for payment in failed_bookings reversed %}
+    <div class="past-booking" data-booking-id="{{ payment.booking.id }}">
+        <p>Booking on {{ payment.booking.start_time }}<span><button
+                    class="toggle-button failed">Show
+                    Details</button></span></p>
+        <div class="booking-details" style="display: none">
+            <h4 id="red">Booking Details</h4>
+            <p><b>Booking ID:</b> {{ payment.booking.id }}</p>
+            <p><b>Chosen Slot:</b> {{ payment.booking.slot.number }}</p>
+            <p><b>Start Time of Reservation:</b> {{ payment.booking.start_time }}</p>
+            <p><b>Expired Time of Reservation:</b> {{ payment.booking.expiration_time }}</p>
+            <h4 id="red">Car Details</h4>
+            <p><b>License Plate Number:</b> {{ payment.booking.vehicle.license_plate }}</p>
+            <p><b>Vehicle Make:</b> {{ payment.booking.vehicle.vehicle_make }}</p>
+            <p><b>Vehicle Model:</b> {{ payment.booking.vehicle.vehicle_model }}</p>
+            <p><b>Vehicle Color:</b> {{ payment.booking.vehicle.vehicle_color }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function updateCountDown() {
+            var currentBookingDetailsPaid = document.querySelectorAll('.current-booking-details-paid');
+            currentBookingDetailsPaid.forEach(function (bookingDetailPaid) {
+                var now = new Date();
+
+                // For reservation expiration
+                var expirationTimeString = bookingDetailPaid.getAttribute('data-expiration-time');
+                var expirationTime = new Date(expirationTimeString);
+
+                var timeLeftMillisExp = expirationTime - now;
+
+                var secondsExp = Math.floor((timeLeftMillisExp / 1000) % 60);
+                var minutesExp = Math.floor((timeLeftMillisExp / 1000 / 60) % 60);
+                var hoursExp = Math.floor((timeLeftMillisExp / 1000 / 60 / 60) % 24);
+
+                var timeLeftElementExp = bookingDetailPaid.querySelector('.time-arrive');
+                timeLeftElementExp.textContent = hoursExp + ' hours ' + minutesExp + ' minutes ' + secondsExp + ' seconds';
+
+                // display extend button
+                var extendButton = document.querySelector('.extend-button');
+                var startTimeString = bookingDetailPaid.getAttribute('data-start-time');
+                var startTime = new Date(startTimeString);
+
+                if (now >= startTime) {
+                    extendButton.style.display = 'block';
+                }
+
+                // remove extend button + time left for arrival when status is occupied
+                var slotStatus = bookingDetailPaid.getAttribute('data-slot-status');
+                if (slotStatus == "Occupied") {
+                    bookingDetailPaid.querySelector('#timer').style.display = 'none';
+                    bookingDetailPaid.querySelector('.time-arrive').style.display = 'none';
+                    bookingDetailPaid.querySelector('#time-left').style.display = 'none';
+                    bookingDetailPaid.querySelector('#expiration-time').style.display = 'none';
+                    extendButton.style.display = 'none';
+                }
+
+                // remove extend button if extended already
+                var extendedStatus = bookingDetailPaid.getAttribute('data-extended');
+                if (extendedStatus == "True") {
+                    extendButton.style.display = 'none';
+                }
+            })
+
+            var currentBookingDetailsUnpaid = document.querySelectorAll('.current-booking-details-unpaid');
+            currentBookingDetailsUnpaid.forEach(function (bookingDetailUnpaid) {
+                var now = new Date();
+
+                // For payment expiration
+                var creationTimeString = bookingDetailUnpaid.getAttribute('data-creation-time');
+                var creationTime = new Date(creationTimeString);
+
+                var timeLeftMillisPay = creationTime.getTime() + 5 * 60 * 1000 - now.getTime();
+
+                var timeLeftElementPay = bookingDetailUnpaid.querySelector('.time-pay');
+                var payNowBtn = bookingDetailUnpaid.querySelector('.pay-now-btn');
+
+                if (timeLeftMillisPay <= 0) {
+                    timeLeftElementPay.textContent = 'Payment Expired';
+                    payNowBtn.disabled = true;
+                    payNowBtn.textContent = "Payment Expired";
+                } else {
+                    var secondsPay = Math.floor((timeLeftMillisPay / 1000) % 60);
+                    var minutesPay = Math.floor((timeLeftMillisPay / 1000 / 60) % 60);
+
+                    timeLeftElementPay.textContent = minutesPay + ' minutes ' + secondsPay + ' seconds';
+                }
+            })
+        };
+
+        updateCountDown();
+        setInterval(updateCountDown, 1000);
+
+        // Toggle detailed view on click for past bookings
+        document.querySelectorAll('.toggle-button').forEach(function (toggleButton) {
+            toggleButton.addEventListener('click', function () {
+                var bookingDetails = toggleButton.closest('.past-booking').querySelector('.booking-details');
+                if (bookingDetails.style.display === 'none') {
+                    bookingDetails.style.display = 'block';
+                    toggleButton.textContent = 'Hide Details';
+                } else {
+                    bookingDetails.style.display = 'none';
+                    toggleButton.textContent = 'Show Details';
+                }
+            });
+        });
+    });
+
+</script>
+
+<script>
+    const radioButtons = document.querySelectorAll('.form-check-input');
+
+    radioButtons.forEach((radioButton) => {
+        radioButton.addEventListener('click', function () {
+            radioButtons.forEach((rb) => rb.classList.remove('custom-checked'));
+            if (this.checked) {
+                this.classList.add('custom-checked');
+            }
+        });
+    });
+
+</script>
+
+{% endblock %}

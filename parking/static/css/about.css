@@ -1,0 +1,114 @@
+.about {
+    padding: 3rem 0 0 0rem;
+    margin-bottom: 0;
+    text-align: center; 
+    position: relative;
+  }
+
+  b {
+    color: #F9BF29;
+  }
+  
+  .about h4 {
+    color: var(--third-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    padding: 0 20px;
+    transition: ease .40s;
+  }
+  
+  .about h4::before,
+  .about h4::after {
+    content: ""; 
+    position: absolute; 
+    top: 50%; 
+    width: 100%; 
+    height: 2px; 
+    background-color: var(--second-color); 
+    transition: ease .40s;
+  }
+  
+  .about h4::before {
+    left: 0; 
+    transform: translateX(-100%);
+  }
+  
+  .about h4::after {
+    right: 0; 
+    transform: translateX(100%); 
+  }
+  
+  .about-content {
+    margin: 1.5rem 10rem;
+  }
+
+  .about-content p{
+    font-size: 1rem;
+    margin-top: 1rem;
+    text-align: justify;
+    transition: ease .40s;
+  }
+
+  .button {
+    color: var(--bg-color);
+    background-color: var(--second-color);
+    font-size: var(--text-font);
+    border: 1px solid;
+    border-radius: 18px;
+    transition: ease .40s;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 8px 20px;
+  }
+
+  .button:hover {
+    color: var(--second-color);
+    transform: scale(1);
+    background-color: transparent;
+    border: 1px solid #F9BF29;
+    cursor: pointer;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Media query for screens with a width of 768px and below */
+@media (max-width: 768px) {
+    .about {
+        padding: 2rem 0 0 0rem; 
+    }
+  
+    .about h4 {
+      font-size: 1rem; 
+    }
+
+    .about h4::before,
+    .about h4::after {
+        width: 47%;
+    }
+  
+    .about-content {
+      margin: 1rem 1.5rem;
+    }
+  
+    .about-content p {
+      font-size: .8rem; 
+      margin-top: .7rem;
+    }
+  
+    .about-reminder {
+      margin: 1rem 1rem 0;
+    }
+  
+    .about-reminder p {
+      font-size: .8rem;
+    }
+  }
+  
+  

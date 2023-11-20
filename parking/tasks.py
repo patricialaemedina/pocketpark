@@ -26,7 +26,6 @@ last_notification_times = {}
 
 @background(schedule=10)
 def delete_inactive_accounts():
-    print('Successfully checked inactive accounts')
     currently_logged_out_users = get_currently_logged_out_users()
 
     for user in currently_logged_out_users:

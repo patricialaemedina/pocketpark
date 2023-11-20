@@ -152,7 +152,7 @@ def notification_list(request):
 def parking_area(request):
     check_and_ban_user(request.user.username)
 
-    slots = Slot.objects.all()
+    slots = Slot.objects.all().order_by('number')
 
     paid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation").first()
     if paid_reservation:

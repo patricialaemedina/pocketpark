@@ -142,3 +142,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('feedback-form').addEventListener('submit', function (event) {
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        const comments = document.getElementById('comments').value.trim();
+
+        if (!selectedRating) {
+            alert('Please select a rating before submitting.');
+            event.preventDefault();
+        }
+    });
+</script>

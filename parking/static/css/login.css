@@ -107,7 +107,6 @@ body::-webkit-scrollbar {
     float: right;
 }
 
-/*---------------*/
 .form-group {
     margin-top: 20px;
     position: relative;
@@ -150,7 +149,6 @@ form input[type="password"]:focus::placeholder {
     opacity: 0;
 }
 
-/* Reset default input styles */
 form input[type="text"],
 form input[type="password"] {
     border: none;
@@ -221,7 +219,7 @@ p {
     font-style: italic;
     font-size: .9rem;
     text-align: center;
-    
+    margin-top: 1rem;
 }
 
 .success-message,
@@ -231,8 +229,8 @@ p {
     font-weight: light;
     font-style: italic;
     font-size: .9rem;
-    text-align: justify;
-    margin: 1rem 0 0 5rem;
+    text-align: center;
+    margin-top: 1rem;
 }
 
 .error-message{
@@ -360,7 +358,7 @@ p {
     .logo-container {
         margin-top: 1rem;
         margin-left: 20px;
-        text-align: center; /* Centering the logo */
+        text-align: center;
     }
 
     .container {
@@ -370,21 +368,21 @@ p {
     }
 
     .left-column h1 {
-        font-size: 3rem; /* Larger font size */
+        font-size: 3rem; 
     }
 
     .left-column h2 {
-        font-size: 2rem; /* Larger font size */
+        font-size: 2rem; 
     }
 
     .left-column h3 {
-        font-size: 1.2rem; /* Larger font size */
-        padding: 12px 25px; /* Adjusted padding */
+        font-size: 1.2rem;
+        padding: 12px 25px;
     }
 
     .right-column {
         width: 100%;
-        margin-top: 2rem; /* Adjusted margin */
+        margin-top: 2rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -420,7 +418,7 @@ p {
     }
 
     i {
-        font-size: 20px; /* Adjusted font size */
+        font-size: 20px;
     }
 
     p {

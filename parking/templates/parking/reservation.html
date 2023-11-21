@@ -63,9 +63,9 @@
 
         </div>
 
-        <div class="button-container">
-            <a href="{% url 'parking_area' %}" class="button" id="cancel-button">Cancel</a>
-            <button class="button" type="submit">Continue</button>
+        <div class="button-container" id="buttonContainer">
+            <a href="{% url 'parking_area' %}" class="button" id="cancel-button">CANCEL</a>
+            <button class="button" type="submit" id="continue-button">CONTINUE</button>
         </div>
 
     </form>
@@ -134,6 +134,19 @@
         form.addEventListener("submit", function () {
             startInput.setCustomValidity("");
         });
+    });
+
+    document.getElementById('continue-button').addEventListener('click', function() {
+        var buttonContainer = document.getElementById('buttonContainer');
+        var form = document.getElementById('reservation-form');
+
+        if (form.checkValidity()) {
+            buttonContainer.classList.add('clicked');
+            this.classList.add('clicked');
+            this.textContent = 'PROCESSING...';
+        } else {
+            alert('Please fill out all required fields.');
+        }
     });
 
 </script>

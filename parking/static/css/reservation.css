@@ -203,7 +203,8 @@ form select:focus::placeholder {
     display: flex;
     gap: 10px;
     justify-content: flex-start;
-    margin-left: 78%;
+    margin-top: 20px;
+    margin-left: 77%;
     transition: ease .40s;
 }
 
@@ -217,9 +218,24 @@ form select:focus::placeholder {
     font-weight: bolder;
     cursor: pointer;
     padding: 8px 20px;
+    transition: background-color 0.3s;
 }
 
-.button:hover {
+.button-container.clicked{
+    margin-left: 74.5%;
+}
+
+.button-container.clicked .button {
+    pointer-events: none; 
+    
+}
+
+.button.clicked {
+    background-color: var(--sixth-color);
+    color: var(--bg-color);
+}
+
+.button-container:not(.clicked) .button:hover {
     color: var(--second-color);
     transform: scale(1);
     background-color: transparent;

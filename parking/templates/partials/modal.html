@@ -9,6 +9,11 @@
                 </div>
                 <div class="modal-body">
                     {{ modal_content }}
+                    {% if additional %}
+                    <div class="additional">
+                    {{ additional }}
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -91,6 +96,14 @@
         color: #F9BF29;
         border: 1px solid #F9BF29;
     }
+
+    .additional {
+        margin-top: 1rem; 
+        font-size: 0.9rem;
+        color: #3B5D50;
+        text-align: center;
+    }
+
 </style>
 
 <!-- for feedbackFormModal -->

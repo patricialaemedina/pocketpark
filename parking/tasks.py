@@ -319,6 +319,8 @@ def process_qr(request):
                                         'vehicle_make': f"{payment.booking.vehicle.vehicle_make}",
                                         'vehicle_color': f"{payment.booking.vehicle.vehicle_color}",
                                         }
+                    else:
+                        response_data = {'message': 'INVALID'}
                 except Payment.DoesNotExist:
                     response_data = {'message': 'INVALID'}
                 except ValueError:

@@ -355,6 +355,7 @@ input[type="time"] {
         margin-bottom: 2.5rem;
     }
   
+    
     .button,
     #cancel-button {
         font-size: var(--responsive-font);

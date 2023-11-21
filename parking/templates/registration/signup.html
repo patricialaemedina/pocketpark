@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">    
 </head>
 
 {% include 'partials/terms_modal.html' with modal_id='termsAndConditionsModal' %}
@@ -25,12 +25,12 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="mid">
         <h4 class="sign-up-account">SIGN UP AN ACCOUNT</h4>
         <form method="post">
             {% csrf_token %}
             <div class="columns-wrapper">
-                <div class="left-column">
+                <div class="left-column custom-left-column">
                     <div class="form-group">
                         {{ userCreateForm.first_name }}
                         <span class="error-message">
@@ -124,8 +124,8 @@
 
                     <div class="form-group">
                         {{ userCreateForm.agreed_to_terms }}
-                        <label for="agreed_to_terms">I agree to the <a href="#" id="termsAndConditionsLink">terms and
-                                conditions</a></label>
+                        <label for="agreed_to_terms">I agree to the <a href="#" id="termsAndConditionsLink">Terms and
+                                Conditions</a></label>
                         <span class="error-message">
                             {{ userCreateForm.agreed_to_terms.errors}}
                         </span>
@@ -134,7 +134,7 @@
                 </div>
             </div>
 
-            <div class="form-group button-container">
+            <div class="button-cont">
                 <button type="submit" id="sign-up-btn">SIGN UP</button>
                 <p class="sign-up-link"><a href="{% url 'login' %}">Already have an account? Sign In</a></p>
             </div>
@@ -151,16 +151,43 @@
         function startCountdown() {
             const modal = $('#termsAndConditionsModal');
             let count = 5;
-
+    
             function updateCountdown() {
                 if (count > 0) {
-                    modal.find('.countdown-timer').text(`Close (${count})`);
+                    modal.find('.countdown-timer').text(`CLOSE (${count})`);
+                    const closeButton = modal.find('.modal-footer button');
+                    closeButton.css({
+                        'background-color': '#A13232',
+                        'border': '1px solid'
+                    });
                     count--;
                     setTimeout(updateCountdown, 1000);
                 } else {
-                    modal.find('.countdown-timer').text('Close');
-                    countdownActive = false;
-                    modal.find('.modal-footer button').prop('disabled', false);
+                    modal.find('.countdown-timer').text('CLOSE');
+                    countdownActive = false; // Countdown is complete
+                    const closeButton = modal.find('.modal-footer button');
+                    closeButton.prop('disabled', false);
+                    closeButton.css({
+                        'background-color': '#3B5D50',
+                        'border': '1px solid',
+                        'transition': 'background-color 0.5s ease'
+                    });
+    
+                    closeButton.hover(
+                        function () {
+                            $(this).css({
+                                'background-color': 'transparent',
+                                'border': '1px solid #3B5D50',
+                                'color': '#3B5D50'
+                            });
+                        },
+                        function () {
+                            $(this).css({
+                                'background-color': '#3B5D50',
+                                'color': '#fff' 
+                            });
+                        }
+                    );
                 }
             }
 

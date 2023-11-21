@@ -29,6 +29,7 @@ def generate_report(request):
         if report_type == 'revenue':
             if period == 'daily':
                 start_date = datetime.strptime(period_date_start, '%Y-%m-%d').date()
+                end_date = start_date
 
                 paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date))
 

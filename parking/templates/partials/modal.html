@@ -1,6 +1,6 @@
 {% load static %}
 <div class="modal fade" id="{{ modal_id }}" tabindex="-1" aria-labelledby="{{ modal_id }}Label" aria-hidden="true">
-    <div class="modeal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,11 +9,6 @@
                 </div>
                 <div class="modal-body">
                     {{ modal_content }}
-                    {% if additional %}
-                    <div class="additional">
-                    {{ additional }}
-                    </div>
-                    {% endif %}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -96,14 +91,6 @@
         color: #F9BF29;
         border: 1px solid #F9BF29;
     }
-
-    .additional {
-        margin-top: 1rem; 
-        font-size: 0.9rem;
-        color: #3B5D50;
-        text-align: center;
-    }
-
 </style>
 
 <!-- for feedbackFormModal -->

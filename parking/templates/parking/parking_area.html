@@ -11,7 +11,7 @@
 <script>
     var payment_processed = true;
 </script>
-    {% include 'partials/modal.html' with modal_id="paymentProcessingModal" modal_title="PAYMENT VERIFICATION" modal_content="Please wait while we verify your payment. This may take a moment." additional="Please proceed to 'Reservations' tab to view your bookings." %}
+    {% include 'partials/modal.html' with modal_id="paymentProcessingModal" modal_title="PAYMENT VERIFICATION" modal_content="Please proceed to 'Reservations' tab while we verify your payment. This may take a moment." %}
 {% else %}
 <script>
     var payment_processed = false;

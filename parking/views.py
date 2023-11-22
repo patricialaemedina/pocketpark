@@ -1,8 +1,10 @@
 import os
 import qrcode
 from io import BytesIO
+from PIL import Image as PILImage
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Image
+from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.colors import HexColor, black
 from datetime import datetime, timedelta
@@ -361,6 +363,22 @@ def download_receipt(request):
     p.drawImage(ImageReader(buffer_img), 250, 30, width=90, height=90)
 
     p.showPage()
+
+    p.setPageSize(letter)
+
+    p.setPageSize(landscape(letter)) 
+
+    image_path_second_page = 'parking/static/images/parking_map.png'
+    second_page_image = PILImage.open(image_path_second_page)
+    image_width, image_height = p._pagesize  
+
+    title_text = "Navigating Mayflower Parking Reservation Area"
+    p.setFont("Helvetica-Bold", 20)
+    p.drawCentredString(image_width / 2, image_height - 50, title_text)
+
+    p.drawImage(image_path_second_page, x=0, y=0, width=image_width, height=image_height, preserveAspectRatio=True)
+
+    p.showPage()    
     p.save()
 
     buffer.seek(0)

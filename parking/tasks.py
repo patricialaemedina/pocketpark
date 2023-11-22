@@ -437,7 +437,7 @@ def update_slot_status(slot_number: int, is_occupied: bool):
 
 @background(schedule=10)
 def get_slot():
-    flask_api_url = "http://api-mba.pocketpark.online/api/run_yolo"
+    flask_api_url = "http://api.pocketpark.online/api/run_yolo"
 
     response = requests.get(flask_api_url)
 

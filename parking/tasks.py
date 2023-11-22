@@ -22,7 +22,6 @@ from .models import *
 
 last_notification_times = {}
 
-
 def delete_inactive_accounts():
     currently_logged_out_users = get_currently_logged_out_users()
 

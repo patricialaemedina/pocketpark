@@ -269,7 +269,7 @@ def extend(request):
 @login_required(login_url='login')
 def submit_feedback(request):
     try:
-        valid_booking = Payment.objects.get(booking__is_valid=True, payment_status="Paid", fee_type="Reservation")
+        valid_booking = Payment.objects.get(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation")
         feedback_exists = Feedback.objects.filter(payment=valid_booking).exists()
     except Payment.DoesNotExist:
         valid_booking = None

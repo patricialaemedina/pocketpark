@@ -14,6 +14,7 @@ from django.db import transaction, IntegrityError
 from django.http import FileResponse
 from django.contrib import messages, auth
 from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
@@ -228,20 +229,24 @@ def reservation(request, slot_number):
 @login_required(login_url='login')
 def my_reservation(request):
     try:
-        valid_booking = Payment.objects.get(booking__is_valid=True, payment_status="Paid", fee_type="Reservation")
-        feedback_exists = Feedback.objects.filter(payment=valid_booking).exists()
-    except Payment.DoesNotExist:
-        valid_booking = None
+        valid_booking = Payment.objects.filter(booking__is_valid=True, payment_status="Paid", fee_type="Reservation").first()
+        if valid_booking:
+            feedback_exists = Feedback.objects.filter(payment=valid_booking).exists()
+        else:
+            feedback_exists = False
+            valid_booking = None
+    except ObjectDoesNotExist:
         feedback_exists = False
+        valid_booking = None
         
     try:
-        paid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation")    
-        unpaid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Pending", fee_type="Reservation")
+        paid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation").first()
+        unpaid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Pending", fee_type="Reservation").first()
 
         successful_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Paid")
         failed_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Failed")
-    except Payment.DoesNotExist:
-        paid_extension = unpaid_extension = successful_bookings = failed_bookings = []
+    except ObjectDoesNotExist:
+        pass
             
     return render(request, 'parking/my_reservation.html', {'feedback_exists': feedback_exists, 'paid_reservation': paid_reservation, 'unpaid_reservation': unpaid_reservation, 'successful_bookings': successful_bookings, 'failed_bookings': failed_bookings})
 

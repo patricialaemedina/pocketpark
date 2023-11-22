@@ -240,8 +240,8 @@ def my_reservation(request):
         valid_booking = None
         
     try:
-        paid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation").first()
-        unpaid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Pending", fee_type="Reservation").first()
+        paid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation")
+        unpaid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Pending", fee_type="Reservation")
 
         successful_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Paid")
         failed_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Failed")

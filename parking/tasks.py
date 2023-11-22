@@ -302,6 +302,7 @@ def confirm_payment(request):
 def process_qr(request):
     if request.method == 'POST':
         try:
+            current_time = timezone.now()
             data = json.loads(request.body.decode('utf-8'))
             qrData = data.get('data')
 
@@ -310,23 +311,26 @@ def process_qr(request):
                     booking_id = uuid.UUID(qrData)
                     payment = Payment.objects.get(booking__id=booking_id, fee_type="Reservation")
                     if payment.booking.is_valid:
-                        response_data = {'message': "VALID",
-                                        'user': f"{payment.booking.user.first_name} {payment.booking.user.last_name}",
-                                        'slot': f"{payment.booking.slot.number}",
-                                        'start_time': f"{payment.booking.start_time}",
-                                        'license_plate': f"{payment.booking.vehicle.license_plate}",
-                                        'vehicle_model': f"{payment.booking.vehicle.vehicle_model}",
-                                        'vehicle_make': f"{payment.booking.vehicle.vehicle_make}",
-                                        'vehicle_color': f"{payment.booking.vehicle.vehicle_color}",
-                                        }
+                        if payment.booking.start_time < current_time:
+                            response_data = {'message': "VALID",
+                                            'user': f"{payment.booking.user.first_name} {payment.booking.user.last_name}",
+                                            'slot': f"{payment.booking.slot.number}",
+                                            'start_time': f"{payment.booking.start_time}",
+                                            'license_plate': f"{payment.booking.vehicle.license_plate}",
+                                            'vehicle_model': f"{payment.booking.vehicle.vehicle_model}",
+                                            'vehicle_make': f"{payment.booking.vehicle.vehicle_make}",
+                                            'vehicle_color': f"{payment.booking.vehicle.vehicle_color}",
+                                            }
+                        else:
+                            response_data = {'message': 'INVALID: Booking has not started yet'}
                     else:
-                        response_data = {'message': 'INVALID'}
+                        response_data = {'message': 'INVALID: Expired booking'}
                 except Payment.DoesNotExist:
-                    response_data = {'message': 'INVALID'}
+                    response_data = {'message': 'INVALID: Booking not found'}
                 except ValueError:
                     response_data = {'message': 'Invalid UUID format'}
             else:
-                response_data = {'message': 'Invalid data format'}
+                response_data = {'message': 'Missing data'}
 
             return JsonResponse(response_data)
         except json.JSONDecodeError:

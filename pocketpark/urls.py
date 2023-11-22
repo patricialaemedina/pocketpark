@@ -19,7 +19,6 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-from parking.tasks import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +29,3 @@ handler400 = 'parking.views.error_400'
 handler403 = 'parking.views.error_403'
 handler404 = 'parking.views.error_404'
 handler500 = 'parking.views.error_500'
-
-delete_inactive_accounts(repeat=1, repeat_until=None)
-get_slot(repeat=1, repeat_until=None)

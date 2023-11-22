@@ -21,10 +21,12 @@ from datetime import timedelta
 from .models import *
 from background_task import background
 from background_task.models import CompletedTask
+from background_task.models import Task
+Task.objects.all().delete()
 
 last_notification_times = {}
 
-@background(schedule=10)
+@background(schedule=1)
 def delete_inactive_accounts():
     currently_logged_out_users = get_currently_logged_out_users()
 
@@ -47,6 +49,7 @@ def delete_inactive_accounts():
         if not user.is_logged_in and not user_logs_in_within_2_years(user) and not user.is_staff:
             delete_user_account(user)
 
+    print('deleted accounts')
     CompletedTask.objects.all().delete()
 
 def get_currently_logged_out_users():
@@ -435,7 +438,7 @@ def update_slot_status(slot_number: int, is_occupied: bool):
     except Slot.DoesNotExist:
         pass
 
-@background(schedule=10)
+@background(schedule=1)
 def get_slot():
     flask_api_url = "http://api.pocketpark.online/api/run_yolo"
 
@@ -456,4 +459,3 @@ def get_slot():
         error_message = {"error": "Failed to retrieve slot data"}
         print(error_message)
         return None
-

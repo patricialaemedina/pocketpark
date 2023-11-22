@@ -336,11 +336,24 @@ def process_qr(request):
         response_data = {'error': 'Invalid request method'}
         return JsonResponse(response_data, status=405)
 
+consecutive_statuses = {}
+
 def update_slot_status(slot_number: int, is_occupied: bool):
+    global consecutive_statuses
     current_time = timezone.now()
 
     try:
         slot_instance, created = Slot.objects.get_or_create(number=slot_number)
+
+        if slot_number not in consecutive_statuses:
+            consecutive_statuses[slot_number] = {'occupied': 0, 'vacant': 0}
+
+        if is_occupied:
+            consecutive_statuses[slot_number]['occupied'] += 1
+            consecutive_statuses[slot_number]['vacant'] = 0
+        else:
+            consecutive_statuses[slot_number]['vacant'] += 1
+            consecutive_statuses[slot_number]['occupied'] = 0            
         
         try:
             booking = Booking.objects.get(slot=slot_instance, is_valid=True)
@@ -369,21 +382,24 @@ def update_slot_status(slot_number: int, is_occupied: bool):
                     expire_checkout_session(reservation.checkout_session_id)
                         
                 elif reservation.payment_status == "Paid" and reservation.booking.expiration_time < current_time and not is_occupied:
-                    reservation.booking.is_valid = False
-                    reservation.booking.end_time = current_time
-                    reservation.booking.slot.status = "Vacant"
-                    reservation.booking.save()
-
-                elif reservation.payment_status == "Paid" and reservation.booking.expiration_time > current_time:
-                    if is_occupied:
-                        reservation.booking.is_valid = True
-                        reservation.booking.slot.status = "Occupied"
-                        reservation.booking.save()
-                    elif not is_occupied and reservation.booking.slot.status == "Occupied":
+                    if consecutive_statuses[slot_number]['vacant'] >= 10:
                         reservation.booking.is_valid = False
                         reservation.booking.end_time = current_time
                         reservation.booking.slot.status = "Vacant"
                         reservation.booking.save()
+
+                elif reservation.payment_status == "Paid" and reservation.booking.expiration_time > current_time:
+                    if is_occupied:
+                        if consecutive_statuses[slot_number]['occupied'] >= 10:
+                            reservation.booking.is_valid = True
+                            reservation.booking.slot.status = "Occupied"
+                            reservation.booking.save()
+                    elif not is_occupied and reservation.booking.slot.status == "Occupied":
+                        if consecutive_statuses[slot_number]['vacant'] >= 10:
+                            reservation.booking.is_valid = False
+                            reservation.booking.end_time = current_time
+                            reservation.booking.slot.status = "Vacant"
+                            reservation.booking.save()
                     else:
                         reservation.booking.is_valid = True
                         reservation.booking.slot.status = "Reserved"
@@ -391,29 +407,33 @@ def update_slot_status(slot_number: int, is_occupied: bool):
 
                 else:
                     if is_occupied:
-                        reservation.booking.slot.status = "Occupied"
-                        reservation.booking.save()
+                        if consecutive_statuses[slot_number]['occupied'] >= 10:
+                            reservation.booking.slot.status = "Occupied"
+                            reservation.booking.save()
                     else:
-                        reservation.booking.slot.status = "Vacant"
-                        reservation.booking.save()
+                        if consecutive_statuses[slot_number]['vacant'] >= 10:
+                            reservation.booking.slot.status = "Vacant"
+                            reservation.booking.save()
 
             except Payment.DoesNotExist:
                 pass
             
         except Booking.DoesNotExist:
             if is_occupied:
-                slot_instance.status = "Occupied"
-                slot_instance.save()
+                if consecutive_statuses[slot_number]['occupied'] >= 10:
+                    slot_instance.status = "Occupied"
+                    slot_instance.save()
             else:
-                slot_instance.status = "Vacant"
-                slot_instance.save()
+                if consecutive_statuses[slot_number]['vacant'] >= 10:
+                    slot_instance.status = "Vacant"
+                    slot_instance.save()
     
     except Slot.DoesNotExist:
         pass
 
 @background(schedule=10)
 def get_slot():
-    flask_api_url = "http://api.pocketpark.online/api/run_yolo"
+    flask_api_url = "http://api-mba.pocketpark.online/api/run_yolo"
 
     response = requests.get(flask_api_url)
 
@@ -424,7 +444,6 @@ def get_slot():
             slot_number = slot.get("number")
             is_occupied = slot.get("occupied")
             
-            # Call the update_slot_status function to update the slot status in your database
             update_slot_status(slot_number, is_occupied)
             
         print('slot update')

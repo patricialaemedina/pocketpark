@@ -19,9 +19,12 @@ from django.contrib.auth.views import PasswordResetCompleteView
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from datetime import timedelta
 from .models import *
+from background_task import background
+from background_task.models import CompletedTask
 
 last_notification_times = {}
 
+@background(schedule=10)
 def delete_inactive_accounts():
     currently_logged_out_users = get_currently_logged_out_users()
 
@@ -432,6 +435,7 @@ def update_slot_status(slot_number: int, is_occupied: bool):
     except Slot.DoesNotExist:
         pass
 
+@background(schedule=10)
 def get_slot():
     flask_api_url = "http://api-mba.pocketpark.online/api/run_yolo"
 

@@ -158,26 +158,20 @@ def generate_report(request):
                 
                 current_time = timezone.now()
 
-                title_style = ParagraphStyle(
-                    'TitleStyle',
-                    parent=styles['Title'],
-                    fontSize=12,
-                    spaceBefore=1,
-                    spaceAfter=1,
-                    textColor=colors.black,
-                    leading=18, 
-                )
+                title_style = ParagraphStyle('TitleStyle', parent=styles['Title'], fontSize=12, spaceBefore=1, spaceAfter=1, textColor=colors.black, leading=18)
 
-                "Mayflower Parking Sales and Revenue Report<br/>"
-                "Greenfield District Mandaluyong<br/>"
+                subheading_style = ParagraphStyle(name='CenteredSubheading', alignment=1)
 
-                report_title = (
-                    "Mayflower Parking Occupancy Report<br/>"
+                report_title = ("Mayflower Parking Occupancy Report<br/>")
+
+                subheading = (
                     "Greenfield District Mandaluyong<br/>"
                     f"(Taken on {timezone.localtime(current_time).strftime('%B %d, %Y, %I:%M %p')})"
                 )
 
+
                 story.append(Paragraph(report_title, title_style))
+                story.append(Paragraph(subheading, subheading_style))        
                 story.append(Spacer(1, 1)) 
 
                 labels = ['Occupied', 'Vacant', 'Reserved']

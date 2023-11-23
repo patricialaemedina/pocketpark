@@ -384,7 +384,7 @@
                 // remove extend button + time left for arrival when status is occupied
                 var slotStatus = bookingDetailPaid.getAttribute('data-slot-status');
                 console.log('Slot Status: ', slotStatus);
-                if (slotStatus == "Occupied") {
+                if (slotStatus == " Occupied") {
                     bookingDetailPaid.querySelector('#timer').style.display = 'none';
                     bookingDetailPaid.querySelector('.time-arrive').style.display = 'none';
                     bookingDetailPaid.querySelector('#time-left').style.display = 'none';

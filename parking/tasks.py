@@ -283,7 +283,7 @@ def confirm_payment(request):
         paid_payment.booking.save()
         paid_payment.save()
 
-        apikey = 'd56bd8f11cfea2b104f86ba054f8e0d7'
+        apikey = 'api_key'
         sendername = 'SEMAPHORE'
         expiration_time = paid_payment.booking.expiration_time
         manila_timezone = timezone.get_current_timezone()
@@ -374,15 +374,17 @@ def update_slot_status(slot_number: int, is_occupied: bool):
                     reservation.booking.save()
                     reservation.save()
                     expire_checkout_session(reservation.checkout_session_id)
-                        
+
+                # vacant until time expires
                 elif reservation.payment_status == "Paid" and reservation.booking.expiration_time < current_time and not is_occupied:
                     reservation.booking.is_valid = False
                     reservation.booking.end_time = current_time
                     reservation.booking.slot.status = "Vacant"
                     reservation.booking.save()
 
+                # within time (not expired yet)
                 elif reservation.payment_status == "Paid" and reservation.booking.expiration_time > current_time:
-                    if is_occupied:
+                    if reservation.booking.slot.status == "Reserved" and is_occupied:
                         reservation.booking.is_valid = True
                         reservation.booking.slot.status = "Occupied"
                         reservation.booking.save()

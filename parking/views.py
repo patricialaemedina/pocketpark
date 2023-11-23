@@ -237,8 +237,8 @@ def my_reservation(request):
     paid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation")    
     unpaid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Pending", fee_type="Reservation")
 
-    successful_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Paid")
-    failed_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Failed")
+    successful_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Paid").order_by('-created_at')
+    failed_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Failed").order_by('-created_at')
             
     return render(request, 'parking/my_reservation.html', {'feedback_exists': feedback_exists, 'paid_reservation': paid_reservation, 'unpaid_reservation': unpaid_reservation, 'successful_bookings': successful_bookings, 'failed_bookings': failed_bookings})
 

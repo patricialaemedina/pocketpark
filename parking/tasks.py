@@ -389,7 +389,7 @@ def update_slot_status(slot_number: int, is_occupied: bool):
                             reservation.booking.slot.save()
                         else:
                             if is_occupied:
-                                reservation.booking.slot.status == "Occupied"
+                                reservation.booking.slot.status = "Occupied"
                                 reservation.booking.slot.save()
                             else: 
                                 pass # wait for driver to arrive

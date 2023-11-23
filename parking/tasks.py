@@ -429,6 +429,8 @@ def update_slot_status(slot_number: int, is_occupied: bool):
     except Slot.DoesNotExist:
         pass
 
+slot_status_counts = {}
+
 @background(schedule=1)
 def get_slot():
     flask_api_url = "http://api.pocketpark.online/api/run_yolo"
@@ -441,8 +443,18 @@ def get_slot():
         for slot in slot_data:
             slot_number = slot.get("number")
             is_occupied = slot.get("occupied")
-            
-            update_slot_status(slot_number, is_occupied)
+
+            if slot_number in slot_status_counts:
+                if slot_status_counts[slot_number]["status"] == is_occupied:
+                    slot_status_counts[slot_number]["count"] += 1
+                else:
+                    slot_status_counts[slot_number] = {"status": is_occupied, "count": 1}
+                
+                if slot_status_counts[slot_number]["count"] >= 5:
+                    update_slot_status(slot_number, is_occupied)
+                    slot_status_counts[slot_number]["count"] = 0
+            else:
+                slot_status_counts[slot_number] = {"status": is_occupied, "count": 1}
             
         print('slot update')
         return slot_data

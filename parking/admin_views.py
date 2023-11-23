@@ -304,11 +304,6 @@ def generate_report(request):
                 story.append(Spacer(0, 0))
                 story.append(yearly_peaks_table)
 
-                if len(yearly_peaks) > 1:
-                    conclusion_text = "The analysis indicates a variance in booking trends across different months within the year."
-                else:
-                    conclusion_text = "The analysis shows consistent booking patterns across the months in the year."
-
                 # ACTIVE USERS
                 active_users = CustomUser.objects.exclude(is_staff=True).annotate(num_bookings=Count('booking')).order_by('-num_bookings')[:5]
 
@@ -328,7 +323,6 @@ def generate_report(request):
                     ('GRID', (0, 0), (-1, -1), 1, HexColor("#CFCFCF")),
                 ]))
 
-                story.append(PageBreak())
                 story.append(Paragraph("Most Active Users", styles["Heading4"]))
                 story.append(Spacer(0, 0))
                 story.append(active_users_table)
@@ -351,10 +345,10 @@ def generate_report(request):
                 for peak in yearly_peaks:
                     month_number = peak['created_at__month']
                     month_abbr = datetime(2000, month_number, 1).strftime('%b')
-                    monthly_peak_data_dict[month_abbr] = peak['bookings_count']
-
+                    monthly_peak_data_dict[month_abbr] += peak['bookings_count']
+                
                 monthly_peak_data = [{'month': month_abbr, 'count': monthly_peak_data_dict[month_abbr]} for month_abbr in all_months_abbr]
-
+                
                 plt.figure(figsize=(6, 3))
                 plt.plot([item['month'] for item in monthly_peak_data], [item['count'] for item in monthly_peak_data], marker='o', color='#F9BF29')
                 plt.xlabel('Months', fontweight='bold', fontsize=8)
@@ -388,13 +382,42 @@ def generate_report(request):
                     ('ALIGN', (0, 0), (-1, -1), 'CENTER'), 
                 ]))
 
+                story.append(PageBreak())
                 story.append(Paragraph("Monthly Performance Chart", styles["Heading4"]))
                 story.append(Spacer(0, 0))
                 story.append(combined_table)
                 story.append(Spacer(1, 12))
                 centered_style = ParagraphStyle(name='Centered', alignment=TA_CENTER)
                 story.append(Spacer(1, 8))
-                story.append(Paragraph(conclusion_text, centered_style))
+
+                highest_count = max(item['count'] for item in monthly_peak_data)
+                lowest_count = min(item['count'] for item in monthly_peak_data)
+                
+                months_with_highest_count = [item['month'] for item in monthly_peak_data if item['count'] == highest_count]
+                months_with_lowest_count = [item['month'] for item in monthly_peak_data if item['count'] == lowest_count]
+
+                total_monthly_bookings = sum(item['count'] for item in monthly_peak_data)
+                average_monthly_bookings = total_monthly_bookings / len(monthly_peak_data)
+
+                highest_plural = "" if len(months_with_highest_count) == 1 else "s"
+                lowest_plural = "" if len(months_with_lowest_count) == 1 else "s"
+                is_are_highest = "is" if len(months_with_highest_count) == 1 else "are"
+                is_are_lowest = "is" if len(months_with_lowest_count) == 1 else "are"
+
+                line_chart_interpretation = (
+                    "The line chart above illustrates the monthly count of bookings throughout the year. "
+                    "Each data point corresponds to the number of bookings for the respective month. "
+                    f"The average monthly bookings are {average_monthly_bookings:.2f}. "
+                    f"The month{highest_plural} with the highest number of bookings {is_are_highest} "
+                    f"{', '.join(months_with_highest_count)}, with {highest_count}, representing "
+                    f"{(highest_count / total_monthly_bookings) * 100:.2f}% of the total bookings. "
+                    f"Conversely, the month{lowest_plural} with the lowest number of bookings {is_are_lowest} "
+                    f"{', '.join(months_with_lowest_count)}, with {lowest_count}, accounting for "
+                    f"{(lowest_count / total_monthly_bookings) * 100:.2f}% of the total bookings."
+                )
+                
+                story.append(Spacer(1, 4))
+                story.append(Paragraph(line_chart_interpretation, centered_style))
 
                 doc.build(story)
 

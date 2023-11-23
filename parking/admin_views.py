@@ -328,6 +328,7 @@ def generate_report(request):
                     ('GRID', (0, 0), (-1, -1), 1, HexColor("#CFCFCF")),
                 ]))
 
+                story.append(PageBreak())
                 story.append(Paragraph("Most Active Users", styles["Heading4"]))
                 story.append(Spacer(0, 0))
                 story.append(active_users_table)
@@ -387,7 +388,6 @@ def generate_report(request):
                     ('ALIGN', (0, 0), (-1, -1), 'CENTER'), 
                 ]))
 
-                story.append(PageBreak())
                 story.append(Paragraph("Monthly Performance Chart", styles["Heading4"]))
                 story.append(Spacer(0, 0))
                 story.append(combined_table)

@@ -234,14 +234,11 @@ def my_reservation(request):
         valid_booking = None
         feedback_exists = False
         
-    try:
-        paid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation")    
-        unpaid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Pending", fee_type="Reservation")
+    paid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation")    
+    unpaid_reservation = Payment.objects.filter(booking__user=request.user, booking__is_valid=True, payment_status="Pending", fee_type="Reservation")
 
-        successful_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Paid")
-        failed_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Failed")
-    except Payment.DoesNotExist:
-        paid_extension = unpaid_extension = successful_bookings = failed_bookings = []
+    successful_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Paid")
+    failed_bookings = Payment.objects.filter(booking__user=request.user, booking__is_valid=False, payment_status="Failed")
             
     return render(request, 'parking/my_reservation.html', {'feedback_exists': feedback_exists, 'paid_reservation': paid_reservation, 'unpaid_reservation': unpaid_reservation, 'successful_bookings': successful_bookings, 'failed_bookings': failed_bookings})
 
@@ -268,18 +265,20 @@ def extend(request):
 
 @login_required(login_url='login')
 def submit_feedback(request):
+    valid_booking = None
+    feedback_exists = False
+
     try:
         valid_booking = Payment.objects.get(booking__user=request.user, booking__is_valid=True, payment_status="Paid", fee_type="Reservation")
         feedback_exists = Feedback.objects.filter(payment=valid_booking).exists()
     except Payment.DoesNotExist:
-        valid_booking = None
-        feedback_exists = False
+        pass
 
-    if request.method == 'POST' and not feedback_exists:
+    if request.method == 'POST' and not feedback_exists and valid_booking:
         rating = request.POST.get('rating')
         comments = request.POST.get('comments')
+        
         feedback = Feedback.objects.create(payment=valid_booking, rating=rating, comments=comments)
-        feedback.save()
 
         return redirect('my_reservation')
     

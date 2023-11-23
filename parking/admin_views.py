@@ -339,7 +339,7 @@ def generate_report(request):
                 story.append(active_users_table)
 
                 # USER STATISTICS
-                total_users = CustomUser.objects.count()
+                total_users = CustomUser.objects.filter(is_staff=False).count()
                 total_bookings = Booking.objects.filter(user__in=CustomUser.objects.all()).count()
                 average_bookings_per_user = total_bookings / total_users if total_users > 0 else 0
 

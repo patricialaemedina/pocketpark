@@ -370,69 +370,64 @@ def update_slot_status(slot_number: int, is_occupied: bool):
                     if (current_time - reservation.creation_datetime).total_seconds() > 300:
                         reservation.booking.is_valid = False
                         reservation.booking.end_time = current_time
-                        reservation.booking.slot.status = "Vacant"
-                        reservation.payment_status = "Failed"
                         reservation.booking.save()
+                        reservation.booking.slot.status = "Vacant"
+                        reservation.booking.slot.save()
+                        reservation.payment_status = "Failed"
                         reservation.save()
                         expire_checkout_session(reservation.checkout_session_id)
                     else:
-                        # Waiting for user to pay
-                        pass
+                        pass # wait for payment
+                        
+                elif reservation.payment_status == "Paid":
+                    if reservation.booking.slot.status == "Reserved":
+                        if reservation.booking.expiration_time < current_time:
+                            reservation.booking.is_valid = False
+                            reservation.booking.end_time = current_time
+                            reservation.booking.save()
+                            reservation.booking.slot.status = "Vacant"
+                            reservation.booking.slot.save()
+                        else:
+                            if is_occupied:
+                                reservation.booking.slot.status == "Occupied"
+                                reservation.booking.slot.save()
+                            else: 
+                                pass # wait for driver to arrive
 
-  
-                elif reservation.payment_status == "Paid" and reservation.booking.slot.status == "Reserved" and reservation.booking.expiration_time < current_time:
-                    if not is_occupied:
-                        reservation.booking.is_valid = False
-                        reservation.booking.end_time = current_time
-                        reservation.booking.slot.status = "Vacant"
-                        reservation.booking.save()
-                        reservation.save()
+                    elif reservation.booking.slot.status == "Occupied":
+                        if is_occupied:
+                            pass # driver still in slot
+                        else:
+                            reservation.booking.is_valid = False
+                            reservation.booking.end_time = current_time
+                            reservation.booking.save()
+                            reservation.booking.slot.status = "Vacant"
+                            reservation.booking.slot.save()
+                    
                     else:
-                        # You can add code here to handle the scenario when the slot is unexpectedly occupied
-                        # Notify administrators for the unexpected occupancy
-                        pass
-
-                elif reservation.payment_status == "Paid" and reservation.booking.slot.status == "Reserved" and reservation.booking.expiration_time > current_time:
-                    if is_occupied:
-                        reservation.booking.slot.status = "Occupied"
-                        reservation.booking.save()
-                        reservation.save()
-                    else:
-                        reservation.booking.slot.status = "Reserved"
-                        reservation.booking.save()
-                        reservation.save()
-
-                elif reservation.payment_status == "Paid" and reservation.booking.slot.status == "Occupied":
-                    if not is_occupied:
-                        reservation.booking.slot.status = "Vacant"
-                        reservation.booking.is_valid = False
-                        reservation.booking.end_time = current_time
-                        reservation.booking.save()
-                        reservation.save()
-                
-                else:
-                    if is_occupied:
-                        # Notify administrators for the unexpected occupancy
-                        pass
-                    else:
-                        # Normal status vacant
-                        pass
-
+                        if is_occupied:
+                            pass # notify admin about unexpected occupancy
+                        else:
+                            reservation.booking.is_valid = False
+                            reservation.booking.end_time = current_time
+                            reservation.booking.save()
+                            reservation.booking.slot.status = "Vacant"
+                            reservation.booking.slot.save()
+                    
             except Payment.DoesNotExist:
                 pass
             
         except Booking.DoesNotExist:
             if is_occupied:
-                # Notify administrators for the unexpected occupancy
                 slot_instance.status = "Occupied"
                 slot_instance.save()
+                # notify admin about unexpected occupancy
             else:
-                # Normal status vacant
                 slot_instance.status = "Vacant"
                 slot_instance.save()
     
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except Slot.DoesNotExist:
+        pass
 
 @background(schedule=1)
 def get_slot():

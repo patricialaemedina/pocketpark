@@ -247,6 +247,14 @@
 
 {% elif unpaid_reservation %}
 
+<script>
+    function reloadPage() {
+        location.reload();
+    }
+
+    setInterval(reloadPage, 8000);
+</script>
+
 {% for payment in unpaid_reservation %}
 
 <p class="intro-message">
@@ -347,12 +355,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-
-        function reloadPage() {
-            location.reload();
-        }
-
-        setInterval(reloadPage, 8000);
 
         function updateCountDown() {
             var currentBookingDetailsPaid = document.querySelectorAll('.current-booking-details-paid');

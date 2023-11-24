@@ -343,11 +343,17 @@ def process_qr(request):
         response_data = {'error': 'Invalid request method'}
         return JsonResponse(response_data, status=405)
 
-def notify_admin_about_occupancy():
-    admin_email = 'medinapatricialae@gmail.com'
+last_notification_time = {}
+
+def notify_admin_about_occupancy(slot_number, current_time):
+    admin_email = 'web.pocketpark@gmail.com'
     subject = 'Unexpected Occupancy Detected'
-    message = 'Unexpected occupancy has been detected in a slot. Please take necessary actions.'
-    send_mail(subject, message, 'web.pocketpark@gmail.com', [admin_email])
+    formatted_time = current_time.strftime("%B %d, %Y %I:%M %p")
+    message = f'Unexpected occupancy has been detected in a Slot {slot_number} at {formatted_time}. Please take necessary actions.'
+
+    if slot_number not in last_notification_time or (current_time - last_notification_time[slot_number]) >= timedelta(minutes=5):
+        send_mail(subject, message, 'web.pocketpark@gmail.com', [admin_email])
+        last_notification_time[slot_number] = current_time
 
 def update_slot_status(slot_number: int, is_occupied: bool):
     current_time = timezone.now()
@@ -425,7 +431,7 @@ def update_slot_status(slot_number: int, is_occupied: bool):
             
         except Booking.DoesNotExist:
             if is_occupied:
-                notify_admin_about_occupancy()
+                notify_admin_about_occupancy(slot_instance.number, current_time)
                 slot_instance.status = "Occupied"
                 slot_instance.save()
                 # notify admin about unexpected occupancy

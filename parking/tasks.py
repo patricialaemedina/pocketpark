@@ -348,6 +348,7 @@ last_notification_time = {}
 def notify_admin_about_occupancy(slot_number, current_time):
     admin_email = 'web.pocketpark@gmail.com'
     subject = 'Unexpected Occupancy Detected'
+    current_time = current_time.astimezone(timezone.get_current_timezone())
     formatted_time = current_time.strftime("%B %d, %Y %I:%M %p")
     message = f'Unexpected occupancy has been detected in a Slot {slot_number} at {formatted_time}. Please take necessary actions.'
 

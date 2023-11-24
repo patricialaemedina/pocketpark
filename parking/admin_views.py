@@ -84,7 +84,7 @@ def generate_report(request):
             story = []
 
             report_title = (
-                "Mayflower Parking Sales and Revenue Report<br/>"
+                "Mayflower Parking Reservation Revenue Report<br/>"
                 "Greenfield District Mandaluyong<br/>"
             )
 
@@ -101,11 +101,11 @@ def generate_report(request):
 
             story.append(Paragraph(report_title, title_style))
 
-            table_data = [['ID', 'Date & Time', 'Amount Paid', 'Fee Type']]
+            table_data = [['Name', 'Date & Time', 'Amount Paid', 'Fee Type']]
 
             for payment in paid_payments:
                 payment_details = [
-                    payment.booking.id,
+                    f'{payment.booking.user.first_name} {payment.booking.user.last_name}',
                     timezone.localtime(payment.booking.start_time).strftime('%B %d, %Y, %I:%M %p'),
                     f'PHP {payment.amount_paid}',
                     payment.fee_type,

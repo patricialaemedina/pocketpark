@@ -464,7 +464,7 @@ def get_slot():
 
         combined_slot_data = first_slot_data + second_slot_data
         
-        for slot in slot_data:
+        for slot in combined_slot_data:
             slot_number = slot.get("number")
             is_occupied = slot.get("occupied")
 
@@ -481,7 +481,7 @@ def get_slot():
                 slot_status_counts[slot_number] = {"status": is_occupied, "count": 1}
             
         print('slot update')
-        return slot_data
+        return combined_slot_data
     else:
         error_message = {"error": "Failed to retrieve slot data"}
         print(error_message)

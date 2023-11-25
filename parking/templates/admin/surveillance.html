@@ -9,18 +9,24 @@
     
     <img id="image1" src="http://api.pocketpark.online/api/generate_frames1" alt="Surveillance Stream 1">
     <img id="image2" src="http://api.pocketpark.online/api/generate_frames2" alt="Surveillance Stream 2">
+    <img id="image3" src="http://api-mba.pocketpark.online/api/generate_frames3" alt="Surveillance Stream 3">
+    <img id="image4" src="http://api-mba.pocketpark.online/api/generate_frames4" alt="Surveillance Stream 4">
     
     <script>
         let currentImage = 1;
 
         function switchImage() {
             if (currentImage === 1) {
-                document.getElementById('image1').style.display = 'none';
+                document.getElementById('image1').style.display = 'block';
                 document.getElementById('image2').style.display = 'block';
+                document.getElementById('image3').style.display = 'none';
+                document.getElementById('image4').style.display = 'none';
                 currentImage = 2;
             } else {
-                document.getElementById('image1').style.display = 'block';
+                document.getElementById('image1').style.display = 'none';
                 document.getElementById('image2').style.display = 'none';
+                document.getElementById('image3').style.display = 'block';
+                document.getElementById('image4').style.display = 'block';
                 currentImage = 1;
             }
         }

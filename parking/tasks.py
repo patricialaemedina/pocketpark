@@ -447,24 +447,14 @@ slot_status_counts = {}
 
 @background(schedule=1)
 def get_slot():
-    first_flask_api_url = "http://api.pocketpark.online/api/run_yolo"
-    second_flask_api_url = "http://api-mba.pocketpark.online/api/run_yolo"
+    flask_api_url = "http://api.pocketpark.online/api/run_yolo"
 
-    first_response = requests.get(first_flask_api_url)
-    second_response = requests.get(second_flask_api_url)
+    response = requests.get(flask_api_url)
 
-    if first_response.status_code == 200 and second_response.status_code == 200:
-        first_slot_data = first_response.json()
-        second_slot_data = second_response.json()
-
-        max_slot_number = max(slot['number'] for slot in first_slot_data) 
-
-        for slot in second_slot_data:
-            slot['number'] += max_slot_number
-
-        combined_slot_data = first_slot_data + second_slot_data
+    if response.status_code == 200:
+        slot_data = response.json()
         
-        for slot in combined_slot_data:
+        for slot in slot_data:
             slot_number = slot.get("number")
             is_occupied = slot.get("occupied")
 
@@ -481,7 +471,7 @@ def get_slot():
                 slot_status_counts[slot_number] = {"status": is_occupied, "count": 1}
             
         print('slot update')
-        return combined_slot_data
+        return slot_data
     else:
         error_message = {"error": "Failed to retrieve slot data"}
         print(error_message)

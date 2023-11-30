@@ -68,20 +68,20 @@ admin.site.register(UserAgreement, UserAgreementAdmin)
 
 class VehicleAdmin(admin.ModelAdmin):
     list_display = (
-        'license_plate', 'vehicle_model', 'vehicle_make', 'vehicle_color', 'owner'
+        'license_plate', 'vehicle_model', 'vehicle_make', 'vehicle_color', 'owner', 'vehicle_photo',
     )
 
     search_fields = ('license_plate', 'vehicle_model', 'vehicle_make', 'vehicle_color', 'owner')
 
     fieldsets = (
         (None, {
-            'fields': ('owner', 'license_plate', 'vehicle_model', 'vehicle_make', 'vehicle_color',)
+            'fields': ('owner', 'license_plate', 'vehicle_model', 'vehicle_make', 'vehicle_color', 'vehicle_photo',)
         }),
     )
         
     add_fieldsets = (
         (None, {
-            'fields': ('license_plate', 'vehicle_model', 'vehicle_make', 'vehicle_color', 'owner')
+            'fields': ('license_plate', 'vehicle_model', 'vehicle_make', 'vehicle_color', 'owner', 'vehicle_photo',)
         })
     )
 

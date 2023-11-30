@@ -10,6 +10,26 @@ const btnScanQR = document.getElementById("btn-scan-qr");
 
 let scanning = false;
 
+function startCountdown(expirationTime) {
+  const countdownElement = document.getElementById("countdown");
+
+  const timerInterval = setInterval(() => {
+    const currentTime = new Date().getTime();
+    const timeDifference = expirationTime - currentTime;
+
+    if (timeDifference <= 0) {
+      clearInterval(timerInterval);
+      countdownElement.innerText = "Expired";
+    } else {
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      countdownElement.innerText = `${hours} hours ${minutes} minutes ${seconds} seconds`;
+    }
+  }, 1000);
+}
+
 qrcoded.callback = res => {
   if (res) {
     outputData.innerText = res;
@@ -57,6 +77,8 @@ function sendDataToDjango(data) {
         const vehicleModelElement = document.getElementById("vehicle_model");
         const vehicleMakeElement = document.getElementById("vehicle_make");
         const vehicleColorElement = document.getElementById("vehicle_color");
+        const expirationTime = new Date(response.expiration_time);
+        startCountdown(expirationTime)
 
         const startDateTime = new Date(response.start_time);
         const formattedStartTime = startDateTime.toLocaleString();
@@ -80,7 +102,6 @@ function sendDataToDjango(data) {
     }
   };
   
-  // Send the request with the data
   xhr.send(jsonData);
 }
 

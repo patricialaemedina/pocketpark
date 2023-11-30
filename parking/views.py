@@ -26,7 +26,7 @@ def home(request):
 def signup(request):
     if request.method == 'POST':
         userCreateForm = UserCreateForm(request.POST)
-        vehicleForm = VehicleForm(request.POST)
+        vehicleForm = VehicleForm(request.POST, request.FILES)
 
         if userCreateForm.is_valid() and vehicleForm.is_valid():
             user = userCreateForm.save(commit=False)
@@ -129,7 +129,7 @@ def edit_profile(request):
 @login_required(login_url='login')
 def add_vehicle(request):
     if request.method == "POST":
-        form = VehicleForm(request.POST)
+        form = VehicleForm(request.POST, request.FILES)
         
         if form.is_valid():
             vehicle = form.save(commit=False)

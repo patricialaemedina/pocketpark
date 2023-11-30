@@ -33,6 +33,7 @@ class Vehicle(models.Model):
     vehicle_make = models.CharField(max_length=50)
     vehicle_model = models.CharField(max_length=50)
     vehicle_color = models.CharField(max_length=20)
+    vehicle_photo = models.ImageField(upload_to='vehicle_photos/', blank=False, null=False)
 
     def __str__(self):
         return f"{self.license_plate} {self.vehicle_make} {self.vehicle_model}"

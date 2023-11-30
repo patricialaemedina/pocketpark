@@ -27,7 +27,7 @@
 
     <div class="mid">
         <h4 class="sign-up-account">SIGN UP AN ACCOUNT</h4>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="columns-wrapper">
                 <div class="left-column custom-left-column">
@@ -119,6 +119,13 @@
                         {{ vehicleForm.vehicle_color }}
                         <span class="error-message">
                             {{ vehicleForm.vehicle_color.errors }}
+                        </span>
+                    </div>
+
+                    <div class="form-group" style="padding-left: 0px;">
+                        {{ vehicleForm.vehicle_photo }}
+                        <span class="error-message">
+                            {{ vehicleForm.vehicle_photo.errors }}
                         </span>
                     </div>
 

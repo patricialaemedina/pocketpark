@@ -31,9 +31,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yag=+m+vq2gj+erj()f^t@_g+jf+(((_^he(7c)a8q$dg$yb*%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['ph.pocketpark.online']
+ALLOWED_HOSTS = ['ph.pocketpark.online', '*']
 
 CSRF_TRUSTED_ORIGINS = ['http://ph.pocketpark.online', 'https://ph.pocketpark.online']
 
@@ -138,6 +138,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -153,8 +156,13 @@ if 'DATABASE_URL' in os.environ:
 
 # Static file serving.
 # https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
+
+
+
 STORAGES = {
-    # ...
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },

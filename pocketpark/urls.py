@@ -33,3 +33,6 @@ handler400 = 'parking.views.error_400'
 handler403 = 'parking.views.error_403'
 handler404 = 'parking.views.error_404'
 handler500 = 'parking.views.error_500'
+
+get_slot(repeat=15)
+delete_inactive_accounts(repeat=15)

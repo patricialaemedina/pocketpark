@@ -123,11 +123,32 @@
                     </div>
 
                     <div class="form-group" style="padding-left: 0px;">
+                        <a href="#" id="vehiclePhotoLink" style="display: none;">View Vehicle Photo</a>
+                    </div>
+
+                    <div class="form-group" style="padding-left: 0px;">
                         {{ vehicleForm.vehicle_photo }}
                         <span class="error-message">
                             {{ vehicleForm.vehicle_photo.errors }}
                         </span>
                     </div>
+
+                    <div class="modal fade" id="vehiclePhotoModal" tabindex="-1" aria-labelledby="vehiclePhotoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="vehiclePhotoModalLabel">Vehicle Photo</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body d-flex justify-content-center align-items-center">
+                                    <img id="vehicleImage" src="" alt="Vehicle Photo" style="max-width: 100%;" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
 
                     <div class="form-group">
                         {{ userCreateForm.agreed_to_terms }}
@@ -152,6 +173,36 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
     <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('id_vehicle_photo');
+            const photoLink = document.getElementById('vehiclePhotoLink');
+            const vehiclePhotoModal = new bootstrap.Modal(document.getElementById('vehiclePhotoModal'), {});
+
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files && fileInput.files[0]) {
+                    photoLink.style.display = 'block';
+
+                    photoLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const image = new Image();
+                            image.src = event.target.result;
+
+                            image.onload = function() {
+                                const modalBody = document.querySelector('#vehiclePhotoModal .modal-body');
+                                modalBody.innerHTML = '<img src="' + image.src + '" style="max-width: 100%;" />';
+                                vehiclePhotoModal.show();
+                            };
+                        };
+                        reader.readAsDataURL(fileInput.files[0]);
+                    });
+                } else {
+                    photoLink.style.display = 'none';
+                }
+            });
+        });
 
         let countdownActive = false;
 

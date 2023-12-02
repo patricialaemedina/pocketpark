@@ -26,9 +26,6 @@ urlpatterns = [
     path('', include('parking.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 handler400 = 'parking.views.error_400'
 handler403 = 'parking.views.error_403'
 handler404 = 'parking.views.error_404'

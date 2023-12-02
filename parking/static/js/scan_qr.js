@@ -77,6 +77,7 @@ function sendDataToDjango(data) {
         const vehicleModelElement = document.getElementById("vehicle_model");
         const vehicleMakeElement = document.getElementById("vehicle_make");
         const vehicleColorElement = document.getElementById("vehicle_color");
+        const vehiclePhotoElement = document.getElementById("vehicle_photo");
         const expirationTime = new Date(response.expiration_time);
         startCountdown(expirationTime)
 
@@ -90,6 +91,7 @@ function sendDataToDjango(data) {
         vehicleModelElement.innerText = response.vehicle_model;
         vehicleMakeElement.innerText = response.vehicle_make;
         vehicleColorElement.innerText = response.vehicle_color;
+        vehiclePhotoElement.src = response.vehicle_photo;
       }
 
       else {  

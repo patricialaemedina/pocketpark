@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-yag=+m+vq2gj+erj()f^t@_g+jf+(((_^he(7c)a8q$dg$yb*%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ph.pocketpark.online', '*']
+ALLOWED_HOSTS = ['ph.pocketpark.online']
 
 CSRF_TRUSTED_ORIGINS = ['http://ph.pocketpark.online', 'https://ph.pocketpark.online']
 
@@ -138,9 +138,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -161,7 +158,7 @@ if 'DATABASE_URL' in os.environ:
 
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
@@ -181,3 +178,12 @@ EMAIL_USE_TLS = True
 PASSWORD_RESET_TIMEOUT = 3600
 
 BACKGROUND_TASK_RUN_ASYNC = True
+
+AWS_ACCESS_KEY_ID = 'AKIATC5VTPR2UWSULU4O'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'pocketpark-backend'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'ap-southeast-2'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True

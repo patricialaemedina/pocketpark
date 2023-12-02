@@ -324,7 +324,7 @@ def process_qr(request):
                                             'vehicle_model': f"{payment.booking.vehicle.vehicle_model}",
                                             'vehicle_make': f"{payment.booking.vehicle.vehicle_make}",
                                             'vehicle_color': f"{payment.booking.vehicle.vehicle_color}",
-                                            'vehicle_photo': f"{payment.booking.vehicle.vehicle_photo}",
+                                            'vehicle_photo': f"{payment.booking.vehicle.vehicle_photo.url}",
                                             }
                         else:
                             response_data = {'message': 'INVALID: Booking has not started yet'}

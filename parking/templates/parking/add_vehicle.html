@@ -3,10 +3,13 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="{% static 'css/add_vehicle.css' %}">
 
 <div class="new-vehicle">
-    <h4>REGISTER NEW VEHICLE </h4>
+    <h4>REGISTER NEW VEHICLE</h4>
+    <p>Fill in the required information about your vehicle.</p>
 </div>
 
 <div class="container">
@@ -42,6 +45,15 @@
                         {{ form.vehicle_color.errors }}
                     </span>
                 </div>
+
+                <div class="form-group" style="padding-left: 0px;">
+                    <a href="#" id="samplePhotoLink">View Sample Photo</a>
+                </div>
+
+                <div class="form-group" style="padding-left: 0px;">
+                    <a href="#" id="vehiclePhotoLink" style="display: none;">View Uploaded Photo</a>
+                </div>
+
                 <div class="form-group">
                     <label for="vehicle_photo">Vehicle Photo:</label>
                     <input type="file" name="vehicle_photo" accept="image/*" required>
@@ -49,14 +61,95 @@
                         {{ form.vehicle_photo.errors }}
                     </span>
                 </div>
-
+                <div class="modal fade" id="vehiclePhotoModal" tabindex="-1" aria-labelledby="vehiclePhotoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="vehiclePhotoModalLabel">Vehicle Photo</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img id="vehicleImage" src="" alt="Vehicle Photo" style="max-width: 100%;" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="button-container">
-                    <a href="{% url 'profile' %}" class="button" id="cancel-button">CANCEL</a>
+                    <a href="{% url 'profile' %}" style="text-decoration: none;" class="button" id="cancel-button">CANCEL</a>
                     <button class="button" type="submit">ADD VEHICLE</button>
                 </div>
             </div>
         </div>
+
     </form>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/htmx.org@1.6.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const samplePhotoLink = document.getElementById('samplePhotoLink');
+        const vehiclePhotoLink = document.getElementById('vehiclePhotoLink');
+        const vehiclePhotoInput = document.querySelector('input[name="vehicle_photo"]');
+        const vehiclePhotoModal = new bootstrap.Modal(document.getElementById('vehiclePhotoModal'), {});
+
+        samplePhotoLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const samplePhotoSrc = '{% static "images/sample-car.png" %}';
+            displayPhoto(samplePhotoSrc);
+        });
+
+        vehiclePhotoLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (vehiclePhotoInput.files && vehiclePhotoInput.files[0]) {
+                const file = vehiclePhotoInput.files[0];
+                displayChosenPhoto(file);
+            }
+        });
+
+        vehiclePhotoInput.addEventListener('change', function() {
+            if (vehiclePhotoInput.files && vehiclePhotoInput.files[0]) {
+                showVehiclePhotoLink();
+                hideSamplePhotoLink(); 
+            } else {
+                hideVehiclePhotoLink();
+            }
+        });
+
+        function displayPhoto(imageSrc) {
+            const vehicleImage = document.getElementById('vehicleImage');
+            vehicleImage.src = imageSrc;
+            vehiclePhotoModal.show();
+        }
+
+        function displayChosenPhoto(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                displayPhoto(event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showVehiclePhotoLink() {
+            vehiclePhotoLink.style.display = 'block';
+        }
+
+        function hideVehiclePhotoLink() {
+            vehiclePhotoLink.style.display = 'none';
+        }
+
+        function hideSamplePhotoLink() {
+            samplePhotoLink.style.display = 'none';
+        }
+    });
+
+
+</script>
 {% endblock %}

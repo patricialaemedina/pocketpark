@@ -160,8 +160,16 @@ form input:focus {
     font-style: italic;
 }
 
-/*---------------------------------------------/
-/* Media query for screens 768px and below */
+a {
+    color: var(--third-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 768px) {
     .new-vehicle {
         padding: 2rem 0 0 0;

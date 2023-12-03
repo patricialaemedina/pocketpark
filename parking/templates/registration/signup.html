@@ -123,7 +123,11 @@
                     </div>
 
                     <div class="form-group" style="padding-left: 0px;">
-                        <a href="#" id="vehiclePhotoLink" style="display: none;">View Vehicle Photo</a>
+                        <a href="#" id="samplePhotoLink">View Sample Photo</a>
+                    </div>
+
+                    <div class="form-group" style="padding-left: 0px;">
+                        <a href="#" id="vehiclePhotoLink" style="display: none;">View Uploaded Photo</a>
                     </div>
 
                     <div class="form-group" style="padding-left: 0px;">
@@ -168,124 +172,135 @@
             </div>
         </form>
     </div>
-    
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
     <script>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const fileInput = document.getElementById('id_vehicle_photo');
-            const photoLink = document.getElementById('vehiclePhotoLink');
-            const vehiclePhotoModal = new bootstrap.Modal(document.getElementById('vehiclePhotoModal'), {});
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.getElementById('id_vehicle_photo');
+        const photoLink = document.getElementById('vehiclePhotoLink');
+        const samplePhotoLink = document.getElementById('samplePhotoLink');
+        const vehiclePhotoModal = new bootstrap.Modal(document.getElementById('vehiclePhotoModal'), {});
 
-            fileInput.addEventListener('change', function() {
-                if (fileInput.files && fileInput.files[0]) {
-                    photoLink.style.display = 'block';
-
-                    photoLink.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            const image = new Image();
-                            image.src = event.target.result;
-
-                            image.onload = function() {
-                                const modalBody = document.querySelector('#vehiclePhotoModal .modal-body');
-                                modalBody.innerHTML = '<img src="' + image.src + '" style="max-width: 100%;" />';
-                                vehiclePhotoModal.show();
-                            };
-                        };
-                        reader.readAsDataURL(fileInput.files[0]);
-                    });
-                } else {
-                    photoLink.style.display = 'none';
-                }
-            });
-        });
-
-        let countdownActive = false;
-
-        function startCountdown() {
-            const modal = $('#termsAndConditionsModal');
-            let count = 5;
-    
-            function updateCountdown() {
-                if (count > 0) {
-                    modal.find('.countdown-timer').text(`CLOSE (${count})`);
-                    const closeButton = modal.find('.modal-footer button');
-                    closeButton.css({
-                        'background-color': '#A13232',
-                        'border': '1px solid'
-                    });
-                    count--;
-                    setTimeout(updateCountdown, 1000);
-                } else {
-                    modal.find('.countdown-timer').text('CLOSE');
-                    countdownActive = false; // Countdown is complete
-                    const closeButton = modal.find('.modal-footer button');
-                    closeButton.prop('disabled', false);
-                    closeButton.css({
-                        'background-color': '#3B5D50',
-                        'border': '1px solid',
-                        'transition': 'background-color 0.5s ease'
-                    });
-    
-                    closeButton.hover(
-                        function () {
-                            $(this).css({
-                                'background-color': 'transparent',
-                                'border': '1px solid #3B5D50',
-                                'color': '#3B5D50'
-                            });
-                        },
-                        function () {
-                            $(this).css({
-                                'background-color': '#3B5D50',
-                                'color': '#fff' 
-                            });
-                        }
-                    );
-                }
-            }
-
-            modal.on('shown.bs.modal', function () {
-                countdownActive = true;
-                updateCountdown();
-            });
+        function displayPhoto(imageSrc) {
+            const modalBody = document.querySelector('#vehiclePhotoModal .modal-body');
+            modalBody.innerHTML = '<img src="' + imageSrc + '" style="max-width: 100%;" />';
+            vehiclePhotoModal.show();
         }
 
-        document.getElementById('termsAndConditionsLink').addEventListener('click', function (e) {
-            e.preventDefault();
-            const modal = $('#termsAndConditionsModal');
-            modal.modal('show');
-            startCountdown();
-        });
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files && fileInput.files[0]) {
+                photoLink.style.display = 'block'; 
 
-        $('#termsAndConditionsModal').on('hide.bs.modal', function (e) {
-            if (countdownActive) {
-                e.preventDefault();
+                photoLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const image = new Image();
+                        image.src = event.target.result;
+
+                        image.onload = function() {
+                            displayPhoto(image.src); 
+                        };
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                });
+                
+                samplePhotoLink.style.display = 'none'; 
+            } else {
+                photoLink.style.display = 'none'; 
             }
         });
-
-        const passwordToggles = document.querySelectorAll(".password-toggle");
-
-        passwordToggles.forEach(function (passwordToggle) {
-            passwordToggle.addEventListener("click", function () {
-                const targetId = passwordToggle.getAttribute("data-target");
-                const passwordInput = document.getElementById(targetId);
-
-                if (passwordInput.type === "password") {
-                    passwordInput.type = "text";
-                    passwordToggle.classList.remove("fa-eye-slash");
-                    passwordToggle.classList.add("fa-eye");
-                } else {
-                    passwordInput.type = "password";
-                    passwordToggle.classList.remove("fa-eye");
-                    passwordToggle.classList.add("fa-eye-slash");
-                }
-            });
+        
+        samplePhotoLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const samplePhotoSrc = '{% static "images/sample-car.png" %}';
+            displayPhoto(samplePhotoSrc); 
         });
+    });
+
+    let countdownActive = false;
+
+    function startCountdown() {
+        const modal = $('#termsAndConditionsModal');
+        let count = 5;
+
+        function updateCountdown() {
+            if (count > 0) {
+                modal.find('.countdown-timer').text(`CLOSE (${count})`);
+                const closeButton = modal.find('.modal-footer button');
+                closeButton.css({
+                    'background-color': '#A13232',
+                    'border': '1px solid'
+                });                    count--;
+                setTimeout(updateCountdown, 1000);
+            } else {
+                modal.find('.countdown-timer').text('CLOSE');
+                countdownActive = false; // Countdown is complete
+                const closeButton = modal.find('.modal-footer button');
+                closeButton.prop('disabled', false);
+                closeButton.css({
+                    'background-color': '#3B5D50',
+                    'border': '1px solid',
+                    'transition': 'background-color 0.5s ease'
+                });
+
+                closeButton.hover(
+                    function () {
+                        $(this).css({
+                            'background-color': 'transparent',
+                            'border': '1px solid #3B5D50',
+                            'color': '#3B5D50'
+                        });
+                    },
+                    function () {
+                        $(this).css({
+                            'background-color': '#3B5D50',
+                            'color': '#fff' 
+                        });
+                    }
+                );
+            }
+        }
+
+            modal.on('shown.bs.modal', function () {
+            countdownActive = true;
+            updateCountdown();
+        });
+    }
+    document.getElementById('termsAndConditionsLink').addEventListener('click', function (e) {
+        e.preventDefault();
+        const modal = $('#termsAndConditionsModal');
+        modal.modal('show');
+        startCountdown(); 
+    });
+
+    $('#termsAndConditionsModal').on('hide.bs.modal', function (e) {
+        if (countdownActive) {
+            e.preventDefault();
+        }
+    });
+
+    const passwordToggles = document.querySelectorAll(".password-toggle");
+
+    passwordToggles.forEach(function (passwordToggle) {
+        passwordToggle.addEventListener("click", function () {
+            const targetId = passwordToggle.getAttribute("data-target");
+            const passwordInput = document.getElementById(targetId);
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordToggle.classList.remove("fa-eye-slash");
+                passwordToggle.classList.add("fa-eye");
+            } else {
+                passwordInput.type = "password";
+                passwordToggle.classList.remove("fa-eye");
+                passwordToggle.classList.add("fa-eye-slash");
+            }
+        });
+    });
     </script>
 
 </body>

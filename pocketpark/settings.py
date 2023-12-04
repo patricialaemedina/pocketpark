@@ -130,16 +130,8 @@ USE_L10N = False
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 STATIC_URL = '/static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -150,11 +142,6 @@ if 'DATABASE_URL' in os.environ:
         conn_max_age=500,
         conn_health_checks=True,
     )
-
-# Static file serving.
-# https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
-
-
 
 STORAGES = {
     "default": {
@@ -169,7 +156,6 @@ RECAPTCHA_PUBLIC_KEY = '6LdaUxQpAAAAANd_2LqFFSUL20P-4Xj6MkLuMgAi'
 RECAPTCHA_PRIVATE_KEY = '6LdaUxQpAAAAAJKf5PHpezFp0-7S7WeDZ4Ik84G-'
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
-# Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

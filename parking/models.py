@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from decimal import Decimal
@@ -35,8 +36,14 @@ class Suggestion(models.Model):
         return f"{self.suggestions} - {self.user.username}"
 
 class Vehicle(models.Model):
+    license_plate_regex = r'^[A-Z]{3}-\d{3,4}$'
+    license_plate_validator = RegexValidator(
+        regex=license_plate_regex,
+        message='Enter a valid license plate in the format LLL-DDD or LLL-DDDD.'
+    )
+
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    license_plate = models.CharField(max_length=20, help_text='Enter a license plate (e.g. LLL-DDDD or LLL-DDD).')
+    license_plate = models.CharField(max_length=20, validators=[license_plate_validator], help_text='Enter a license plate (e.g. LLL-DDDD or LLL-DDD).')
     vehicle_make = models.CharField(max_length=50)
     vehicle_model = models.CharField(max_length=50)
     vehicle_color = models.CharField(max_length=20)

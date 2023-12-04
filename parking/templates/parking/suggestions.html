@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/suggestions.css' %}">
+
+<div class="suggestions">
+    <h4>SUGGESTIONS FOR POCKETPARK</h4>
+    <p>We highly value and appreciate your insights and ideas.</p>
+</div>
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <textarea id="suggestions" name="suggestions" placeholder="Enter your suggestions here."></textarea>
+        <div class="button-container">
+            <a href="{% url 'profile' %}" class="button" id="cancel-button">GO BACK</a>
+            <input type="submit" class="button" value="SUBMIT">
+        </div>
+    </form>
+    
+</div>
+
+{% endblock %}

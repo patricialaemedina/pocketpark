@@ -27,9 +27,16 @@ class UserAgreement(models.Model):
     def __str__(self):
         return f"User Agreement for {self.user.username}"
 
+class Suggestion(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    suggestions = models.TextField()
+
+    def __str__(self):
+        return f"{self.suggestions} - {self.user.username}"
+
 class Vehicle(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    license_plate = models.CharField(max_length=20, help_text='Enter a license plate (e.g. ABC 1234).')
+    license_plate = models.CharField(max_length=20, help_text='Enter a license plate (e.g. LLL-DDDD or LLL-DDD).')
     vehicle_make = models.CharField(max_length=50)
     vehicle_model = models.CharField(max_length=50)
     vehicle_color = models.CharField(max_length=20)

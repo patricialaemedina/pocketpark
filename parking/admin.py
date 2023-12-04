@@ -66,6 +66,13 @@ class UserAgreementAdmin(admin.ModelAdmin):
 
 admin.site.register(UserAgreement, UserAgreementAdmin)
 
+class SuggestionsAdmin(admin.ModelAdmin):
+    list_display = (
+        'user', 'suggestions'
+    )
+
+admin.site.register(Suggestion, SuggestionsAdmin)
+
 class VehicleAdmin(admin.ModelAdmin):
     list_display = (
         'license_plate', 'vehicle_model', 'vehicle_make', 'vehicle_color', 'owner', 'vehicle_photo',

@@ -200,6 +200,10 @@ body {
     overflow-x: auto;
 }
 
+.feedback-item {
+    color: red;
+}
+
 /* Media query for screens 768px and below */
 @media screen and (max-width: 768px) {
     .colors-indicator {

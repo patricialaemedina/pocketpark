@@ -92,6 +92,16 @@ def guidelines(request):
     return render(request, 'parking/guidelines.html', {})
 
 @login_required(login_url='login')
+def suggestions(request):
+    if request.method == 'POST':
+        suggest = request.POST.get('suggestions')
+        suggestion = Suggestion.objects.create(user=request.user, suggestions=suggest)
+
+        return redirect('profile')
+        
+    return render(request, 'parking/suggestions.html', {})
+
+@login_required(login_url='login')
 def profile(request):
     vehicles = Vehicle.objects.filter(owner=request.user)
 
@@ -162,7 +172,9 @@ def parking_area(request):
     else:
         already_booked = False
 
-    context = {'slots': slots, 'already_booked': already_booked}
+    feedbacks = Feedback.objects.all().order_by('-submitted_at')
+
+    context = {'slots': slots, 'already_booked': already_booked, 'feedbacks': feedbacks}
 
     if request.htmx:
         return render(request, 'partials/slot.html', context)

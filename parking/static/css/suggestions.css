@@ -1,0 +1,160 @@
+body {
+    overflow-x: hidden;
+  }
+  
+  .suggestions {
+      padding: 3rem 0 0 0rem;
+      margin-bottom: 0;
+      text-align: center; 
+      position: relative;
+    }
+    
+    .suggestions h4 {
+      color: var(--third-color);
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: inline-block;
+      position: relative;
+      padding: 0 20px;
+      transition: ease .40s;
+    }
+    
+    .suggestions h4::before,
+    .suggestions h4::after {
+      content: ""; 
+      position: absolute; 
+      top: 50%; 
+      width: 70%; 
+      height: 2px; 
+      background-color: var(--second-color); 
+      transition: ease .40s;
+    }
+    
+    .suggestions h4::before {
+      left: 0; 
+      transform: translateX(-100%);
+    }
+    
+    .suggestions h4::after {
+      right: 0; 
+      transform: translateX(100%); 
+    }
+
+    .suggestions p {
+        color: var(--text-color);
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        margin-bottom: 0;
+        transition: ease .40s;
+        text-align: center;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items:flex-end;
+    }
+
+    .button {
+      color: var(--bg-color);
+      background-color: var(--second-color);
+      font-size: var(--text-font);
+      border: 1px solid;
+      border-radius: 18px;
+      transition: ease .40s;
+      font-weight: bolder;
+      cursor: pointer;
+      padding: 8px 20px;
+    }
+  
+    .button:hover {
+      color: var(--second-color);
+      transform: scale(1);
+      background-color: transparent;
+      border: 1px solid #F9BF29;
+      cursor: pointer;
+    }
+    
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    form #suggestions {
+        margin: 3rem;
+        margin-bottom: 0;
+        width: 50rem;
+        padding: 12px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 20rem; 
+        font-size: 16px;
+        resize: vertical;
+    }
+
+    #cancel-button {
+        color: var(--bg-color);
+        background-color: var(--third-color);
+        font-size: var(--text-font);
+        border: 1px solid;
+        border-radius: 18px;
+        transition: ease .40s;
+        font-weight: bolder;
+        cursor: pointer;
+        padding: 8px 20px;
+    }
+    
+    #cancel-button:hover {
+        color: var(--third-color);
+        transform: scale(1);
+        background-color: transparent;
+        border: 1px solid #3B5D50;
+        cursor: pointer;
+    }
+    
+    .button {
+        margin: 0.5rem;
+    }
+
+  @media (max-width: 768px) {
+      .suggestions {
+          padding: 2rem 0 0 0rem; 
+      }
+    
+      .suggestions h4 {
+        font-size: 1rem; 
+      }
+  
+      .suggestions h4::before,
+      .suggestions h4::after {
+          width: 10.5%;
+      }
+    
+      .suggestions p {
+        font-size: .9rem; 
+        margin-top: 1rem;
+      }
+
+      form #suggestions {
+        margin: 1.5rem;
+        margin-bottom: 0;
+        width: 20rem;
+        padding: 12px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        height: 15rem; 
+        font-size: 16px;
+    }
+
+    textarea {
+        font-size: 1rem;
+    }
+
+}
+
+    
+    

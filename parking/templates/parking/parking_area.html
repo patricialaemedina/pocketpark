@@ -94,6 +94,26 @@
     </div>
 </div>
 
+<div class="colors-indicator">
+    <h4>FEEDBACK FROM OUR USERS</h4>
+</div>
+
+<div class="container">
+    <div class="feedbacks-container" style="height: 300px; overflow-y: auto;">
+        {% if feedbacks %}
+            <ul>
+                {% for feedback in feedbacks %}
+                    <li class="feedback-item">
+                        <strong>{{ feedback.rating }}</strong> - {{ feedback.comments }} - Slot {{ feedback.payment.booking.slot.number }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No feedback available.</p>
+        {% endif %}
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/htmx.org@1.6.1"></script>
 <script>

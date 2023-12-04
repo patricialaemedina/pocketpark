@@ -111,14 +111,14 @@ class VehicleForm(forms.ModelForm):
     def clean_license_plate(self):
         license_plate = self.cleaned_data['license_plate']
 
-        private_vehicle_plate_pattern = re.compile(r'^[A-Z]{3}\s\d{3,4}$')
+        private_vehicle_plate_pattern = re.compile(r'^[A-Z]{3}-\d{3,4}$')
 
         if not license_plate:
             raise ValidationError('This field is required.')
         if Vehicle.objects.filter(license_plate=license_plate).exists():
             raise ValidationError('This license plate is already registered.')
         if not private_vehicle_plate_pattern.match(license_plate):
-            raise ValidationError('License plate should be in the format LLL NNN or LLL NNNN.')
+            raise ValidationError('License plate should be in the format LLL-DDD or LLL-DDDD.')
                     
         return license_plate
 

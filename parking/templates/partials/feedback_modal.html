@@ -1,83 +1,108 @@
-{% load static %}
-<style>
-    .modal-content {
-        border: 1px solid #F9BF29;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Rating Feedback</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
 
-    }
+        .modal-content {
+            border: 1px solid #F9BF29;
 
-    .modal-header {
-        margin: 0 1.2rem;
-        border: none;
-    }
+        }
 
-    .modal-title {
-        color: #F9BF29;
-        border: none;
+        .modal-header {
+            margin: 0 1.2rem;
+            border: none;
+        }
 
+        .modal-title {
+            color: #F9BF29;
+            border: none;
+            
 
-    }
+        }
 
-    .modal-body {
-        text-align: justify;
-        margin: 0 2.3rem;
-        padding: 0;
-    }
+        .modal-body {
+            text-align: justify;
+            margin: 0 2.3rem;
+            padding: 0;
+        }
 
-    .modal-body h4 {
-        text-align: center;
-        font-size: 1.3rem;
-        font-weight: bold;
-        color: #3B5D50;
-        margin-bottom: 1rem;
-    }
+        .modal-body h4 {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #3B5D50;
+            margin-bottom: 1rem;
+        }
 
-    .modal-body h5 {
-        padding-top: .5rem;
-        padding-bottom: .5rem;
-        font-size: 1rem;
-        font-weight: bold;
-    }
+        .modal-body h5 {
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+            font-size: 1rem;
+            font-weight: bold;
+        }
 
-    .row {
-        margin-left: .5rem;
-    }
+        .row {
+            margin-left: .5rem;
+        }
 
-    .form-check-label {
-        font-weight: 400;
-        font-size: 1rem;
-    }
+        .form-check-label {
+            font-weight: 400;
+            font-size: 1rem;
+        }
 
-    .modal-footer {
-        margin-right: 1.2rem;
-        border: none;
-    }
+        .modal-footer {
+            margin-right: 1.2rem;
+            border: none;
+        }
 
-    .modal-footer .btn-primary:nth-child(1) {
-        background-color: #3B5D50;
-        color: #FFFFFF;
-        border: 1px solid #3B5D50;
-    }
+        .modal-footer .btn-primary:nth-child(1) {
+            background-color: #3B5D50;
+            color: #FFFFFF;
+            border: 1px solid #3B5D50;
+        }
 
-    .modal-footer .btn-primary:nth-child(1):hover {
-        background-color: transparent;
-        color: #3B5D50;
-        border: 1px solid #3B5D50;
-    }
+        .modal-footer .btn-primary:nth-child(1):hover {
+            background-color: transparent;
+            color: #3B5D50;
+            border: 1px solid #3B5D50;
+        }
 
-    .modal-footer .btn-primary:nth-child(2) {
-        background-color: #F9BF29;
-        color: #FFFFFF;
-        border: 1px solid #F9BF29;
-    }
+        .modal-footer .btn-primary:nth-child(2) {
+            background-color: #F9BF29;
+            color: #FFFFFF;
+            border: 1px solid #F9BF29;
+        }
 
-    .modal-footer .btn-primary:nth-child(2):hover {
-        background-color: transparent;
-        color: #F9BF29;
-        border: 1px solid #F9BF29;
-    }
-</style>
+        .modal-footer .btn-primary:nth-child(2):hover {
+            background-color: transparent;
+            color: #F9BF29;
+            border: 1px solid #F9BF29;
+        }
+     
+        .star-container {
+            display: flex; 
+            justify-content: center;
+        }
 
-<!-- for feedbackFormModal -->
+        .star {
+            font-size: 30px;
+            color: #ccc; 
+            cursor: pointer;
+            margin-right: 20px; 
+        }
+
+        .star i.fas {
+            color: #F9BF29; 
+        }
+    </style>
+</head>
+<body>
+
 <div class="modal fade" id="feedbackFormModal" data-feedback-exists="{{ feedback_exists }}" data-bs-backdrop="static"
     tabindex="-1" aria-labelledby="feedbackFormModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -88,7 +113,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="{% url 'submit_feedback' %}" id="feedback-form">
-                <!-- Add a form tag and specify the action -->
                 {% csrf_token %}
                 <div class="modal-body">
                     <h4>Feedback Form: PocketPark Reservation Experience</h4>
@@ -96,36 +120,13 @@
                         reservation experience with PocketPark. Please take a moment
                         to let us know how we did. </p>
                     <h5>1. How do you rate your reservation experience with PocketPark?</h5>
-                    <div class="row">
-                        <div class="col-auto">
-                            <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault1"
-                                value="Excellent">
-                            <label class="form-check-label" for="flexRadioDefault1">Excellent</label>
-                        </div>
-
-                        <div class="col-auto">
-                            <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault2"
-                                value="Good">
-                            <label class="form-check-label" for="flexRadioDefault2">Good</label>
-                        </div>
-
-                        <div class="col-auto">
-                            <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault3"
-                                value="Medium">
-                            <label class="form-check-label" for="flexRadioDefault3">Medium</label>
-                        </div>
-
-                        <div class="col-auto">
-                            <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault4"
-                                value="Poor">
-                            <label class="form-check-label" for="flexRadioDefault4">Poor</label>
-                        </div>
-
-                        <div class="col-auto">
-                            <input class="form-check-input" type="radio" name="rating" id="flexRadioDefault5"
-                                value="Very Bad">
-                            <label class="form-check-label" for="flexRadioDefault5">Very Bad</label>
-                        </div>
+                    <div class="star-container"> 
+                        <span class="star" data-value="1"><i class="far fa-star"></i></span>
+                        <span class="star" data-value="2"><i class="far fa-star"></i></span>
+                        <span class="star" data-value="3"><i class="far fa-star"></i></span>
+                        <span class="star" data-value="4"><i class="far fa-star"></i></span>
+                        <span class="star" data-value="5"><i class="far fa-star"></i></span>
+                        <input type="hidden" name="rating" id="rating" value="">
                     </div>
                     <h5>2. Do you have any comments about PocketPark?
                         (Please feel free to share any additional thoughts,
@@ -145,12 +146,35 @@
 
 <script>
     document.getElementById('feedback-form').addEventListener('submit', function (event) {
-        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        const selectedRating = document.querySelector('.star-container input[type="hidden"]').value;
         const comments = document.getElementById('comments').value.trim();
 
-        if (!selectedRating) {
+        if (selectedRating === '') {
             alert('Please select a rating before submitting.');
             event.preventDefault();
         }
     });
+
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('rating');
+
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const value = this.getAttribute('data-value');
+            ratingInput.value = value;
+
+            stars.forEach(s => {
+                if (s.getAttribute('data-value') <= value) {
+                    s.querySelector('i').classList.add('fas');
+                    s.querySelector('i').classList.remove('far');
+                } else {
+                    s.querySelector('i').classList.add('far');
+                    s.querySelector('i').classList.remove('fas');
+                }
+            });
+        });
+    });
 </script>
+
+</body>
+</html>

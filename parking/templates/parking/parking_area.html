@@ -5,6 +5,7 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/parking_area.css' %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 {% if request.session.payment_processed %}
@@ -30,6 +31,203 @@
 {% if already_booked %}
     {% include 'partials/modal.html' with modal_id="alreadyBookedModal" modal_title="ALREADY BOOKED" modal_content="You already have an active booking. Please wait until it expires before making another reservation. Thank you. Drive and park safely." %}
 {% endif %}
+
+<style>
+    .divider {
+        margin: 1rem 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .average-rating {
+        text-align: center;
+    }
+
+    .average-rating h4{
+        font-size: 1.8rem;
+        font-weight: bolder;
+        margin: 0;
+    }
+
+    .average-rating p{
+        color: #555;
+        margin: 0;
+    }
+
+    .bar-graph {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bar-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .stars {
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .bar-outer {
+        width: 80%;
+        height: 25px;
+        border-radius: 5px;
+        background-color: #ccc;
+        overflow: hidden;
+    }
+
+    .outer-bar {
+        width: 200%;
+        height: 100%;
+        border-radius: 5px;
+    }
+
+    .inner-bar {
+        height: 100%;
+        width: 0; 
+        transition: width 0.5s ease;
+        border-radius: 5px;
+        color: #ccc;
+    }
+
+    .bar-count {
+        margin-left: 10px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .color-1 { background-color: #A13232; }
+    .color-2 { background-color: #DA6A00; }
+    .color-3 { background-color: #F9BF29; }
+    .color-4 { background-color: #445d3b; }
+    .color-5 { background-color: #3B5D50; }
+
+    .feedback-item {
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+    .user-info {
+        margin-left: 10px;
+    }
+
+    .user-and-date {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .user{
+        color: #3B5D50;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .rating {
+        color: #FFD700;
+        font-size: 18px;
+        margin-left: 10px;
+    }
+
+    .date {
+        color: #555;
+        font-style: italic;
+        margin-right: 10px;
+    }
+
+    .feedbacks-container {
+        margin-bottom: 2rem;
+    }
+
+    .feedbacks-container .comments {
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+
+    .comments {
+        color: #555;
+        margin-top: 5px;
+        margin-left: 10px;
+        text-align: justify;
+        margin-bottom: 0;
+    }
+
+    p {
+        margin-bottom: 0.5rem;
+    }
+
+    .slot {
+
+    }
+
+    /* Media query for screens up to 768px */
+    @media screen and (max-width: 768px) {
+
+        .divider {
+            flex-direction: column;
+        }
+
+        .average-rating {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .average-rating h4{
+            font-size: 1.1rem;
+        }
+    
+        .average-rating p{
+            font-size: .8rem;
+        }
+
+        .bar-container{
+            margin-bottom: 5px;
+        }
+
+        .bar-graph {
+            width: 70%;
+        }
+
+        .bar-outer {
+            width: 100%;
+            margin-bottom: 5px;
+            height: 20px;
+        } 
+
+        .feedbacks-container {
+            
+        }
+        
+        .feedbacks-container ul {
+            margin: 0 1rem;
+            padding: 0;
+        }
+
+        .user,
+        .rating,
+        .date{
+            font-size: .9rem;
+        }
+
+        .rating {
+            margin-left: 0;
+        }
+        
+        .comments {
+            color: #555;
+            margin-top: 0px;
+            margin-left: 10px;
+            text-align: justify;
+        }
+    }
+</style>
 
 <div class="colors-indicator">
     <h4>PARKING AREA CURRENT STATUS</h4>
@@ -79,7 +277,7 @@
                         <td>₱70.00</td>
                     </tr>
                     <tr>
-                        <td>7+ hours</td>
+                        <td>6+ hours</td>
                         <td>₱80.00</td>
                     </tr>
                 </table>
@@ -94,17 +292,52 @@
     </div>
 </div>
 
-<div class="colors-indicator">
+<div class="colors-indicator">  
     <h4>FEEDBACK FROM OUR USERS</h4>
+</div>
+
+<div class="divider">
+    <div class="average-rating">
+        <h4>Ratings: {{ average_rating|floatformat:1 }}</h4>
+        <p>{{ total_feedbacks_count }} Reviews</p>
+    </div>
+    <div class="bar-graph">
+    {% for rating_count in star_distribution|dictsortreversed:"rating" %}
+        <div class="bar-container">
+            <span class="stars">{{ rating_count.rating }} </span>
+            <div class="bar-outer">
+                <div class="outer-bar">
+                    <div class="inner-bar color-{{ rating_count.rating }}" data-width="{{ rating_count.width }}"></div>
+                </div>
+            </div>
+            <p class="bar-count">{{ rating_count.count }}</p>
+        </div>
+    {% endfor %}
+    </div>
 </div>
 
 <div class="container">
     <div class="feedbacks-container" style="height: 300px; overflow-y: auto;">
+
         {% if feedbacks %}
             <ul>
                 {% for feedback in feedbacks %}
                     <li class="feedback-item">
-                        <strong>{{ feedback.rating }}</strong> - {{ feedback.comments }} - Slot {{ feedback.payment.booking.slot.number }}
+                        <div class="user-and-date">
+                            <div class="user-info">
+                                <p class="user">{{ feedback.user }}</p>
+                                <p class="slot">Slot #{{ feedback.slot_number }} | {{ feedback.rating_stars }}</p>
+                            </div>
+                            <div class="date">
+                                <p>Date: {{ feedback.creation_date }}</p>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <p></p>
+                        </div>
+                        <div class="comments">
+                            <p>{{ feedback.comments }}</p>
+                        </div>
                     </li>
                 {% endfor %}
             </ul>
@@ -118,6 +351,13 @@
 <script src="https://unpkg.com/htmx.org@1.6.1"></script>
 <script>
     
+    $(document).on("htmx:load", function (evt) {
+        $(".inner-bar").each(function () { 
+            var width = $(this).data("width");
+            $(this).css("width", width + "%").addClass("bar-custom-width");
+        });
+    });
+
     $(document).ready(function () {
         console.log("JavaScript is running");
 

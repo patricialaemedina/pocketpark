@@ -6,6 +6,7 @@ import datetime
 import urllib.parse
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Avg, Count
 from django.contrib import messages, auth
 from django.shortcuts import redirect, render
 from django.contrib.auth import get_user_model
@@ -162,6 +163,13 @@ def activeEmail(request, user, to_email):
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     def get(self, request, *args, **kwargs):
         return render(request, 'registration/login.html')
+
+def convert_to_stars(rating):
+    try:
+        rating_value = int(rating)
+        return '⭐' * rating_value  
+    except ValueError:
+        return ''
 
 def check_and_ban_user(username):
     try:

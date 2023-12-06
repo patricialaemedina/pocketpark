@@ -113,15 +113,15 @@ class Receipt(models.Model):
         return f"Receipt for Booking {self.payment.booking.id}"   
 
 class Feedback(models.Model):
-    RATINGS = (
-        ('Excellent', 'Excellent'),
-        ('Good', 'Good'),
-        ('Medium', 'Medium'),
-        ('Poor', 'Poor'),
-        ('Very Bad', 'Very Bad'),
+    RATING_CHOICES = (
+        (1, '1 star'),
+        (2, '2 stars'),
+        (3, '3 stars'),
+        (4, '4 stars'),
+        (5, '5 stars'),
     )
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
-    rating = models.CharField(max_length=20, choices=RATINGS)
+    rating = models.IntegerField(choices=RATING_CHOICES)
     comments = models.TextField()
     submitted_at = models.DateTimeField(auto_now_add=True)
 

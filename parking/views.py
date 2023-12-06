@@ -174,7 +174,40 @@ def parking_area(request):
 
     feedbacks = Feedback.objects.all().order_by('-submitted_at')
 
-    context = {'slots': slots, 'already_booked': already_booked, 'feedbacks': feedbacks}
+    average_rating_dict = Feedback.objects.aggregate(Avg('rating'))
+    average_rating = average_rating_dict.get('rating__avg', 0) if average_rating_dict else 0
+    
+    total_feedbacks_count = Feedback.objects.count()
+    
+    star_distribution = (
+        Feedback.objects.values('rating')
+        .annotate(count=Count('rating'))
+        .order_by('rating')
+    )
+
+    rating_bars = [
+        {'rating': i, 'width': 0} for i in range(1, 6)
+    ] 
+    
+    for rating_count in star_distribution:
+        width_value = rating_count['count'] * 10  
+        rating_bars[rating_count['rating'] - 1]['width'] = width_value
+
+    context = {'slots': slots, 'already_booked': already_booked, 'feedbacks': feedbacks, 'average_rating': average_rating, 'star_distribution': rating_bars, 'total_feedbacks_count': total_feedbacks_count}
+    
+    feedbacks_with_slots = []
+    for feedback in feedbacks:
+        slot_number = feedback.payment.booking.slot.number
+        feedback_data = {
+            'user': feedback.payment.booking.user.username,
+            'rating_stars': convert_to_stars(feedback.rating),
+            'comments': feedback.comments,
+            'slot_number': slot_number,
+            'creation_date': feedback.submitted_at.strftime("%Y-%m-%d"),  
+        }
+        feedbacks_with_slots.append(feedback_data)
+
+    context['feedbacks'] = feedbacks_with_slots
 
     if request.htmx:
         return render(request, 'partials/slot.html', context)

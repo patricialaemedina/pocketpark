@@ -252,6 +252,10 @@ body::-webkit-scrollbar {
   .fade.fade-out {
     opacity: 0;
   }
+
+  .footer a {
+    text-decoration: none;
+  }
   
   
   /* Media query for screens 768px and below */

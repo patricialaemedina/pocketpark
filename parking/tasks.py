@@ -164,6 +164,28 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     def get(self, request, *args, **kwargs):
         return render(request, 'registration/login.html')
 
+def delete_vehicle(request, license_plate):
+    try:
+        vehicle = Vehicle.objects.get(license_plate=license_plate)
+        vehicle.delete()
+        return JsonResponse({'deleted': True})
+    except Vehicle.DoesNotExist:
+        return JsonResponse({'deleted': False, 'message': 'Vehicle not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'deleted': False, 'message': str(e)}, status=500)
+
+def get_vehicle_info(request):
+    vehicles = Vehicle.objects.filter(owner=request.user)
+    vehicle_data = []
+    for vehicle in vehicles:
+        vehicle_data.append({
+            'license_plate': vehicle.license_plate,
+            'vehicle_make': vehicle.vehicle_make,
+            'vehicle_model': vehicle.vehicle_model,
+            'vehicle_color': vehicle.vehicle_color,
+        })
+    return JsonResponse({'vehicles': vehicle_data})
+
 def convert_to_stars(rating):
     try:
         rating_value = int(rating)

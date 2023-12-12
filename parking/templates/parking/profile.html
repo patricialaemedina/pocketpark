@@ -3,7 +3,11 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+{% include 'partials/confirmation_modal.html' with modal_id='deleteVehicleModal' modal_title='Delete Vehicle' modal_content='Are you sure you want to delete this vehicle?' %}
 
 <div class="messages">
     {% if messages %}
@@ -42,7 +46,8 @@
         <h4>VEHICLE INFORMATION</h4>
         <ul>
             {% for vehicle in vehicles %}
-            <li><b>License Plate Number: </b>{{ vehicle.license_plate }}</li>
+            <li><b>License Plate Number: </b>{{ vehicle.license_plate }}
+                <button class="btn btn-danger delete-button" data-license-plate="{{ vehicle.license_plate }}" data-bs-toggle="modal" data-bs-target="#deleteVehicleModal" style="margin-left: 1rem;">Delete</button></li>
             <li><b>Vehicle Make: </b>{{ vehicle.vehicle_make }}</li>
             <li><b>Vehicle Model: </b>{{ vehicle.vehicle_model }}</li>
             <li><b>Vehicle Color: </b>{{ vehicle.vehicle_color }}</li>
@@ -93,14 +98,85 @@
     </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/htmx.org@1.6.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // pa-add rin ng mga kulang dito
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        const deleteVehicleModal = new bootstrap.Modal(document.getElementById('deleteVehicleModal'), {});
+        const deleteConfirmButton = document.getElementById('okayButton');
+
+        document.querySelector('.right-column ul').addEventListener('click', function (event) {
+            const deleteButton = event.target.closest('.delete-button');
+            if (deleteButton) {
+                const licensePlate = deleteButton.getAttribute('data-license-plate');
+                deleteConfirmButton.setAttribute('data-license-plate', licensePlate);
+                deleteVehicleModal.show();
+            }
+        });
+        function updateVehicleInfo() {
+
+            $.ajax({
+                url: '/get-vehicle-info/',  
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    const rightColumn = document.querySelector('.right-column ul'); 
+                    if (rightColumn) {
+                        rightColumn.innerHTML = '';  
+                        const vehicles = response.vehicles; 
+                        vehicles.forEach(vehicle => {
+                            const vehicleDetails = `
+                                <li><b>License Plate Number: </b>${vehicle.license_plate}</li>
+                                <li><b>Vehicle Make: </b>${vehicle.vehicle_make}</li>
+                                <li><b>Vehicle Model: </b>${vehicle.vehicle_model}</li>
+                                <li><b>Vehicle Color: </b>${vehicle.vehicle_color}</li>
+                                <li>
+                                    <!-- Delete button with confirmation modal -->
+                                    <button class="btn btn-danger delete-button" data-license-plate="${vehicle.license_plate}" data-bs-toggle="modal" data-bs-target="#deleteVehicleModal">Delete</button>
+                                </li>
+                                <br>`;
+                            rightColumn.insertAdjacentHTML('beforeend', vehicleDetails);
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.error('Failed to fetch updated vehicle information:', error);
+                }
+            });
+        }
+
+        deleteConfirmButton.addEventListener('click', function() {
+            const licensePlate = deleteConfirmButton.getAttribute('data-license-plate');
+            if (licensePlate) {
+                $.ajax({
+                    url: `/delete-vehicle/${licensePlate}/`,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': "{{ csrf_token }}",
+                    },
+                    success: function(response) {
+                        deleteVehicleModal.hide();
+                        updateVehicleInfo(); 
+                    },
+                    error: function(error) {
+                        console.error('Failed to delete the vehicle:', error);
+                    }
+                });
+            } else {
+                console.error('License plate is null');
+            }
+        });
+    });
+
     setTimeout(function () {
         var messagesContainer = document.querySelector('.messages .alert');
         if (messagesContainer) {
             messagesContainer.classList.add('fade-out');
         }
-    }, 2000);
+    }, 500);
 </script>
+
 {% endblock %}

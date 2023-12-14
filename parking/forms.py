@@ -98,10 +98,10 @@ class UserCreateForm(UserCreationForm):
         return contact_number     
 
 class VehicleForm(forms.ModelForm):
-    license_plate = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'license_plate', 'id': 'license_plate', 'placeholder': 'License Plate Number'}))
-    vehicle_make = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_make', 'id': 'vehicle_make', 'placeholder': 'Vehicle Make'}))
-    vehicle_model = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_model', 'id': 'vehicle_model', 'placeholder': 'Vehicle Model'}))
-    vehicle_color = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_color', 'id': 'vehicle_color', 'placeholder': 'Vehicle Color'}))
+    license_plate = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'license_plate', 'id': 'license_plate', 'placeholder': 'License Plate Number', 'required': 'required'}))
+    vehicle_make = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_make', 'id': 'vehicle_make', 'placeholder': 'Vehicle Make', 'required': 'required'}))
+    vehicle_model = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_model', 'id': 'vehicle_model', 'placeholder': 'Vehicle Model', 'required': 'required'}))
+    vehicle_color = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_color', 'id': 'vehicle_color', 'placeholder': 'Vehicle Color', 'required': 'required'}))
     vehicle_photo = forms.ImageField(required=True, label='Upload Vehicle Photo')
     
     class Meta:
@@ -111,14 +111,10 @@ class VehicleForm(forms.ModelForm):
     def clean_license_plate(self):
         license_plate = self.cleaned_data['license_plate']
 
-        private_vehicle_plate_pattern = re.compile(r'^[A-Z]{3}-\d{3,4}$')
-
         if not license_plate:
             raise ValidationError('This field is required.')
         if Vehicle.objects.filter(license_plate=license_plate).exists():
             raise ValidationError('This license plate is already registered.')
-        if not private_vehicle_plate_pattern.match(license_plate):
-            raise ValidationError('License plate should be in the format LLL-DDD or LLL-DDDD.')
                     
         return license_plate
 

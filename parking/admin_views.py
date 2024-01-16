@@ -142,13 +142,18 @@ def generate_report(request):
             story.append(table)
             story.append(Spacer(1, 10))
             story.append(Paragraph(f"Total Revenue: PHP {total_revenue}\n\n\n", styles["Normal"]))
-            
-            signature_text = "Christian Aban\n"
-            signature_text += "________________________\n" 
-            signature_text += "Parking Manager\n"
-            signature_text += "Greenfield District Mandaluyong"
 
-            story.append(signature_text)
+            name = "Christian Aban"
+            line = "________________________________"
+            position = "Parking Manager"
+            place = "Greenfield District Mandaluyong"
+
+            center = ParagraphStyle(name='CenteredSubheading', alignment=1)
+            story.append(Paragraph(name, center))        
+            story.append(Paragraph(line, center))        
+            story.append(Paragraph(position, center))        
+            story.append(Paragraph(name, center))        
+
             story.append(Spacer(1, 12)) 
             doc.build(story)
 

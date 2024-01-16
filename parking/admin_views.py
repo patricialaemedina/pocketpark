@@ -148,6 +148,7 @@ def generate_report(request):
             signature_text += "Parking Manager\n"
             signature_text += "Greenfield District Mandaluyong"
 
+            story.append(signature_text)
             story.append(Spacer(1, 12)) 
             doc.build(story)
 

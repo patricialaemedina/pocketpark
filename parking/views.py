@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from .tasks import *
+from .filters import *
 
 def home(request):
     return render(request, 'home.html', {})
@@ -93,9 +94,13 @@ def guidelines(request):
 
 @login_required(login_url='login')
 def suggestions(request):
+    initialize_profanity_filter()
+    add_custom_censor_words(custom_foul_words)
+
     if request.method == 'POST':
         suggest = request.POST.get('suggestions')
-        suggestion = Suggestion.objects.create(user=request.user, suggestions=suggest)
+        cleaned_text = filter_profanity(suggest)
+        suggestion = Suggestion.objects.create(user=request.user, suggestions=cleaned_text)
 
         return redirect('profile')
         
@@ -310,6 +315,8 @@ def extend(request):
 
 @login_required(login_url='login')
 def submit_feedback(request):
+    initialize_profanity_filter()
+    add_custom_censor_words(custom_foul_words)
     valid_booking = None
     feedback_exists = False
 
@@ -323,7 +330,8 @@ def submit_feedback(request):
         rating = request.POST.get('rating')
         comments = request.POST.get('comments')
         
-        feedback = Feedback.objects.create(payment=valid_booking, rating=rating, comments=comments)
+        cleaned_text = filter_profanity(comments)
+        feedback = Feedback.objects.create(payment=valid_booking, rating=rating, comments=cleaned_text)
 
         return redirect('my_reservation')
     

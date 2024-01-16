@@ -31,7 +31,7 @@ def generate_report(request):
                 start_date = datetime.strptime(period_date_start, '%Y-%m-%d').date()
                 end_date = start_date
 
-                paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date))
+                paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date)).order_by('creation_datetime')
 
                 total_revenue = sum(payment.amount_paid for payment in paid_payments)
 
@@ -39,7 +39,7 @@ def generate_report(request):
                 start_date = datetime.strptime(period_date_start, '%Y-%m-%d').date()
                 end_date = start_date + timedelta(days=7)
 
-                paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date))
+                paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date)).order_by('creation_datetime')
 
                 total_revenue = sum(payment.amount_paid for payment in paid_payments)
                 
@@ -49,9 +49,13 @@ def generate_report(request):
                 selected_year = int(selected_year)
 
                 start_date = datetime(selected_year, selected_month, 1).date()
-                end_date = start_date.replace(day=1, month=selected_month + 1) - timedelta(days=1)
 
-                paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date))
+                if selected_month == 12:
+                    end_date = datetime(selected_year + 1, 1, 1).date() - timedelta(days=1)
+                else:
+                    end_date = start_date.replace(day=1, month=selected_month + 1) - timedelta(days=1)
+
+                paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date)).order_by('creation_datetime')
 
                 total_revenue = sum(payment.amount_paid for payment in paid_payments)
 
@@ -61,7 +65,7 @@ def generate_report(request):
                 start_date = datetime(selected_year, 1, 1).date()
                 end_date = datetime(selected_year, 12, 31).date()
 
-                paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date))
+                paid_payments = Payment.objects.filter(payment_status='Paid', creation_datetime__date__range=(start_date, end_date)).order_by('creation_datetime')
 
                 total_revenue = sum(payment.amount_paid for payment in paid_payments)
             

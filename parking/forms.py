@@ -11,7 +11,7 @@ from .models import *
 class UserCreateForm(UserCreationForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'name': 'first_name', 'id': 'first_name', 'placeholder': 'First Name', 'required': 'required'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'name': 'last_name', 'id': 'last_name', 'placeholder': 'Last Name', 'required': 'required'}))
-    username = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'name': 'username', 'id': 'username', 'placeholder': 'Username', 'required': 'required', 'autofocus': False}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'name': 'username', 'id': 'username', 'placeholder': 'Username (in lowercase)', 'required': 'required', 'autofocus': False}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'type': 'email', 'name': 'email', 'id': 'email', 'placeholder': 'Email', 'required': 'required'}))
     contact_number = forms.CharField(max_length=11, widget=forms.TextInput(attrs={'type': 'tel', 'name': 'contact_number', 'id': 'contact_number', 'placeholder': 'Contact Number', 'required': 'required', 'pattern': '09[0-9]{9}'}))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'type': 'password', 'name': 'password1', 'id': 'password1', 'placeholder': 'Password', 'required': 'required', 'class': 'password'}))
@@ -99,10 +99,10 @@ class UserCreateForm(UserCreationForm):
 
 class VehicleForm(forms.ModelForm):
     license_plate = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'license_plate', 'id': 'license_plate', 'placeholder': 'License Plate Number', 'required': 'required'}))
-    vehicle_make = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_make', 'id': 'vehicle_make', 'placeholder': 'Vehicle Make', 'required': 'required'}))
-    vehicle_model = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_model', 'id': 'vehicle_model', 'placeholder': 'Vehicle Model', 'required': 'required'}))
+    vehicle_make = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_make', 'id': 'vehicle_make', 'placeholder': 'Vehicle Make (e.g. Toyota, Honda)', 'required': 'required'}))
+    vehicle_model = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_model', 'id': 'vehicle_model', 'placeholder': 'Vehicle Model (e.g. Corolla, Civic)', 'required': 'required'}))
     vehicle_color = forms.CharField(required=True, widget=forms.TextInput(attrs={'type': 'text', 'name': 'vehicle_color', 'id': 'vehicle_color', 'placeholder': 'Vehicle Color', 'required': 'required'}))
-    vehicle_photo = forms.ImageField(required=True, label='Upload Vehicle Photo')
+    vehicle_photo = forms.ImageField(required=False, label='Upload Vehicle Photo')
     
     class Meta:
         model = Vehicle

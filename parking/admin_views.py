@@ -153,7 +153,7 @@ def generate_report(request):
             story.append(Paragraph(name, center))        
             story.append(Paragraph(line, center))        
             story.append(Paragraph(position, center))        
-            story.append(Paragraph(name, center))        
+            story.append(Paragraph(place, center))        
 
             story.append(Spacer(1, 12)) 
             doc.build(story)
@@ -443,11 +443,11 @@ def generate_report(request):
                 position = "Parking Manager"
                 place = "Greenfield District Mandaluyong"
 
-                story.append(Spacer(5, 4))
+                story.append(Spacer(8, 4))
                 story.append(Paragraph(name, centered_style))        
                 story.append(Paragraph(line, centered_style))        
                 story.append(Paragraph(position, centered_style))        
-                story.append(Paragraph(name, centered_style))        
+                story.append(Paragraph(place, centered_style))        
 
 
                 doc.build(story)

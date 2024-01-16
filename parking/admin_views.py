@@ -143,6 +143,7 @@ def generate_report(request):
             story.append(Spacer(1, 10))
             story.append(Paragraph(f"Total Revenue: PHP {total_revenue}\n\n\n", styles["Normal"]))
 
+            story.append(Spacer(1, 4))
             name = "Christian Aban"
             line = "________________________________"
             position = "Parking Manager"
@@ -442,6 +443,7 @@ def generate_report(request):
                 position = "Parking Manager"
                 place = "Greenfield District Mandaluyong"
 
+                story.append(Spacer(1, 4))
                 story.append(Paragraph(name, centered_style))        
                 story.append(Paragraph(line, centered_style))        
                 story.append(Paragraph(position, centered_style))        

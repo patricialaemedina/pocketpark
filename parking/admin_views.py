@@ -8,7 +8,7 @@ from reportlab.lib.colors import HexColor
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer, HRFlowable, Image, PageBreak, LineBreak
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer, HRFlowable, Image, PageBreak
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from django.utils import timezone
 from django.db.models import Count
@@ -159,8 +159,6 @@ def generate_report(request):
             )
             story.append(Paragraph(signature_text, styles["Signature"]))
             story.append(Spacer(1, 12)) 
-            story.append(LineBreak())
-
             doc.build(story)
 
             return response

@@ -8,7 +8,7 @@ from reportlab.lib.colors import HexColor
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer, HRFlowable, Image, PageBreak
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer, HRFlowable, Image, PageBreak, LineBreak
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from django.utils import timezone
 from django.db.models import Count
@@ -142,17 +142,24 @@ def generate_report(request):
             story.append(table)
             story.append(Spacer(1, 10))
             story.append(Paragraph(f"Total Revenue: PHP {total_revenue}\n\n\n", styles["Normal"]))
+            
+            signature_text = "Christian Aban\n"
+            signature_text += "________________________\n" 
+            signature_text += "Parking Manager\n"
+            signature_text += "Greenfield District Mandaluyong"
 
-            story.append(Spacer(1, 12))
-
-            underline_text = '<u>Christian Aban</u>'
-            story.append(Paragraph(underline_text, centered_style))
-
-            story.append(Spacer(1, 12))
-
-            manager_text = "Parking Manager (Greenfield District Mandaluyong)"
-            centered_text = Paragraph(manager_text, centered_style)
-            story.append(centered_text)
+            signature_style = ParagraphStyle(
+                "Signature",
+                parent=styles["Normal"],
+                fontName="Helvetica-Bold",
+                fontSize=12,
+                textColor="blue",
+                spaceAfter=12,
+                alignment=1,
+            )
+            story.append(Paragraph(signature_text, styles["Signature"]))
+            story.append(Spacer(1, 12)) 
+            story.append(LineBreak())
 
             doc.build(story)
 

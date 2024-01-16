@@ -148,16 +148,6 @@ def generate_report(request):
             signature_text += "Parking Manager\n"
             signature_text += "Greenfield District Mandaluyong"
 
-            signature_style = ParagraphStyle(
-                "Signature",
-                parent=styles["Normal"],
-                fontName="Helvetica-Bold",
-                fontSize=12,
-                textColor="blue",
-                spaceAfter=12,
-                alignment=1,
-            )
-            story.append(Paragraph(signature_text, styles["Signature"]))
             story.append(Spacer(1, 12)) 
             doc.build(story)
 

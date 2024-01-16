@@ -105,7 +105,7 @@ def generate_report(request):
 
             story.append(Paragraph(report_title, title_style))
 
-            table_data = [['Name', 'Vehicle (Plate Number)', 'Date & Time', 'Amount Paid', 'Fee Type']]
+            table_data = [['Name', 'Vehicle', 'Date & Time', 'Amount Paid', 'Fee Type']]
 
             for payment in paid_payments:
                 payment_details = [
@@ -117,7 +117,7 @@ def generate_report(request):
                 ]
                 table_data.append(payment_details)
 
-            col_widths = [165, 72, 150, 50, 60]
+            col_widths = [150, 70, 140, 60, 60]
 
             table = Table(table_data, colWidths=col_widths)
             table.setStyle(TableStyle([

@@ -105,18 +105,19 @@ def generate_report(request):
 
             story.append(Paragraph(report_title, title_style))
 
-            table_data = [['Name', 'Date & Time', 'Amount Paid', 'Fee Type']]
+            table_data = [['Name', 'Vehicle (Plate Number)', 'Date & Time', 'Amount Paid', 'Fee Type']]
 
             for payment in paid_payments:
                 payment_details = [
                     f'{payment.booking.user.first_name} {payment.booking.user.last_name}',
+                    f'{payment.booking.vehicle.license_plate}',
                     timezone.localtime(payment.booking.start_time).strftime('%B %d, %Y, %I:%M %p'),
                     f'PHP {payment.amount_paid}',
                     payment.fee_type,
                 ]
                 table_data.append(payment_details)
 
-            col_widths = [170, 150, 80, 80]
+            col_widths = [165, 72, 150, 50, 60]
 
             table = Table(table_data, colWidths=col_widths)
             table.setStyle(TableStyle([

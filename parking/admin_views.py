@@ -433,9 +433,20 @@ def generate_report(request):
                     f"{', '.join(months_with_lowest_count)}, with {lowest_count}, accounting for "
                     f"{(lowest_count / total_monthly_bookings) * 100:.2f}% of the total bookings."
                 )
-                
+                                
                 story.append(Spacer(1, 4))
                 story.append(Paragraph(line_chart_interpretation, centered_style))
+
+                name = "Christian Aban"
+                line = "________________________________"
+                position = "Parking Manager"
+                place = "Greenfield District Mandaluyong"
+
+                story.append(Paragraph(name, centered_style))        
+                story.append(Paragraph(line, centered_style))        
+                story.append(Paragraph(position, centered_style))        
+                story.append(Paragraph(name, centered_style))        
+
 
                 doc.build(story)
 

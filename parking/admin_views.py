@@ -71,7 +71,8 @@ def generate_report(request):
             
             response = HttpResponse(content_type='application/pdf')
             filename = f"{period}_sales_report.pdf"
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            response['Content-Disposition'] = 'inline; filename="{filename}"'
+
 
             doc = SimpleDocTemplate(response, pagesize=letter)
             styles = getSampleStyleSheet()

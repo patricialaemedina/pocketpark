@@ -143,6 +143,17 @@ def generate_report(request):
             story.append(Spacer(1, 10))
             story.append(Paragraph(f"Total Revenue: PHP {total_revenue}\n\n\n", styles["Normal"]))
 
+            story.append(Spacer(1, 12))
+
+            underline_text = '<u>Christian Aban</u>'
+            story.append(Paragraph(underline_text, centered_style))
+
+            story.append(Spacer(1, 12))
+
+            manager_text = "Parking Manager (Greenfield District Mandaluyong)"
+            centered_text = Paragraph(manager_text, centered_style)
+            story.append(centered_text)
+
             doc.build(story)
 
             return response
@@ -157,7 +168,7 @@ def generate_report(request):
                 reserved_slots = Slot.objects.filter(status='Reserved').count()
 
                 response = HttpResponse(content_type='application/pdf')
-                response['Content-Disposition'] = 'attachment; filename="occupancy_report.pdf"'
+                response['Content-Disposition'] = 'inline; filename="{filename}"'
                 doc = SimpleDocTemplate(response, pagesize=letter)
                 styles = getSampleStyleSheet()
                 story = []

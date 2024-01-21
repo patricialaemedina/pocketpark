@@ -107,7 +107,7 @@ def generate_report(request):
 
             story.append(Paragraph(report_title, title_style))
 
-            table_data = [['Name', 'Vehicle', 'Date & Time', 'Amount Paid', 'Fee Type']]
+            table_data = [['Name', 'Vehicle', 'Date & Time', 'Amount Paid', 'VAT (12%)', 'Fee Type']]
 
             for payment in paid_payments:
                 amount_paid = payment.amount_paid
@@ -147,7 +147,7 @@ def generate_report(request):
             story.append(Spacer(1, 10))
             story.append(Paragraph(f"Total Revenue: PHP {total_revenue}\n\n\n", styles["Normal"]))
 
-            story.append(Spacer(5, 4))
+            story.append(Spacer(10, 4))
             name = "Christian Aban"
             line = "________________________________"
             position = "Parking Manager"
@@ -447,7 +447,7 @@ def generate_report(request):
                 position = "Parking Manager"
                 place = "Greenfield District Mandaluyong"
 
-                story.append(Spacer(8, 4))
+                story.append(Spacer(10, 4))
                 story.append(Paragraph(name, centered_style))        
                 story.append(Paragraph(line, centered_style))        
                 story.append(Paragraph(position, centered_style))        

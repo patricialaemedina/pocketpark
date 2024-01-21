@@ -403,7 +403,7 @@ def download_receipt(request):
     
     else:
         reservation_vat = paid_reservation.amount_paid * vat_percentage
-        initial_reservation_fee = paid_extension.amount_paid - reservation_vat
+        initial_reservation_fee = paid_reservation.amount_paid - reservation_vat
 
         p.drawString(250, 150, f"Reservation fee: {initial_reservation_fee:.2f}")
         p.drawString(250, 140, f"VAT (12%): {reservation_vat:.2f}")

@@ -2,6 +2,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from PIL import Image
 from io import BytesIO
+from decimal import Decimal
 from datetime import datetime, timedelta, date
 from reportlab.lib import colors
 from reportlab.lib.colors import HexColor
@@ -109,11 +110,14 @@ def generate_report(request):
             table_data = [['Name', 'Vehicle', 'Date & Time', 'Amount Paid', 'Fee Type']]
 
             for payment in paid_payments:
+                amount_paid = payment.amount_paid
+                vat_percentage = Decimal('0.12')
                 payment_details = [
                     f'{payment.booking.user.first_name} {payment.booking.user.last_name}',
                     f'{payment.booking.vehicle.license_plate}',
                     timezone.localtime(payment.booking.start_time).strftime('%B %d, %Y, %I:%M %p'),
                     f'PHP {payment.amount_paid}',
+                    f'PHP {amount_paid * vat_percentage:.2f}',
                     payment.fee_type,
                 ]
                 table_data.append(payment_details)

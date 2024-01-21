@@ -1,6 +1,7 @@
 import os
 import qrcode
 from io import BytesIO
+from decimal import Decimal
 from PIL import Image as PILImage
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Image
@@ -390,11 +391,23 @@ def download_receipt(request):
     p.drawString(250, 160, "PAYMENT DETAILS")
 
     p.setFont('Times-Roman', 8)
-    p.drawString(250, 150, f"Reservation Fee: {paid_reservation.amount_paid}")
+    vat_percentage = Decimal('0.12')
 
     if paid_extension:
-        p.drawString(250, 140, f"Extension Fee: {paid_extension.amount_paid}")
-        p.drawString(250, 130, f"Total Amount: {paid_reservation.amount_paid + paid_extension.amount_paid}")
+        extension_vat = paid_extension.amount_paid * vat_percentage
+        initial_extension_fee = paid_extension.amount_paid - extension_vat
+
+        p.drawString(250, 150, f"Extension fee: {initial_extension_fee:.2f}")
+        p.drawString(250, 140, f"VAT (12%): {extension_vat:.2f}")
+        p.drawString(250, 130, f"Total Amount: {paid_extension.amount_paid:.2f}")
+    
+    else:
+        reservation_vat = paid_reservation.amount_paid * vat_percentage
+        initial_reservation_fee = paid_extension.amount_paid - reservation_vat
+
+        p.drawString(250, 150, f"Reservation fee: {initial_reservation_fee:.2f}")
+        p.drawString(250, 140, f"VAT (12%): {reservation_vat:.2f}")
+        p.drawString(250, 130, f"Total Amount: {paid_reservation.amount_paid:.2f}")    
 
     p.setFont('Times-Italic', 8) 
     p.drawString(60, 17, "Please present the QR code at the parking attendant's booth for booking verification.")
